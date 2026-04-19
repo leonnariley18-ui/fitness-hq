@@ -89,6 +89,15 @@
   .back-to-top { position: fixed; bottom: 28px; right: 28px; background: #1c3d2e; color: #f5ede0; border: none; border-radius: 99px; padding: 10px 18px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; opacity: 0; transition: opacity 0.3s, transform 0.15s; letter-spacing: 0.06em; text-transform: uppercase; z-index: 99; }
   .back-to-top.visible { opacity: 1; }
   .back-to-top:hover { transform: translateY(-2px); }
+
+  .coll-header { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; user-select: none; margin-bottom: 2px; }
+  .coll-header:hover { background: #faf6f0; }
+  .coll-header.open { border-radius: 10px 10px 0 0; margin-bottom: 0; }
+  .coll-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1c3d2e; }
+  .coll-arrow { font-size: 12px; color: #b8903a; transition: transform 0.2s; }
+  .coll-arrow.open { transform: rotate(180deg); }
+  .coll-body { display: none; border: 0.5px solid #d8cfc4; border-top: none; border-radius: 0 0 10px 10px; background: #fff; padding: 16px 18px; margin-bottom: 12px; }
+  .coll-body.open { display: block; }
 </style>
 </head>
 <body>
@@ -237,7 +246,12 @@
 <!-- RULES -->
 <div class="section">
   <div class="section-header"><div class="section-title">Rules That Never Change</div><div class="section-line"></div></div>
-  <ul class="rules-list">
+  <div class="coll-header" onclick="toggleColl('rules')" id="coll-rules">
+    <span class="coll-label">Rules That Never Change</span>
+    <span class="coll-arrow" id="arrow-rules">▼</span>
+  </div>
+  <div class="coll-body" id="body-rules">
+  <ul class="rules-list" style="padding-top:4px;">
     <li><div class="rule-dot"></div>Warm-up always first — no exceptions</li>
     <li><div class="rule-dot"></div><a href="warm-up-routines-v1.2.html" style="color:#b8903a; font-weight:500;">Quick - LEG</a> is for push-up only days exclusively — never before pistol squats</li>
     <li><div class="rule-dot"></div>Post-push-up stretches always immediately after push-ups</li>
@@ -246,12 +260,18 @@
     <li><div class="rule-dot"></div>Full rest is always valid</li>
     <li><div class="rule-dot"></div>Log every session in the <a href="workout-logger.html" style="color:#b8903a; font-weight:500;">Workout Logger</a></li>
   </ul>
+  </div>
 </div>
 
 <!-- DOCUMENT MAP -->
 <div class="section">
   <div class="section-header"><div class="section-title">Document Map</div><div class="section-line"></div></div>
-  <table class="doc-map">
+  <div class="coll-header" onclick="toggleColl('docmap')" id="coll-docmap">
+    <span class="coll-label">All Pages</span>
+    <span class="coll-arrow" id="arrow-docmap">▼</span>
+  </div>
+  <div class="coll-body" id="body-docmap">
+  <table class="doc-map" style="margin-top:8px;">
     <tr><th>Document</th><th>What It Contains</th><th>Status</th></tr>
     <tr><td><strong>Fitness Ecosystem Master Plan</strong></td><td>Philosophy, goals, rules, document map</td><td><span class="status-active">Active</span></td></tr>
     <tr><td><a href="calisthenics-master-plan-v2.0.html">Calisthenics Master Plan v2.0</a></td><td>Push-up and pistol squat progressions — all 4 blocks each</td><td><span class="status-active">Active</span></td></tr>
@@ -265,11 +285,17 @@
     <tr><td><a href="check-in-app.html">Check-In App</a></td><td>Bi-weekly check-in form</td><td><span class="status-active">Active</span></td></tr>
     <tr><td><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga App Ecosystem v5.1</a></td><td>Apps #2/3 and #4 specifications</td><td><span class="status-shelved">Shelved</span></td></tr>
   </table>
+  </div>
 </div>
 
 <!-- VERSION HISTORY -->
 <div class="section">
   <div class="section-header"><div class="section-title">Version History</div><div class="section-line"></div></div>
+  <div class="coll-header" onclick="toggleColl('version')" id="coll-version">
+    <span class="coll-label">Version History</span>
+    <span class="coll-arrow" id="arrow-version">▼</span>
+  </div>
+  <div class="coll-body" id="body-version" style="padding-top:8px;">
   <div class="version-entry">
     <div class="version-tag">v1.2 — April 13, 2026</div>
     <ul class="version-list">
@@ -296,10 +322,20 @@
       <li>Apps #2/3 and #4 shelved</li>
     </ul>
   </div>
+  </div>
 </div>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+
 <script>
+  function toggleColl(id) {
+    var body = document.getElementById('body-' + id);
+    var arrow = document.getElementById('arrow-' + id);
+    var header = document.getElementById('coll-' + id);
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+    header.classList.toggle('open');
+  }
   var btn = document.getElementById('backToTop');
   window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
 </script>
