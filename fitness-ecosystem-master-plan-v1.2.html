@@ -56,9 +56,30 @@
   .version-list { list-style: none; padding-left: 12px; }
   .version-list li { font-size: 12px; color: #5a4a3a; line-height: 1.8; font-weight: 300; }
   .version-list li::before { content: "–  "; color: #b8903a; }
+
+  /* NAV */
+  .site-nav { background: #1c3d2e; padding: 12px 0; margin: -48px -32px 48px; position: sticky; top: 0; z-index: 100; }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
+  .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
+  .site-nav ul li a.active { background: #b8903a; color: #fff; }
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <ul>
+    <li><a href="workout-reference-guide.html">Home</a></li>
+    <li><a href="fitness-ecosystem-master-plan-v1.2.html" class="active">Ecosystem</a></li>
+    <li><a href="calisthenics-master-plan-v2.0.html">Calisthenics</a></li>
+    <li><a href="fitness-nutrition-systems-v3.1.html">Nutrition</a></li>
+    <li><a href="warm-up-routines-v1.2.html">Warm-Ups</a></li>
+    <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
+    <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
+  </ul>
+</nav>
 
 <div class="header">
   <h1>Fitness Ecosystem Master Plan</h1>
@@ -267,5 +288,10 @@
   </div>
 </div>
 
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+<script>
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
+</script>
 </body>
 </html>
