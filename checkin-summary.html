@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Check-In Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; max-width: 820px; margin: 0 auto; padding: 0 32px 64px; }
+
+  .site-nav { background: #1c3d2e; padding: 12px 0; margin: 0 -32px 48px; position: sticky; top: 0; z-index: 100; }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
+  .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
+  .site-nav ul li a.active { background: #b8903a; color: #fff; }
+
+  .header { border-bottom: 2px solid #b8903a; padding-bottom: 24px; margin-bottom: 36px; }
+  .header h1 { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #1c3d2e; margin-bottom: 4px; }
+  .header .sub { font-size: 12px; color: #7a6a5a; font-weight: 300; letter-spacing: 0.04em; }
+  .header .meta { font-size: 11px; color: #b8903a; margin-top: 6px; font-weight: 500; }
+
+  .section { margin-bottom: 36px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #1c3d2e; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: #d8cfc4; }
+
+  /* PERIOD BANNER */
+  .period-banner { background: #1c3d2e; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .period-item { flex: 1; min-width: 120px; }
+  .period-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #a0b8a8; margin-bottom: 4px; }
+  .period-value { font-size: 13px; color: #f5ede0; font-weight: 500; }
+  .next-checkin { background: #b8903a; border-radius: 8px; padding: 10px 16px; text-align: center; }
+  .next-checkin .label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
+  .next-checkin .date { font-size: 14px; font-weight: 600; color: #fff; }
+
+  /* STATS GRID */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-n { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #1c3d2e; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 10px; color: #9a8070; font-weight: 300; line-height: 1.4; }
+
+  /* PROGRESS BARS */
+  .progress-item { margin-bottom: 14px; }
+  .progress-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .progress-name { font-size: 12px; font-weight: 500; color: #2a2a2a; }
+  .progress-frac { font-size: 11px; color: #9a8070; font-weight: 300; }
+  .progress-bar-bg { background: #ede5d8; border-radius: 99px; height: 6px; }
+  .progress-bar-fill { height: 100%; border-radius: 99px; background: #1c3d2e; transition: width 1s ease; }
+  .progress-bar-fill.gold { background: #b8903a; }
+
+  /* Q&A CARDS */
+  .qa-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .qa-section { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #b8903a; margin-bottom: 8px; }
+  .qa-q { font-size: 12px; font-weight: 500; color: #5a4a3a; margin-bottom: 6px; }
+  .qa-a { font-size: 13px; color: #2a2a2a; line-height: 1.7; font-weight: 300; }
+
+  /* WINS / CHALLENGES */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .win-card { background: #e8f0ea; border-radius: 10px; padding: 16px; }
+  .challenge-card { background: #f5e8ec; border-radius: 10px; padding: 16px; }
+  .card-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .win-card .card-label { color: #1c6b2e; }
+  .challenge-card .card-label { color: #6b1f38; }
+  .card-text { font-size: 12px; line-height: 1.7; font-weight: 300; }
+  .win-card .card-text { color: #2a4a2a; }
+  .challenge-card .card-text { color: #4a1a28; }
+
+  /* ARCHIVE */
+  .archive-entry { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: background 0.15s; }
+  .archive-entry:hover { background: #faf6f0; }
+  .archive-date { font-size: 12px; font-weight: 600; color: #b8903a; min-width: 120px; }
+  .archive-desc { font-size: 12px; color: #5a4a3a; font-weight: 300; flex: 1; }
+  .archive-arrow { font-size: 12px; color: #d8cfc4; }
+
+  .back-to-top { position: fixed; bottom: 28px; right: 28px; background: #1c3d2e; color: #f5ede0; border: none; border-radius: 99px; padding: 10px 18px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; opacity: 0; transition: opacity 0.3s, transform 0.15s; letter-spacing: 0.06em; text-transform: uppercase; z-index: 99; }
+  .back-to-top.visible { opacity: 1; }
+  .back-to-top:hover { transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <ul>
+    <li><a href="workout-reference-guide.html">Home</a></li>
+    <li><a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a></li>
+    <li><a href="calisthenics-master-plan-v2.0.html">Calisthenics</a></li>
+    <li><a href="fitness-nutrition-systems-v3.1.html">Nutrition</a></li>
+    <li><a href="warm-up-routines-v1.2.html">Warm-Ups</a></li>
+    <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
+    <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
+    <li><a href="checkin-summary.html" class="active">Check-In</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In App</a></li>
+  </ul>
+</nav>
+
+<div class="header">
+  <h1>Check-In Summary</h1>
+  <div class="sub">Most recent check-in — updated every two weeks</div>
+  <div class="meta">Last updated: April 10, 2026</div>
+</div>
+
+<!-- PERIOD BANNER -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Check-In Period</div><div class="section-line"></div></div>
+  <div class="period-banner">
+    <div class="period-item">
+      <div class="period-label">Period</div>
+      <div class="period-value">March 8 – April 10, 2026</div>
+    </div>
+    <div class="period-item">
+      <div class="period-label">Push-Up Sessions</div>
+      <div class="period-value">5 sessions</div>
+    </div>
+    <div class="period-item">
+      <div class="period-label">Yoga Flows</div>
+      <div class="period-value">2 flows</div>
+    </div>
+    <div class="period-item">
+      <div class="period-label">Strap Sessions</div>
+      <div class="period-value">3 sessions</div>
+    </div>
+    <div class="next-checkin">
+      <div class="label">Next Check-In</div>
+      <div class="date">May 3, 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Progression Progress</div><div class="section-line"></div></div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-n">11</div>
+      <div class="stat-label">Total push-up sessions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">5/6</div>
+      <div class="stat-label">Block 2 sessions done</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">10</div>
+      <div class="stat-label">Yoga flows total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">15</div>
+      <div class="stat-label">Flows to unlock Flow 15</div>
+    </div>
+  </div>
+
+  <div class="progress-item">
+    <div class="progress-header">
+      <div class="progress-name">Push-Up Block 2</div>
+      <div class="progress-frac">5 of 6 sessions</div>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:83%"></div></div>
+  </div>
+  <div class="progress-item">
+    <div class="progress-header">
+      <div class="progress-name">Yoga Flows toward Flow 15</div>
+      <div class="progress-frac">10 of 15</div>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill gold" style="width:67%"></div></div>
+  </div>
+  <div class="progress-item">
+    <div class="progress-header">
+      <div class="progress-name">Pistol Squat Block 1</div>
+      <div class="progress-frac">Starting April 16</div>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- CHECK-IN ANSWERS -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Check-In Answers</div><div class="section-line"></div></div>
+
+  <div class="qa-card">
+    <div class="qa-section">Push-Up Progress</div>
+    <div class="qa-q">How is your body responding since last check in?</div>
+    <div class="qa-a">No post-workout soreness. Intrinsic form correction is developing — body is self-correcting mid-set. Bathroom sink is harder than the countertop (lower surface angle) and feels like a real step up.</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-section">Push-Up Progress</div>
+    <div class="qa-q">Any form discoveries, modifications, or things to adjust for next time?</div>
+    <div class="qa-a">Holy shit moments every session. The bathroom sink was a spontaneous discovery — a lower surface creates a harder angle and is closer to a real push-up. Keeping it going forward.</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-section">Flexibility and Targeted Practice</div>
+    <div class="qa-q">How is your flexibility feeling since last check in?</div>
+    <div class="qa-a">No measurable changes yet but supine figure four is a favorite. Strap routine is consistent when sessions happen. Targeted practices are brand new as of this check-in.</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-section">Protein and Nutrition</div>
+    <div class="qa-q">What's been happening with protein since last check in?</div>
+    <div class="qa-a">Biscoff Baby recipe is locked in at 4 stars. Batch 2 confirmed winner with more protein powder and cookie butter. Batch prep struggles during hectic periods — need a flexible fallback.</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-section">Energy and Recovery</div>
+    <div class="qa-q">How has your energy and recovery been since last check in?</div>
+    <div class="qa-a">Depressive episode this period. Still showed up for 5 sessions. Feeling an upswing coming. The mindset shift is fully established — showing up even when it's hard.</div>
+  </div>
+</div>
+
+<!-- WINS AND CHALLENGES -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Wins and Challenges</div><div class="section-line"></div></div>
+  <div class="two-col">
+    <div class="win-card">
+      <div class="card-label">Wins</div>
+      <div class="card-text">Completed Block 1 including one session in a hotel room in Philadelphia. Bathroom sink discovery — spontaneous intensity upgrade. Mindset shift fully established. Showed up through a depressive episode.</div>
+    </div>
+    <div class="challenge-card">
+      <div class="card-label">Challenges</div>
+      <div class="card-text">Depressive episode mid-period — energy crashes after work made everything harder. Batch prep broke down during hectic stretches. One session stopped halfway (April 11).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHIVE -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Previous Check-Ins</div><div class="section-line"></div></div>
+  <div class="archive-entry">
+    <div class="archive-date">March 8, 2026</div>
+    <div class="archive-desc">First check-in — Block 1 complete, strap routine unlocked, Biscoff Baby confirmed</div>
+    <div class="archive-arrow">→</div>
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+
+<script>
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
+
+  // Animate progress bars on load
+  window.addEventListener('load', function() {
+    document.querySelectorAll('.progress-bar-fill').forEach(function(bar) {
+      var w = bar.style.width;
+      bar.style.width = '0%';
+      setTimeout(function() { bar.style.width = w; }, 200);
+    });
+  });
+</script>
+</body>
+</html>
