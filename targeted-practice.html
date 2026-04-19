@@ -31,23 +31,32 @@
   .info-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #8898c8; margin-bottom: 4px; }
   .info-value { font-size: 12px; color: #f5ede0; font-weight: 300; line-height: 1.5; }
 
+  /* TP CARD — collapsible style */
   .tp-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
-  .tp-header { background: #1a2a5e; padding: 20px 24px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .tp-card-header { background: #1a2a5e; padding: 20px 24px; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; transition: opacity 0.15s; user-select: none; }
+  .tp-card-header:hover { opacity: 0.92; }
   .tp-header-left { flex: 1; }
   .tp-version { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #8898c8; margin-bottom: 4px; }
   .tp-title { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: #f5ede0; margin-bottom: 4px; }
   .tp-context { font-size: 11px; color: #8898c8; font-weight: 300; }
-  .download-btn { background: rgba(184,144,58,0.2); border: 1px solid rgba(184,144,58,0.4); color: #e8c88a; font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 14px; border-radius: 99px; cursor: pointer; transition: all 0.15s; white-space: nowrap; flex-shrink: 0; }
-  .download-btn:hover { background: rgba(184,144,58,0.35); border-color: #b8903a; color: #f5ede0; }
-  .tp-body { padding: 20px 24px; }
+  .tp-arrow { font-size: 16px; color: #b8903a; transition: transform 0.2s; margin-top: 4px; flex-shrink: 0; }
+  .tp-arrow.open { transform: rotate(180deg); }
+
+  .tp-body { display: none; padding: 20px 24px; }
+  .tp-body.open { display: block; }
+
   .tp-poses { list-style: none; padding: 0; margin-bottom: 16px; }
   .tp-poses li { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0e8de; align-items: flex-start; }
   .tp-poses li:last-child { border-bottom: none; }
   .pose-num { font-size: 10px; font-weight: 600; color: #b8903a; min-width: 20px; margin-top: 2px; }
   .pose-name { font-size: 13px; font-weight: 500; color: #2a2a2a; margin-bottom: 2px; }
   .pose-target { font-size: 11px; color: #7a6a5a; font-weight: 300; }
-  .tp-best { background: #f0f3f9; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #3a4a6a; line-height: 1.6; font-weight: 300; }
+
+  .tp-best { background: #f0f3f9; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #3a4a6a; line-height: 1.6; font-weight: 300; margin-bottom: 16px; }
   .tp-best strong { font-weight: 600; color: #1a2a5e; }
+
+  .download-btn { display: inline-flex; align-items: center; gap: 6px; background: #1a2a5e; border: none; color: #e8c88a; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 18px; border-radius: 99px; cursor: pointer; transition: all 0.15s; }
+  .download-btn:hover { background: #2a3a7e; color: #f5ede0; }
 
   .notes-box { background: #1a2a5e; border-radius: 10px; padding: 20px 24px; }
   .notes-box h3 { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: #f5ede0; margin-bottom: 10px; }
@@ -87,37 +96,25 @@
 </div>
 
 <div class="info-strip">
-  <div class="info-item">
-    <div class="info-label">Warm-Up</div>
-    <div class="info-value">SFB or Quick + LEG (3-5 min)</div>
-  </div>
-  <div class="info-item">
-    <div class="info-label">Hold Time</div>
-    <div class="info-value">120 seconds per pose</div>
-  </div>
-  <div class="info-item">
-    <div class="info-label">Duration</div>
-    <div class="info-value">~15-22 min per version</div>
-  </div>
-  <div class="info-item">
-    <div class="info-label">Cool-Down</div>
-    <div class="info-value">None needed — the practice IS the stretch</div>
-  </div>
+  <div class="info-item"><div class="info-label">Warm-Up</div><div class="info-value">SFB or Quick + LEG (3-5 min)</div></div>
+  <div class="info-item"><div class="info-label">Hold Time</div><div class="info-value">120 seconds per pose</div></div>
+  <div class="info-item"><div class="info-label">Duration</div><div class="info-value">~15-22 min per version</div></div>
+  <div class="info-item"><div class="info-label">Cool-Down</div><div class="info-value">None needed — the practice IS the stretch</div></div>
 </div>
 
 <!-- TP V1 -->
 <div class="section">
   <div class="section-header"><div class="section-title">Version 1</div><div class="section-line"></div></div>
   <div class="tp-card">
-    <div class="tp-header">
+    <div class="tp-card-header" onclick="toggleTP('v1')">
       <div class="tp-header-left">
         <div class="tp-version">TP V1</div>
         <div class="tp-title">Hips, Splits and Grounding</div>
-        <div class="tp-context">Post-Arm-Day</div>
+        <div class="tp-context">Post-Arm-Day · Low Lunge, Half Split, Warrior I, Butterfly, Supine Twist</div>
       </div>
-      <button class="download-btn" onclick="downloadJSON('v1')">⬇ Download JSON</button>
+      <div class="tp-arrow" id="arrow-v1">▼</div>
     </div>
-    <div class="tp-body">
+    <div class="tp-body" id="body-v1">
       <ul class="tp-poses">
         <li><div class="pose-num">01</div><div><div class="pose-name">Low Lunge</div><div class="pose-target">Hip flexors, front of back thigh</div></div></li>
         <li><div class="pose-num">02</div><div><div class="pose-name">Half Split</div><div class="pose-target">Hamstrings, back of front thigh</div></div></li>
@@ -126,6 +123,7 @@
         <li><div class="pose-num">05</div><div><div class="pose-name">Supine Twist</div><div class="pose-target">Spinal rotation, outer hips</div></div></li>
       </ul>
       <div class="tp-best"><strong>Best after:</strong> push-up sessions or any upper body day. Keeps hips open and counteracts sitting.</div>
+      <button class="download-btn" onclick="downloadJSON('v1')">⬇ Download JSON for App #1</button>
     </div>
   </div>
 </div>
@@ -134,15 +132,15 @@
 <div class="section">
   <div class="section-header"><div class="section-title">Version 2</div><div class="section-line"></div></div>
   <div class="tp-card">
-    <div class="tp-header">
+    <div class="tp-card-header" onclick="toggleTP('v2')">
       <div class="tp-header-left">
         <div class="tp-version">TP V2</div>
         <div class="tp-title">Spine, Hips and Twist</div>
-        <div class="tp-context">Post-Leg-Day</div>
+        <div class="tp-context">Post-Leg-Day · Melting Heart, Seated Spinal Twist, Reclined Pigeon, Butterfly, Supine Twist</div>
       </div>
-      <button class="download-btn" onclick="downloadJSON('v2')">⬇ Download JSON</button>
+      <div class="tp-arrow" id="arrow-v2">▼</div>
     </div>
-    <div class="tp-body">
+    <div class="tp-body" id="body-v2">
       <ul class="tp-poses">
         <li><div class="pose-num">01</div><div><div class="pose-name">Melting Heart</div><div class="pose-target">Thoracic spine, shoulders, chest</div></div></li>
         <li><div class="pose-num">02</div><div><div class="pose-name">Seated Spinal Twist</div><div class="pose-target">Spinal rotation, outer hips</div></div></li>
@@ -151,6 +149,7 @@
         <li><div class="pose-num">05</div><div><div class="pose-name">Supine Twist</div><div class="pose-target">Spinal rotation, outer hips</div></div></li>
       </ul>
       <div class="tp-best"><strong>Best after:</strong> pistol squat sessions or any lower body day. Decompress the legs and spine after heavy leg work.</div>
+      <button class="download-btn" onclick="downloadJSON('v2')">⬇ Download JSON for App #1</button>
     </div>
   </div>
 </div>
@@ -159,15 +158,15 @@
 <div class="section">
   <div class="section-header"><div class="section-title">Version 3</div><div class="section-line"></div></div>
   <div class="tp-card">
-    <div class="tp-header">
+    <div class="tp-card-header" onclick="toggleTP('v3')">
       <div class="tp-header-left">
         <div class="tp-version">TP V3</div>
         <div class="tp-title">Deep Hip Open and Balance</div>
-        <div class="tp-context">Solo Practice</div>
+        <div class="tp-context">Solo Practice · Pigeon, Half Split, Warrior III, Butterfly, Supine Twist</div>
       </div>
-      <button class="download-btn" onclick="downloadJSON('v3')">⬇ Download JSON</button>
+      <div class="tp-arrow" id="arrow-v3">▼</div>
     </div>
-    <div class="tp-body">
+    <div class="tp-body" id="body-v3">
       <ul class="tp-poses">
         <li><div class="pose-num">01</div><div><div class="pose-name">Pigeon Pose</div><div class="pose-target">Deep outer hip, glute, hip flexor</div></div></li>
         <li><div class="pose-num">02</div><div><div class="pose-name">Half Split</div><div class="pose-target">Hamstrings, back of front thigh</div></div></li>
@@ -176,6 +175,7 @@
         <li><div class="pose-num">05</div><div><div class="pose-name">Supine Twist</div><div class="pose-target">Spinal rotation, outer hips</div></div></li>
       </ul>
       <div class="tp-best"><strong>Best as:</strong> standalone practice or on rest days. The most challenging of the three — good for when you want something meaningful without a full workout.</div>
+      <button class="download-btn" onclick="downloadJSON('v3')">⬇ Download JSON for App #1</button>
     </div>
   </div>
 </div>
@@ -188,7 +188,7 @@
     <ul class="notes-list">
       <li>Generated by <a href="https://claude.ai/project/019d7a5c-2499-72ed-856f-230dde6a70fa" target="_blank" style="color:#b8c8e8;">CC (Yoga Coaching Claude)</a> based on your struggle poses from Google Calendar</li>
       <li>Load the downloaded JSON into <a href="https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa" target="_blank" style="color:#b8c8e8;">App #1 ↗</a> via Targeted Practice mode</li>
-      <li><a href="https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa" target="_blank" style="color:#b8c8e8;">App #1 ↗</a> handles voice guidance, alignment cues, hold timers, and side switching automatically</li>
+      <li><a href="https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa" target="_blank" style="color:#b8c8e8;">App #1</a> handles voice guidance, alignment cues, hold timers, and side switching automatically</li>
       <li>New versions generated by <a href="https://claude.ai/project/019d7a5c-2499-72ed-856f-230dde6a70fa" target="_blank" style="color:#b8c8e8;">CC</a> as your practice evolves and new struggle poses emerge</li>
       <li>Each version has a duplicatable calendar event — duplicate it every time you do the practice</li>
     </ul>
@@ -198,199 +198,17 @@
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
 
 <script>
+function toggleTP(id) {
+  var body = document.getElementById('body-' + id);
+  var arrow = document.getElementById('arrow-' + id);
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
 var jsons = {
-  v1: {
-    filename: "targeted-practice-hips-splits-grounding.json",
-    data: {
-      "type": "targeted",
-      "session_name": "Hips, Splits and Grounding",
-      "generated_date": "2026-04-11",
-      "analyzed_period": "Feb 9 - Apr 10, 2026",
-      "focus_areas": ["hip flexibility", "hamstring flexibility", "grounding"],
-      "intro": "Today's practice targets Low Lunge, Half Split, Warrior I, Butterfly, and Supine Twist. These poses were selected based on your most frequent struggle areas from recent flows.",
-      "outro": "That's your practice for today. Take a moment before you move — notice how those poses feel now versus when you started. Come back to this whenever you're ready.",
-      "poses": [
-        {
-          "name": "Low Lunge",
-          "target_area": "Hip flexors, front of back thigh",
-          "how_to_enter": "Step your right foot forward between your hands. Lower your left knee to the mat. Sink your hips forward and down.",
-          "breathing": "Inhale to lengthen, exhale to sink deeper into the lunge.",
-          "alignment_points": ["Front knee stacked over ankle", "Back knee soft on the mat", "Hips square to the front", "Chest lifted, shoulders relaxed"],
-          "modifications": ["Place a folded blanket under the back knee for cushioning", "Keep hands on front thigh instead of floor"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Half Split",
-          "target_area": "Hamstrings, back of front thigh",
-          "how_to_enter": "From low lunge, shift hips back over the back knee and straighten the front leg. Flex the front foot.",
-          "breathing": "Inhale to lengthen the spine, exhale to fold forward over the front leg.",
-          "alignment_points": ["Front leg straight but not locked", "Hips square", "Spine long, not rounded", "Flex the front foot actively"],
-          "modifications": ["Place blocks under hands if floor feels far", "Keep a slight bend in the front knee"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Warrior I",
-          "target_area": "Hip flexors, chest, shoulders",
-          "how_to_enter": "Step right foot forward, spin back heel down at 45 degrees. Bend front knee to 90 degrees. Raise arms overhead.",
-          "breathing": "Inhale to lift and expand through the chest, exhale to ground through the feet.",
-          "alignment_points": ["Front knee tracks over middle toes", "Back heel grounded", "Hips facing forward", "Arms reach actively overhead"],
-          "modifications": ["Shorten stance if hips feel tight", "Keep hands on hips instead of overhead"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Butterfly Pose",
-          "target_area": "Inner groin, hips",
-          "how_to_enter": "Sit on the floor. Bring soles of feet together, let knees fall open to the sides. Hold feet with both hands.",
-          "breathing": "Inhale to sit tall, exhale to gently fold forward from the hips.",
-          "alignment_points": ["Sit on sitting bones, not tailbone", "Spine long before folding", "Let gravity do the work — no forcing", "Feet as close to body as comfortable"],
-          "modifications": ["Sit on a folded blanket to tilt pelvis forward", "Place blocks under knees for support"],
-          "has_two_sides": false,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Supine Twist",
-          "target_area": "Spinal rotation, outer hips",
-          "how_to_enter": "Lie on your back. Draw right knee to chest, then guide it across the body to the left. Extend right arm out to the side.",
-          "breathing": "Inhale to lengthen the spine, exhale to deepen the twist.",
-          "alignment_points": ["Both shoulders stay on the mat", "Top hip stacks over bottom hip", "Gaze opposite direction of knees", "Relax the neck and jaw"],
-          "modifications": ["Place a block or blanket under the bent knee if it doesn't reach the floor"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        }
-      ]
-    }
-  },
-  v2: {
-    filename: "targeted-practice-spine-hips-twist.json",
-    data: {
-      "type": "targeted",
-      "session_name": "Spine, Hips and Twist",
-      "generated_date": "2026-04-11",
-      "analyzed_period": "Feb 9 - Apr 10, 2026",
-      "focus_areas": ["spinal mobility", "hip flexibility", "twist"],
-      "intro": "Today's practice targets Melting Heart, Seated Spinal Twist, Reclined Pigeon, Butterfly, and Supine Twist. Best used after a lower body session to decompress the legs and spine.",
-      "outro": "That's your practice for today. Take a moment before you move — notice how those poses feel now versus when you started. Come back to this whenever you're ready.",
-      "poses": [
-        {
-          "name": "Melting Heart",
-          "target_area": "Thoracic spine, shoulders, chest",
-          "how_to_enter": "Come to hands and knees. Walk hands forward and lower chest toward the mat, keeping hips over knees. Rest forehead or chin on mat.",
-          "breathing": "Inhale to expand through the upper back, exhale to let the chest melt toward the floor.",
-          "alignment_points": ["Hips stay stacked over knees", "Arms extended, elbows lifted off mat", "Chest dropping toward floor", "Breathe into the upper back"],
-          "modifications": ["Place a block under the forehead", "Use a bolster under the chest for support"],
-          "has_two_sides": false,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Seated Spinal Twist",
-          "target_area": "Spinal rotation, outer hips",
-          "how_to_enter": "Sit with legs extended. Bend right knee and cross right foot over left thigh. Plant right hand behind you. Left arm wraps outside right knee.",
-          "breathing": "Inhale to sit tall and lengthen, exhale to deepen the twist.",
-          "alignment_points": ["Sit tall on both sitting bones", "Twist from the waist up", "Keep foot flexed on the mat", "Look over the back shoulder"],
-          "modifications": ["Keep bottom leg bent if hamstrings are tight"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Reclined Pigeon",
-          "target_area": "Deep outer hip, glute",
-          "how_to_enter": "Lie on your back with knees bent. Cross right ankle over left thigh. Flex right foot. Draw both legs toward chest.",
-          "breathing": "Inhale to create space, exhale to draw legs closer.",
-          "alignment_points": ["Keep flexed foot active to protect the knee", "Both shoulders on the mat", "Lower back relaxed on the floor", "Breathe into the outer hip"],
-          "modifications": ["Keep bottom foot on floor if sensation is intense", "Use a strap around the bottom thigh to draw legs in"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Butterfly Pose",
-          "target_area": "Inner groin, hips",
-          "how_to_enter": "Sit on the floor. Bring soles of feet together, let knees fall open to the sides. Hold feet with both hands.",
-          "breathing": "Inhale to sit tall, exhale to gently fold forward from the hips.",
-          "alignment_points": ["Sit on sitting bones, not tailbone", "Spine long before folding", "Let gravity do the work", "Feet as close to body as comfortable"],
-          "modifications": ["Sit on a folded blanket to tilt pelvis forward", "Place blocks under knees for support"],
-          "has_two_sides": false,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Supine Twist",
-          "target_area": "Spinal rotation, outer hips",
-          "how_to_enter": "Lie on your back. Draw right knee to chest, then guide it across the body to the left. Extend right arm out to the side.",
-          "breathing": "Inhale to lengthen the spine, exhale to deepen the twist.",
-          "alignment_points": ["Both shoulders stay on the mat", "Top hip stacks over bottom hip", "Gaze opposite direction of knees", "Relax the neck and jaw"],
-          "modifications": ["Place a block or blanket under the bent knee if it doesn't reach the floor"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        }
-      ]
-    }
-  },
-  v3: {
-    filename: "targeted-practice-deep-hip-balance.json",
-    data: {
-      "type": "targeted",
-      "session_name": "Deep Hip Open and Balance",
-      "generated_date": "2026-04-11",
-      "analyzed_period": "Feb 9 - Apr 10, 2026",
-      "focus_areas": ["deep hip opening", "balance", "hamstring flexibility"],
-      "intro": "Today's practice targets Pigeon Pose, Half Split, Warrior III, Butterfly, and Supine Twist. This is the most challenging version — best as a standalone practice or on rest days.",
-      "outro": "That's your practice for today. Take a moment before you move — notice how those poses feel now versus when you started. Come back to this whenever you're ready.",
-      "poses": [
-        {
-          "name": "Pigeon Pose",
-          "target_area": "Deep outer hip, glute, hip flexor",
-          "how_to_enter": "From downward dog, bring right knee toward right wrist. Lower the right shin to the mat at an angle. Extend left leg back. Lower chest toward the mat over the front shin.",
-          "breathing": "Inhale to lengthen, exhale to soften and release into the pose.",
-          "alignment_points": ["Front shin at an angle, not parallel to mat edge", "Hips as square as possible", "Back leg extending straight back", "Let the hip release — no forcing"],
-          "modifications": ["Place a block or folded blanket under the right hip", "Stay upright instead of folding forward if hip is very tight"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Half Split",
-          "target_area": "Hamstrings, back of front thigh",
-          "how_to_enter": "From low lunge, shift hips back over the back knee and straighten the front leg. Flex the front foot.",
-          "breathing": "Inhale to lengthen the spine, exhale to fold forward over the front leg.",
-          "alignment_points": ["Front leg straight but not locked", "Hips square", "Spine long, not rounded", "Flex the front foot actively"],
-          "modifications": ["Place blocks under hands if floor feels far", "Keep a slight bend in the front knee"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Warrior III",
-          "target_area": "Balance, hamstrings, glutes, core",
-          "how_to_enter": "Stand on left foot. Hinge forward from hips as right leg lifts behind you. Arms extend forward or to sides for balance. Body forms a T-shape.",
-          "breathing": "Inhale to lengthen from heel to crown, exhale to engage core and stabilize.",
-          "alignment_points": ["Standing leg strong but not locked", "Hips level — don't let lifted hip open", "Core engaged throughout", "Gaze softly at the floor"],
-          "modifications": ["Keep hands on hips or a wall for balance", "Keep a slight bend in the standing leg"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Butterfly Pose",
-          "target_area": "Inner groin, hips",
-          "how_to_enter": "Sit on the floor. Bring soles of feet together, let knees fall open to the sides. Hold feet with both hands.",
-          "breathing": "Inhale to sit tall, exhale to gently fold forward from the hips.",
-          "alignment_points": ["Sit on sitting bones, not tailbone", "Spine long before folding", "Let gravity do the work", "Feet as close to body as comfortable"],
-          "modifications": ["Sit on a folded blanket to tilt pelvis forward", "Place blocks under knees for support"],
-          "has_two_sides": false,
-          "hold_seconds": 120
-        },
-        {
-          "name": "Supine Twist",
-          "target_area": "Spinal rotation, outer hips",
-          "how_to_enter": "Lie on your back. Draw right knee to chest, then guide it across the body to the left. Extend right arm out to the side.",
-          "breathing": "Inhale to lengthen the spine, exhale to deepen the twist.",
-          "alignment_points": ["Both shoulders stay on the mat", "Top hip stacks over bottom hip", "Gaze opposite direction of knees", "Relax the neck and jaw"],
-          "modifications": ["Place a block or blanket under the bent knee if it doesn't reach the floor"],
-          "has_two_sides": true,
-          "hold_seconds": 120
-        }
-      ]
-    }
-  }
+  v1: { filename: "targeted-practice-hips-splits-grounding.json", data: { "type": "targeted", "session_name": "Hips, Splits and Grounding", "generated_date": "2026-04-11", "analyzed_period": "Feb 9 - Apr 10, 2026", "focus_areas": ["hip flexibility", "hamstring flexibility", "grounding"], "intro": "Today's practice targets Low Lunge, Half Split, Warrior I, Butterfly, and Supine Twist. These poses were selected based on your most frequent struggle areas from recent flows.", "outro": "That's your practice for today. Take a moment before you move — notice how those poses feel now versus when you started. Come back to this whenever you're ready.", "poses": [ { "name": "Low Lunge", "target_area": "Hip flexors, front of back thigh", "how_to_enter": "Step your right foot forward between your hands. Lower your left knee to the mat. Sink your hips forward and down.", "breathing": "Inhale to lengthen, exhale to sink deeper into the lunge.", "alignment_points": ["Front knee stacked over ankle", "Back knee soft on the mat", "Hips square to the front", "Chest lifted, shoulders relaxed"], "modifications": ["Place a folded blanket under the back knee for cushioning", "Keep hands on front thigh instead of floor"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Half Split", "target_area": "Hamstrings, back of front thigh", "how_to_enter": "From low lunge, shift hips back over the back knee and straighten the front leg. Flex the front foot.", "breathing": "Inhale to lengthen the spine, exhale to fold forward over the front leg.", "alignment_points": ["Front leg straight but not locked", "Hips square", "Spine long, not rounded", "Flex the front foot actively"], "modifications": ["Place blocks under hands if floor feels far", "Keep a slight bend in the front knee"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Warrior I", "target_area": "Hip flexors, chest, shoulders", "how_to_enter": "Step right foot forward, spin back heel down at 45 degrees. Bend front knee to 90 degrees. Raise arms overhead.", "breathing": "Inhale to lift and expand through the chest, exhale to ground through the feet.", "alignment_points": ["Front knee tracks over middle toes", "Back heel grounded", "Hips facing forward", "Arms reach actively overhead"], "modifications": ["Shorten stance if hips feel tight", "Keep hands on hips instead of overhead"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Butterfly Pose", "target_area": "Inner groin, hips", "how_to_enter": "Sit on the floor. Bring soles of feet together, let knees fall open to the sides. Hold feet with both hands.", "breathing": "Inhale to sit tall, exhale to gently fold forward from the hips.", "alignment_points": ["Sit on sitting bones, not tailbone", "Spine long before folding", "Let gravity do the work — no forcing", "Feet as close to body as comfortable"], "modifications": ["Sit on a folded blanket to tilt pelvis forward", "Place blocks under knees for support"], "has_two_sides": false, "hold_seconds": 120 }, { "name": "Supine Twist", "target_area": "Spinal rotation, outer hips", "how_to_enter": "Lie on your back. Draw right knee to chest, then guide it across the body to the left. Extend right arm out to the side.", "breathing": "Inhale to lengthen the spine, exhale to deepen the twist.", "alignment_points": ["Both shoulders stay on the mat", "Top hip stacks over bottom hip", "Gaze opposite direction of knees", "Relax the neck and jaw"], "modifications": ["Place a block or blanket under the bent knee if it doesn't reach the floor"], "has_two_sides": true, "hold_seconds": 120 } ] } },
+  v2: { filename: "targeted-practice-spine-hips-twist.json", data: { "type": "targeted", "session_name": "Spine, Hips and Twist", "generated_date": "2026-04-11", "analyzed_period": "Feb 9 - Apr 10, 2026", "focus_areas": ["spinal mobility", "hip flexibility", "twist"], "intro": "Today's practice targets Melting Heart, Seated Spinal Twist, Reclined Pigeon, Butterfly, and Supine Twist. Best used after a lower body session to decompress the legs and spine.", "outro": "That's your practice for today. Take a moment before you move — notice how those poses feel now versus when you started. Come back to this whenever you're ready.", "poses": [ { "name": "Melting Heart", "target_area": "Thoracic spine, shoulders, chest", "how_to_enter": "Come to hands and knees. Walk hands forward and lower chest toward the mat, keeping hips over knees.", "breathing": "Inhale to expand through the upper back, exhale to let the chest melt toward the floor.", "alignment_points": ["Hips stay stacked over knees", "Arms extended, elbows lifted off mat", "Chest dropping toward floor", "Breathe into the upper back"], "modifications": ["Place a block under the forehead", "Use a bolster under the chest for support"], "has_two_sides": false, "hold_seconds": 120 }, { "name": "Seated Spinal Twist", "target_area": "Spinal rotation, outer hips", "how_to_enter": "Sit with legs extended. Bend right knee and cross right foot over left thigh. Plant right hand behind you. Left arm wraps outside right knee.", "breathing": "Inhale to sit tall and lengthen, exhale to deepen the twist.", "alignment_points": ["Sit tall on both sitting bones", "Twist from the waist up", "Keep foot flexed on the mat", "Look over the back shoulder"], "modifications": ["Keep bottom leg bent if hamstrings are tight"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Reclined Pigeon", "target_area": "Deep outer hip, glute", "how_to_enter": "Lie on your back with knees bent. Cross right ankle over left thigh. Flex right foot. Draw both legs toward chest.", "breathing": "Inhale to create space, exhale to draw legs closer.", "alignment_points": ["Keep flexed foot active to protect the knee", "Both shoulders on the mat", "Lower back relaxed on the floor", "Breathe into the outer hip"], "modifications": ["Keep bottom foot on floor if sensation is intense"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Butterfly Pose", "target_area": "Inner groin, hips", "how_to_enter": "Sit on the floor. Bring soles of feet together, let knees fall open to the sides.", "breathing": "Inhale to sit tall, exhale to gently fold forward from the hips.", "alignment_points": ["Sit on sitting bones, not tailbone", "Spine long before folding", "Let gravity do the work", "Feet as close to body as comfortable"], "modifications": ["Sit on a folded blanket to tilt pelvis forward"], "has_two_sides": false, "hold_seconds": 120 }, { "name": "Supine Twist", "target_area": "Spinal rotation, outer hips", "how_to_enter": "Lie on your back. Draw right knee to chest, then guide it across the body to the left.", "breathing": "Inhale to lengthen the spine, exhale to deepen the twist.", "alignment_points": ["Both shoulders stay on the mat", "Top hip stacks over bottom hip", "Gaze opposite direction of knees", "Relax the neck and jaw"], "modifications": ["Place a block or blanket under the bent knee if it doesn't reach the floor"], "has_two_sides": true, "hold_seconds": 120 } ] } },
+  v3: { filename: "targeted-practice-deep-hip-balance.json", data: { "type": "targeted", "session_name": "Deep Hip Open and Balance", "generated_date": "2026-04-11", "analyzed_period": "Feb 9 - Apr 10, 2026", "focus_areas": ["deep hip opening", "balance", "hamstring flexibility"], "intro": "Today's practice targets Pigeon Pose, Half Split, Warrior III, Butterfly, and Supine Twist. This is the most challenging version — best as a standalone practice or on rest days.", "outro": "That's your practice for today. Take a moment before you move — notice how those poses feel now versus when you started. Come back to this whenever you're ready.", "poses": [ { "name": "Pigeon Pose", "target_area": "Deep outer hip, glute, hip flexor", "how_to_enter": "From downward dog, bring right knee toward right wrist. Lower the right shin to the mat at an angle. Extend left leg back. Lower chest toward the mat over the front shin.", "breathing": "Inhale to lengthen, exhale to soften and release into the pose.", "alignment_points": ["Front shin at an angle, not parallel to mat edge", "Hips as square as possible", "Back leg extending straight back", "Let the hip release — no forcing"], "modifications": ["Place a block or folded blanket under the right hip", "Stay upright instead of folding forward if hip is very tight"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Half Split", "target_area": "Hamstrings, back of front thigh", "how_to_enter": "From low lunge, shift hips back over the back knee and straighten the front leg. Flex the front foot.", "breathing": "Inhale to lengthen the spine, exhale to fold forward over the front leg.", "alignment_points": ["Front leg straight but not locked", "Hips square", "Spine long, not rounded", "Flex the front foot actively"], "modifications": ["Place blocks under hands if floor feels far"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Warrior III", "target_area": "Balance, hamstrings, glutes, core", "how_to_enter": "Stand on left foot. Hinge forward from hips as right leg lifts behind you. Arms extend forward or to sides for balance.", "breathing": "Inhale to lengthen from heel to crown, exhale to engage core and stabilize.", "alignment_points": ["Standing leg strong but not locked", "Hips level — don't let lifted hip open", "Core engaged throughout", "Gaze softly at the floor"], "modifications": ["Keep hands on hips or a wall for balance"], "has_two_sides": true, "hold_seconds": 120 }, { "name": "Butterfly Pose", "target_area": "Inner groin, hips", "how_to_enter": "Sit on the floor. Bring soles of feet together, let knees fall open to the sides.", "breathing": "Inhale to sit tall, exhale to gently fold forward from the hips.", "alignment_points": ["Sit on sitting bones, not tailbone", "Spine long before folding", "Let gravity do the work", "Feet as close to body as comfortable"], "modifications": ["Sit on a folded blanket to tilt pelvis forward"], "has_two_sides": false, "hold_seconds": 120 }, { "name": "Supine Twist", "target_area": "Spinal rotation, outer hips", "how_to_enter": "Lie on your back. Draw right knee to chest, then guide it across the body to the left.", "breathing": "Inhale to lengthen the spine, exhale to deepen the twist.", "alignment_points": ["Both shoulders stay on the mat", "Top hip stacks over bottom hip", "Gaze opposite direction of knees", "Relax the neck and jaw"], "modifications": ["Place a block or blanket under the bent knee if it doesn't reach the floor"], "has_two_sides": true, "hold_seconds": 120 } ] } }
 };
 
 function downloadJSON(version) {
