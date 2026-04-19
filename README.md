@@ -31,6 +31,7 @@ Personal fitness reference system for Leonna — built and maintained with Claud
 | Tool | Description |
 |------|-------------|
 | [App #1 — Yoga Flow Generator](https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa) | AI yoga flow generation — lives in Claude |
+| [CC — Yoga Coaching Claude](https://claude.ai/project/019d7a5c-2499-72ed-856f-230dde6a70fa) | Struggle pose analysis and targeted practice generation |
 
 ## Live Site
 [leonnariley18-ui.github.io/fitness-hq](https://leonnariley18-ui.github.io/fitness-hq)
