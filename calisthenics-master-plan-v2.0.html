@@ -7,31 +7,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; padding: 48px 32px; max-width: 820px; margin: 0 auto; }
+  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; max-width: 820px; margin: 0 auto; padding: 0 32px 64px; }
 
+  /* NAV */
+  .site-nav { background: #1c3d2e; padding: 12px 0; margin: 0 -32px 48px; position: sticky; top: 0; z-index: 100; }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
+  .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
+  .site-nav ul li a.active { background: #b8903a; color: #fff; }
+
+  /* HEADER */
   .header { border-bottom: 2px solid #b8903a; padding-bottom: 24px; margin-bottom: 36px; }
   .header h1 { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #6b1f38; margin-bottom: 4px; }
   .header .sub { font-size: 12px; color: #7a6a5a; font-weight: 300; letter-spacing: 0.04em; }
   .header .meta { font-size: 11px; color: #b8903a; margin-top: 6px; font-weight: 500; }
 
+  /* SECTION */
   .section { margin-bottom: 36px; }
   .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
   .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #6b1f38; white-space: nowrap; }
   .section-line { flex: 1; height: 1px; background: #d8cfc4; }
 
-  p { font-size: 13px; line-height: 1.8; color: #3a2a1a; margin-bottom: 10px; }
-
-  .status-banner { background: #6b1f38; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; gap: 20px; }
-  .status-item { flex: 1; }
+  /* STATUS BANNER */
+  .status-banner { background: #6b1f38; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .status-item { flex: 1; min-width: 140px; }
   .status-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #d8a0b0; margin-bottom: 4px; }
   .status-value { font-size: 13px; color: #f5ede0; font-weight: 500; }
 
-  .progression-header { background: #6b1f38; border-radius: 10px 10px 0 0; padding: 14px 20px; }
-  .progression-header h2 { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; color: #f5ede0; }
-  .progression-header .prog-sub { font-size: 11px; color: #d8a0b0; margin-top: 2px; }
+  /* PROGRESSION HEADER */
+  .prog-header { background: #6b1f38; border-radius: 10px 10px 0 0; padding: 16px 20px; }
+  .prog-header h2 { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; color: #f5ede0; }
+  .prog-header .prog-sub { font-size: 11px; color: #d8a0b0; margin-top: 2px; }
 
+  /* BLOCK CARDS */
   .block-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 0.5px solid #d8cfc4; border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; margin-bottom: 24px; }
-  .block-card { background: #fff; padding: 18px; border-right: 0.5px solid #d8cfc4; border-bottom: 0.5px solid #d8cfc4; }
+  .block-card { background: #fff; padding: 18px; border-right: 0.5px solid #d8cfc4; border-bottom: 0.5px solid #d8cfc4; transition: background 0.2s; }
+  .block-card:hover { background: #faf6f0; }
   .block-card:nth-child(even) { border-right: none; }
   .block-card:nth-last-child(-n+2) { border-bottom: none; }
   .block-num { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #b8903a; margin-bottom: 4px; }
@@ -44,40 +55,76 @@
   .status-active { background: #f5e8ec; color: #6b1f38; }
   .status-upcoming { background: #f0ebe3; color: #9a8070; }
 
-  .form-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
-  .form-card h4 { font-size: 12px; font-weight: 600; color: #6b1f38; margin-bottom: 8px; }
-  .form-list { list-style: none; padding: 0; }
-  .form-list li { font-size: 12px; color: #3a2a1a; padding: 5px 0; border-bottom: 1px solid #f0e8de; display: flex; gap: 10px; line-height: 1.5; font-weight: 300; }
+  /* COLLAPSIBLE FORM */
+  .collapsible { border: 0.5px solid #d8cfc4; border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .collapsible-header { background: #fff; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; user-select: none; }
+  .collapsible-header:hover { background: #faf6f0; }
+  .collapsible-title { font-size: 12px; font-weight: 600; color: #6b1f38; }
+  .collapsible-arrow { font-size: 12px; color: #b8903a; transition: transform 0.2s; }
+  .collapsible-arrow.open { transform: rotate(180deg); }
+  .collapsible-body { display: none; padding: 0 18px 16px; background: #fff; }
+  .collapsible-body.open { display: block; }
+  .form-list { list-style: none; padding: 0; margin-top: 12px; }
+  .form-list li { font-size: 12px; color: #3a2a1a; padding: 6px 0; border-bottom: 1px solid #f0e8de; display: flex; gap: 10px; line-height: 1.5; font-weight: 300; }
   .form-list li:last-child { border-bottom: none; }
   .form-list li::before { content: "→"; color: #b8903a; font-size: 10px; margin-top: 3px; }
 
+  /* SCIENCE CARDS */
   .science-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .science-card { background: #6b1f38; border-radius: 10px; padding: 16px; }
   .science-title { font-size: 12px; font-weight: 600; color: #f5ede0; margin-bottom: 8px; }
   .science-text { font-size: 11px; color: #d8a0b0; line-height: 1.6; font-weight: 300; }
 
+  /* MILESTONES */
   .milestone-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e8ddd0; }
   .milestone-row:last-child { border-bottom: none; }
-  .milestone-date { font-size: 11px; font-weight: 600; color: #b8903a; min-width: 110px; }
+  .milestone-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-done { background: #2a6b40; }
+  .dot-active { background: #b8903a; }
+  .dot-upcoming { background: #d8cfc4; }
+  .milestone-date { font-size: 11px; font-weight: 600; color: #b8903a; min-width: 130px; }
   .milestone-desc { font-size: 12px; color: #3a2a1a; line-height: 1.5; }
 
+  /* BACK TO TOP */
+  .back-to-top { position: fixed; bottom: 28px; right: 28px; background: #6b1f38; color: #f5ede0; border: none; border-radius: 99px; padding: 10px 18px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; opacity: 0; transition: opacity 0.3s, transform 0.15s; letter-spacing: 0.06em; text-transform: uppercase; z-index: 99; }
+  .back-to-top.visible { opacity: 1; }
+  .back-to-top:hover { transform: translateY(-2px); }
+
+  /* VERSION */
   .version-entry { padding: 10px 0; border-bottom: 1px solid #e8ddd0; }
   .version-entry:last-child { border-bottom: none; }
   .version-tag { font-size: 11px; font-weight: 600; color: #b8903a; margin-bottom: 6px; }
   .version-list { list-style: none; padding-left: 12px; }
   .version-list li { font-size: 12px; color: #5a4a3a; line-height: 1.8; font-weight: 300; }
-  .version-list li::before { content: "–  "; color: #b8903a; }
+  .version-list li::before { content: "– "; color: #b8903a; }
+
+  p { font-size: 13px; line-height: 1.8; color: #3a2a1a; margin-bottom: 10px; }
 </style>
 </head>
 <body>
 
+<nav class="site-nav">
+  <ul>
+    <li><a href="workout-reference-guide.html">Home</a></li>
+    <li><a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a></li>
+    <li><a href="calisthenics-master-plan-v2.0.html" class="active">Calisthenics</a></li>
+    <li><a href="fitness-nutrition-systems-v3.1.html">Nutrition</a></li>
+    <li><a href="warm-up-routines-v1.2.html">Warm-Ups</a></li>
+    <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
+    <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
+  </ul>
+</nav>
+
 <div class="header">
   <h1>Calisthenics Master Plan</h1>
-  <div class="sub">Push-Up Progression & Pistol Squat Progression</div>
-  <div class="meta">v2.0 &nbsp;·&nbsp; April 10, 2026</div>
+  <div class="sub">Push-Up Progression and Pistol Squat Progression</div>
+  <div class="meta">v2.0 · April 10, 2026</div>
 </div>
 
-<!-- CURRENT STATUS -->
+<!-- STATUS -->
 <div class="section">
   <div class="section-header"><div class="section-title">Current Status</div><div class="section-line"></div></div>
   <div class="status-banner">
@@ -93,17 +140,17 @@
   <p>Two progressive strength systems running in parallel. Push-ups (upper body) and pistol squats (lower body) alternate — so you're always either building or recovering, but never both at once. Same 2-week block system, same recovery rules, completely different muscle groups.</p>
 </div>
 
-<!-- THE BLOCK SYSTEM -->
+<!-- HOW IT WORKS -->
 <div class="section">
   <div class="section-header"><div class="section-title">How the Block System Works</div><div class="section-line"></div></div>
   <div class="science-grid">
     <div class="science-card">
       <div class="science-title">Structure</div>
-      <div class="science-text">Each progression = 4 blocks of 2 weeks each. Each block = 6 sessions (3x per week). Complete one block, come back to Claude to generate the next one.</div>
+      <div class="science-text">Each progression = 4 blocks of 2 weeks. Each block = 6 sessions (3x per week). Complete a block then come back to Claude to generate the next one.</div>
     </div>
     <div class="science-card">
       <div class="science-title">Why 3x Per Week</div>
-      <div class="science-text">Muscle growth happens during REST, not training. 48-72 hour recovery between sessions = body repairs stronger. More ≠ better. Rest days are when you actually get stronger.</div>
+      <div class="science-text">Muscle growth happens during REST. 48-72 hour recovery between sessions = body repairs stronger. More is not better. Rest days are when you actually get stronger.</div>
     </div>
   </div>
 </div>
@@ -111,39 +158,39 @@
 <!-- PUSH-UP PROGRESSION -->
 <div class="section">
   <div class="section-header"><div class="section-title">Push-Up Progression (Upper Body)</div><div class="section-line"></div></div>
-  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">Goal: Full floor push-ups. 8-week program, four 2-week blocks. Each session: Quick - LEG warm-up → push-ups → post-push-up stretches (4 min). Total: 16-22 min.</p>
+  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">Warm-up: <a href="warm-up-routines-v1.2.html" style="color:#b8903a; font-weight:500;">Quick - LEG</a> · Cool-down: post-push-up stretch (4 min) · Total: 16-22 min per session</p>
 
-  <div class="progression-header"><h2>Push-Up Blocks</h2><div class="prog-sub">Warm-up: Quick - LEG (~90 sec) · Cool-down: post-push-up stretch (4 min)</div></div>
+  <div class="prog-header"><h2>Push-Up Blocks</h2><div class="prog-sub">Goal: Full floor push-ups by Block 4</div></div>
   <div class="block-grid">
     <div class="block-card">
       <div class="block-num">Block 1 · Weeks 1-2</div>
       <div class="block-name">Foundation — Wall Push-Ups</div>
       <ul class="block-exercises">
-        <li>Wall push-ups — 3 sets × 10-12 reps</li>
-        <li>Plank hold — 3 sets × 15-30 sec</li>
-        <li>Scapular push-ups — 2 sets × 8-10 reps</li>
+        <li>Wall push-ups — 3 sets x 10-12 reps</li>
+        <li>Plank hold — 3 sets x 15-30 sec</li>
+        <li>Scapular push-ups — 2 sets x 8-10 reps</li>
       </ul>
-      <div class="block-status status-complete">✅ Complete — Mar 13</div>
+      <div class="block-status status-complete">Complete — Mar 13</div>
     </div>
     <div class="block-card">
       <div class="block-num">Block 2 · Weeks 3-4</div>
       <div class="block-name">Progression — Countertop Push-Ups</div>
       <ul class="block-exercises">
-        <li>Countertop push-ups — 3 sets × 8-12 reps</li>
-        <li>Eccentric training — 3 sets × 5-8 reps (4-5 sec descent)</li>
-        <li>Scapular push-ups — 2 sets × 10-12 reps</li>
-        <li>Plank hold — 3 sets × 30-45 sec</li>
+        <li>Countertop push-ups — 3 sets x 8-12 reps</li>
+        <li>Eccentric training — 3 sets x 5-8 reps (4-5 sec descent)</li>
+        <li>Scapular push-ups — 2 sets x 10-12 reps</li>
+        <li>Plank hold — 3 sets x 30-45 sec</li>
       </ul>
-      <div class="block-status status-active">💪 In Progress — 5/6</div>
+      <div class="block-status status-active">In Progress — 5/6</div>
     </div>
     <div class="block-card">
       <div class="block-num">Block 3 · Weeks 5-6</div>
       <div class="block-name">Advancement — Chair/Bench Push-Ups</div>
       <ul class="block-exercises">
-        <li>Chair/bench push-ups — 3 sets × 8-12 reps</li>
-        <li>Eccentric training — 3 sets × 5-8 reps</li>
-        <li>Knee push-ups — 2 sets × 10-12 reps</li>
-        <li>Plank hold — 3 sets × 45-60 sec</li>
+        <li>Chair/bench push-ups — 3 sets x 8-12 reps</li>
+        <li>Eccentric training — 3 sets x 5-8 reps</li>
+        <li>Knee push-ups — 2 sets x 10-12 reps</li>
+        <li>Plank hold — 3 sets x 45-60 sec</li>
       </ul>
       <div class="block-status status-upcoming">Upcoming</div>
     </div>
@@ -151,66 +198,71 @@
       <div class="block-num">Block 4 · Weeks 7-8</div>
       <div class="block-name">Mastery — Floor Push-Ups</div>
       <ul class="block-exercises">
-        <li>Full floor push-ups — 3 sets × 5-10 reps</li>
-        <li>Eccentric floor push-ups — 3 sets × 3-5 reps</li>
+        <li>Full floor push-ups — 3 sets x 5-10 reps</li>
+        <li>Eccentric floor push-ups — 3 sets x 3-5 reps</li>
         <li>Knee push-ups (between sets) — as needed</li>
-        <li>Plank hold — 3 sets × 60 sec</li>
+        <li>Plank hold — 3 sets x 60 sec</li>
       </ul>
       <div class="block-status status-upcoming">Upcoming</div>
     </div>
   </div>
 
-  <!-- FORM GUIDELINES -->
-  <div class="form-card">
-    <h4>Universal Form Guidelines</h4>
-    <ul class="form-list">
-      <li>Hands slightly wider than shoulders, weight distributed across entire palm</li>
-      <li>Elbows at 45° from body — "arrow" shape, not "T" shape</li>
-      <li>Core engaged — entire body one rigid plank, no sagging hips</li>
-      <li>Inhale on the way down, exhale on the way up. Never hold your breath.</li>
-      <li>Lower until chest nearly touches surface, push back to full extension</li>
-      <li>Scapular push-ups always before plank hold to preserve form quality</li>
-    </ul>
+  <!-- COLLAPSIBLE FORM GUIDELINES -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <span class="collapsible-title">Universal Form Guidelines</span>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <ul class="form-list">
+        <li>Hands slightly wider than shoulders, weight distributed across entire palm</li>
+        <li>Elbows at 45° from body — "arrow" shape, not "T" shape</li>
+        <li>Core engaged — entire body one rigid plank, no sagging hips</li>
+        <li>Inhale on the way down, exhale on the way up. Never hold your breath.</li>
+        <li>Lower until chest nearly touches surface, push back to full extension</li>
+        <li>Scapular push-ups always before plank hold to preserve form quality</li>
+      </ul>
+    </div>
   </div>
 </div>
 
 <!-- PISTOL SQUAT PROGRESSION -->
 <div class="section">
   <div class="section-header"><div class="section-title">Pistol Squat Progression (Lower Body)</div><div class="section-line"></div></div>
-  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">Goal: Full unassisted pistol squat. Runs on push-up REST days. Each session: SFB or Quick + LEG warm-up → pistol squat session → post-pistol squat stretches (4 min). Total: ~25 min. Equipment: bodyweight, wall, chair, yoga blocks, jade mat.</p>
+  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">Warm-up: <a href="warm-up-routines-v1.2.html" style="color:#b8903a; font-weight:500;">SFB or Quick + LEG</a> · Cool-down: post-pistol squat stretch (4 min) · Total: ~25 min per session · Equipment: bodyweight, wall, chair, yoga blocks, jade mat</p>
 
-  <div class="progression-header"><h2>Pistol Squat Blocks</h2><div class="prog-sub">Warm-up: SFB or Quick + LEG · Cool-down: post-pistol squat stretch (4 min)</div></div>
+  <div class="prog-header"><h2>Pistol Squat Blocks</h2><div class="prog-sub">Goal: Full unassisted pistol squat by ~August 2026</div></div>
   <div class="block-grid">
     <div class="block-card">
       <div class="block-num">Block 1 · Foundation</div>
       <div class="block-name">Base Strength</div>
       <ul class="block-exercises">
-        <li>Bodyweight squats — 3 sets × 12-15 reps</li>
-        <li>Wall sit — 3 sets × 30-45 sec</li>
-        <li>Glute bridges — 3 sets × 12-15 reps</li>
-        <li>Step-ups — 2 sets × 10 reps each leg</li>
+        <li>Bodyweight squats — 3 sets x 12-15 reps</li>
+        <li>Wall sit — 3 sets x 30-45 sec</li>
+        <li>Glute bridges — 3 sets x 12-15 reps</li>
+        <li>Step-ups — 2 sets x 10 reps each leg</li>
       </ul>
-      <div class="block-status status-active">💪 Starting Apr 16</div>
+      <div class="block-status status-active">Starting Apr 16</div>
     </div>
     <div class="block-card">
       <div class="block-num">Block 2 · Single-Leg Work</div>
       <div class="block-name">Unilateral Strength</div>
       <ul class="block-exercises">
-        <li>Bulgarian split squats — 3 sets × 8-10 reps each</li>
-        <li>Single-leg glute bridges — 3 sets × 10-12 reps each</li>
-        <li>Assisted single-leg squat (to chair) — 3 sets × 5-8 each</li>
-        <li>Wall sit — 3 sets × 45-60 sec</li>
+        <li>Bulgarian split squats — 3 sets x 8-10 reps each</li>
+        <li>Single-leg glute bridges — 3 sets x 10-12 reps each</li>
+        <li>Assisted single-leg squat (to chair) — 3 sets x 5-8 each</li>
+        <li>Wall sit — 3 sets x 45-60 sec</li>
       </ul>
       <div class="block-status status-upcoming">~June 2026</div>
     </div>
     <div class="block-card">
-      <div class="block-num">Block 3 · Depth & Control</div>
+      <div class="block-num">Block 3 · Depth and Control</div>
       <div class="block-name">Full Range of Motion</div>
       <ul class="block-exercises">
-        <li>Eccentric single-leg squat — 3 sets × 5-6 reps each</li>
-        <li>Assisted pistol squat (yoga block/wall) — 3 sets × 5-8 each</li>
-        <li>Bulgarian split squats — 3 sets × 10-12 reps each</li>
-        <li>Single-leg wall sit — 3 sets × 20-30 sec each</li>
+        <li>Eccentric single-leg squat — 3 sets x 5-6 reps each</li>
+        <li>Assisted pistol squat (yoga block/wall) — 3 sets x 5-8 each</li>
+        <li>Bulgarian split squats — 3 sets x 10-12 reps each</li>
+        <li>Single-leg wall sit — 3 sets x 20-30 sec each</li>
       </ul>
       <div class="block-status status-upcoming">~July 2026</div>
     </div>
@@ -218,26 +270,26 @@
       <div class="block-num">Block 4 · The Pistol</div>
       <div class="block-name">Full Pistol Squat</div>
       <ul class="block-exercises">
-        <li>Pistol squat attempts — 3 sets × 3-5 reps each</li>
-        <li>Eccentric pistol squat — 2 sets × 5 reps each</li>
-        <li>Bulgarian split squats — 2 sets × 12 reps (maintenance)</li>
-        <li>Wall sit — 2 sets × 60 sec (maintenance)</li>
+        <li>Pistol squat attempts — 3 sets x 3-5 reps each</li>
+        <li>Eccentric pistol squat — 2 sets x 5 reps each</li>
+        <li>Bulgarian split squats — 2 sets x 12 reps (maintenance)</li>
+        <li>Wall sit — 2 sets x 60 sec (maintenance)</li>
       </ul>
       <div class="block-status status-upcoming">~August 2026</div>
     </div>
   </div>
 </div>
 
-<!-- MILESTONES -->
+<!-- MILESTONE TIMELINE -->
 <div class="section">
   <div class="section-header"><div class="section-title">Milestone Timeline</div><div class="section-line"></div></div>
-  <div class="milestone-row"><div class="milestone-date">Mar 13, 2026</div><div class="milestone-desc">Push-Up Block 1 complete ✅ — Yoga strap routine unlocked as reward</div></div>
-  <div class="milestone-row"><div class="milestone-date">~Apr 12, 2026</div><div class="milestone-desc">Push-Up Block 2 complete — Block 3 (chair/bench) begins</div></div>
-  <div class="milestone-row"><div class="milestone-date">Apr 16, 2026</div><div class="milestone-desc">Pistol Squat Block 1 begins</div></div>
-  <div class="milestone-row"><div class="milestone-date">~Apr 28, 2026</div><div class="milestone-desc">Pistol Squat Block 1 complete</div></div>
-  <div class="milestone-row"><div class="milestone-date">~May 2026</div><div class="milestone-desc">Push-Up Block 4 — floor push-ups</div></div>
-  <div class="milestone-row"><div class="milestone-date">~Aug 2026</div><div class="milestone-desc">Pistol Squat Block 4 — full pistol squat goal 🦵🏿</div></div>
-  <div class="milestone-row"><div class="milestone-date">Post-Block 4</div><div class="milestone-desc">Pull-up progression begins (upper body next chapter)</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-done"></div><div class="milestone-date">Mar 13, 2026</div><div class="milestone-desc">Push-Up Block 1 complete — Yoga strap routine unlocked as reward</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-active"></div><div class="milestone-date">~Apr 2026</div><div class="milestone-desc">Push-Up Block 2 complete — Block 3 (chair/bench) begins</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-active"></div><div class="milestone-date">Apr 16, 2026</div><div class="milestone-desc">Pistol Squat Block 1 begins</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-upcoming"></div><div class="milestone-date">~Apr 28, 2026</div><div class="milestone-desc">Pistol Squat Block 1 complete</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-upcoming"></div><div class="milestone-date">~May 2026</div><div class="milestone-desc">Push-Up Block 4 — floor push-ups</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-upcoming"></div><div class="milestone-date">~August 2026</div><div class="milestone-desc">Pistol Squat Block 4 — full pistol squat goal</div></div>
+  <div class="milestone-row"><div class="milestone-dot dot-upcoming"></div><div class="milestone-date">Post-Block 4</div><div class="milestone-desc">Pull-up progression begins</div></div>
 </div>
 
 <!-- VERSION HISTORY -->
@@ -248,7 +300,7 @@
     <ul class="version-list">
       <li>Pistol squat progression added — 4 blocks, same system as push-ups</li>
       <li>Yoga-centric framing removed throughout</li>
-      <li>Post-pistol squat stretch referenced as non-negotiable cool-down</li>
+      <li>Post-pistol squat stretch added as non-negotiable cool-down</li>
     </ul>
   </div>
   <div class="version-entry">
@@ -261,5 +313,20 @@
   </div>
 </div>
 
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+
+<script>
+  function toggleCollapsible(header) {
+    var arrow = header.querySelector('.collapsible-arrow');
+    var body = header.nextElementSibling;
+    arrow.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  });
+</script>
 </body>
 </html>
