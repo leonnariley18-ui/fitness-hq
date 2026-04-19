@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Workout Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; padding: 48px 32px; max-width: 820px; margin: 0 auto; }
+
+  .header { border-bottom: 2px solid #b8903a; padding-bottom: 24px; margin-bottom: 36px; }
+  .header h1 { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #1c3d2e; margin-bottom: 4px; }
+  .header .sub { font-size: 12px; color: #7a6a5a; font-weight: 300; letter-spacing: 0.04em; }
+  .header .meta { font-size: 11px; color: #b8903a; margin-top: 6px; font-weight: 500; }
+
+  .section { margin-bottom: 36px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #1c3d2e; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: #d8cfc4; }
+
+  p { font-size: 13px; line-height: 1.8; color: #3a2a1a; margin-bottom: 10px; }
+
+  /* WARMUP REFERENCE */
+  .warmup-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .warmup-pill { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px 16px; text-align: center; }
+  .warmup-pill.sfb { border-top: 3px solid #1c3d2e; }
+  .warmup-pill.qleg { border-top: 3px solid #b8903a; }
+  .warmup-pill.qnoleg { border-top: 3px solid #6b1f38; }
+  .warmup-abbr { font-size: 14px; font-weight: 600; color: #2a2a2a; margin-bottom: 4px; }
+  .warmup-time { font-size: 10px; font-weight: 600; color: #b8903a; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .warmup-desc { font-size: 11px; color: #5a4a3a; line-height: 1.5; font-weight: 300; }
+
+  /* ANCHOR CARDS */
+  .anchor-list { display: flex; flex-direction: column; gap: 10px; }
+  .anchor-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 16px 20px; display: flex; align-items: flex-start; gap: 14px; }
+  .anchor-num { font-size: 11px; font-weight: 600; color: #b8903a; min-width: 20px; margin-top: 2px; }
+  .anchor-body { flex: 1; }
+  .anchor-name { font-size: 13px; font-weight: 600; color: #1c3d2e; margin-bottom: 4px; }
+  .anchor-time { font-size: 10px; color: #9a8070; font-weight: 300; margin-bottom: 6px; }
+  .anchor-flow { font-size: 12px; color: #5a4a3a; line-height: 1.6; font-weight: 300; }
+  .anchor-flow strong { font-weight: 500; color: #2a2a2a; }
+
+  /* LAYERING RULE */
+  .rule-box { background: #1c3d2e; border-radius: 10px; padding: 20px 24px; }
+  .rule-box h3 { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: #f5ede0; margin-bottom: 10px; }
+  .rule-list { list-style: none; padding: 0; }
+  .rule-list li { font-size: 12px; color: #c8d8c8; padding: 5px 0; border-bottom: 1px solid #2d5a3e; display: flex; gap: 10px; line-height: 1.5; font-weight: 300; }
+  .rule-list li:last-child { border-bottom: none; }
+  .rule-list li::before { content: "→"; color: #b8903a; font-size: 10px; margin-top: 3px; }
+
+  /* STRAP ROUTINE */
+  .stretch-block { background: #fff; border: 0.5px solid #d8cfc4; border-left: 4px solid #1a2a5e; border-radius: 0 10px 10px 0; padding: 18px; margin-bottom: 12px; }
+  .stretch-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .stretch-name { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: #1a2a5e; }
+  .stretch-time { font-size: 11px; font-weight: 600; color: #b8903a; }
+  .stretch-desc { font-size: 12px; color: #3a2a1a; line-height: 1.7; margin-bottom: 10px; font-weight: 300; }
+  .stretch-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stretch-meta.single { grid-template-columns: 1fr; }
+  .meta-item { background: #faf6f0; border-radius: 6px; padding: 8px 10px; }
+  .meta-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #9a8070; margin-bottom: 3px; }
+  .meta-text { font-size: 11px; color: #4a3a2a; line-height: 1.5; font-weight: 300; }
+
+  /* TP CARDS */
+  .tp-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
+  .tp-header { background: #1a2a5e; padding: 16px 20px; }
+  .tp-version { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #8898c8; margin-bottom: 4px; }
+  .tp-title { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; color: #f5ede0; margin-bottom: 4px; }
+  .tp-meta { font-size: 11px; color: #8898c8; font-weight: 300; }
+  .tp-body { padding: 16px 20px; }
+  .tp-poses { list-style: none; padding: 0; margin-bottom: 12px; }
+  .tp-poses li { font-size: 12px; color: #3a2a1a; padding: 6px 0; border-bottom: 1px solid #f0e8de; display: flex; gap: 10px; line-height: 1.5; font-weight: 300; }
+  .tp-poses li:last-child { border-bottom: none; }
+  .tp-poses li::before { content: "·"; color: #b8903a; font-weight: 600; }
+  .tp-best { background: #f0f3f9; border-radius: 6px; padding: 10px 12px; font-size: 11px; color: #3a4a6a; line-height: 1.5; font-weight: 300; }
+  .tp-best strong { font-weight: 500; }
+
+  .why-box { background: #1a2a5e; border-radius: 10px; padding: 18px 20px; margin-top: 20px; }
+  .why-box h3 { font-family: 'Lora', serif; font-size: 14px; font-weight: 600; color: #f5ede0; margin-bottom: 8px; }
+  .why-box p { font-size: 12px; color: #8898c8; line-height: 1.7; margin-bottom: 0; font-weight: 300; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Workout Reference Guide</h1>
+  <div class="sub">Combos, strap routine, and targeted practices — all in one place</div>
+  <div class="meta">Updated April 2026</div>
+</div>
+
+<!-- WORKOUT COMBOS -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Warm-Up Quick Reference</div><div class="section-line"></div></div>
+  <div class="warmup-grid">
+    <div class="warmup-pill sfb">
+      <div class="warmup-abbr">SFB</div>
+      <div class="warmup-time">5 minutes</div>
+      <div class="warmup-desc">Anything with legs, yoga, or targeted practice</div>
+    </div>
+    <div class="warmup-pill qleg">
+      <div class="warmup-abbr">Quick + LEG</div>
+      <div class="warmup-time">3 minutes</div>
+      <div class="warmup-desc">Rushed sessions involving legs</div>
+    </div>
+    <div class="warmup-pill qnoleg">
+      <div class="warmup-abbr">Quick - LEG</div>
+      <div class="warmup-time">~90 seconds</div>
+      <div class="warmup-desc">Push-ups only. Never before pistol squats.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><div class="section-title">The Anchors — Pick One or More in This Order</div><div class="section-line"></div></div>
+  <div class="anchor-list">
+    <div class="anchor-card">
+      <div class="anchor-num">01</div>
+      <div class="anchor-body">
+        <div class="anchor-name">Push-Ups</div>
+        <div class="anchor-time">~25 min</div>
+        <div class="anchor-flow"><strong>Quick - LEG</strong> then push-ups then post-push-up stretches</div>
+      </div>
+    </div>
+    <div class="anchor-card">
+      <div class="anchor-num">02</div>
+      <div class="anchor-body">
+        <div class="anchor-name">Pistol Squats</div>
+        <div class="anchor-time">~25 min</div>
+        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then pistol squat session then post-pistol squat stretches</div>
+      </div>
+    </div>
+    <div class="anchor-card">
+      <div class="anchor-num">03</div>
+      <div class="anchor-body">
+        <div class="anchor-name">Yoga</div>
+        <div class="anchor-time">~20-70 min</div>
+        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then yoga flow via App #1</div>
+      </div>
+    </div>
+    <div class="anchor-card">
+      <div class="anchor-num">04</div>
+      <div class="anchor-body">
+        <div class="anchor-name">Targeted Practice</div>
+        <div class="anchor-time">~15-22 min</div>
+        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then targeted practice via App #1. No cool-down needed.</div>
+      </div>
+    </div>
+    <div class="anchor-card">
+      <div class="anchor-num">05</div>
+      <div class="anchor-body">
+        <div class="anchor-name">Strap Routine</div>
+        <div class="anchor-time">~20 min</div>
+        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then strap routine. Always last in any session.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><div class="section-title">The Layering Rule</div><div class="section-line"></div></div>
+  <div class="rule-box">
+    <h3>Stack anything you want — just keep the order above.</h3>
+    <ul class="rule-list">
+      <li>Post-push-up stretches always right after push-ups</li>
+      <li>Post-pistol squat stretches always right after pistol squats</li>
+      <li>Strap routine always last</li>
+      <li>Rest is always valid</li>
+      <li>Log your session in the Workout Logger app after</li>
+    </ul>
+  </div>
+</div>
+
+<!-- STRAP ROUTINE -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Yoga Strap Flexibility Routine</div><div class="section-line"></div></div>
+  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">12-14 minutes &nbsp;·&nbsp; always last in any session &nbsp;·&nbsp; 3-4x per week &nbsp;·&nbsp; yoga strap, belt, towel, or resistance band</p>
+
+  <div class="stretch-block">
+    <div class="stretch-header"><div class="stretch-name">1. Standing Forward Fold</div><div class="stretch-time">2 minutes</div></div>
+    <div class="stretch-desc">Feet hip-width, soft bend in knees. Hinge forward and hang. Hold opposite elbows or let arms dangle. Don't force — let gravity do the work.</div>
+    <div class="stretch-meta">
+      <div class="meta-item"><div class="meta-label">You'll feel</div><div class="meta-text">Hamstrings, calves, lower back decompressing.</div></div>
+      <div class="meta-item"><div class="meta-label">Breathing</div><div class="meta-text">On each exhale, get heavier. Don't bounce or force.</div></div>
+    </div>
+  </div>
+
+  <div class="stretch-block">
+    <div class="stretch-header"><div class="stretch-name">2. Supine Hamstring Stretch</div><div class="stretch-time">4 min (2 min each leg)</div></div>
+    <div class="stretch-desc">Lie on back. Loop strap around ball of right foot. Extend leg toward ceiling. Draw leg toward you gently. Every 30 sec exhale and draw a little closer. Switch legs.</div>
+    <div class="stretch-meta">
+      <div class="meta-item"><div class="meta-label">You'll feel</div><div class="meta-text">Deep hamstring and calf — more than expected.</div></div>
+      <div class="meta-item"><div class="meta-label">Modification</div><div class="meta-text">Bend knee slightly if very tight — stretch is still there.</div></div>
+    </div>
+  </div>
+
+  <div class="stretch-block">
+    <div class="stretch-header"><div class="stretch-name">3. Supine Hip Opener (Figure Four)</div><div class="stretch-time">4 min (2 min each side)</div></div>
+    <div class="stretch-desc">Cross right ankle over left thigh. Loop strap around left foot, extend toward ceiling. Draw both legs toward you. Slow steady breaths. Switch sides.</div>
+    <div class="stretch-meta">
+      <div class="meta-item"><div class="meta-label">You'll feel</div><div class="meta-text">Deep outer hip and glute.</div></div>
+      <div class="meta-item"><div class="meta-label">Modification</div><div class="meta-text">Keep bottom foot on floor if strap feels like too much.</div></div>
+    </div>
+  </div>
+
+  <div class="stretch-block">
+    <div class="stretch-header"><div class="stretch-name">4. Shoulder and Chest Opener</div><div class="stretch-time">1 minute</div></div>
+    <div class="stretch-desc">Stand or sit. Hold strap behind back wider than shoulder-width, arms straight. On each inhale lift arms slightly behind and away from your body.</div>
+    <div class="stretch-meta single">
+      <div class="meta-item"><div class="meta-label">Why it matters</div><div class="meta-text">Counters all the forward pressing from push-ups. Front of shoulders, chest, biceps.</div></div>
+    </div>
+  </div>
+
+  <div class="stretch-block">
+    <div class="stretch-header"><div class="stretch-name">5. Overhead Side Stretch</div><div class="stretch-time">1 min (30 sec each side)</div></div>
+    <div class="stretch-desc">Hold strap overhead wider than shoulder-width, taut. Lean gently to one side, hold, breathe, switch. Both arms stay straight.</div>
+    <div class="stretch-meta single">
+      <div class="meta-item"><div class="meta-label">You'll feel</div><div class="meta-text">Lats, side body, obliques, shoulders.</div></div>
+    </div>
+  </div>
+
+  <div class="stretch-block">
+    <div class="stretch-header"><div class="stretch-name">6. Seated Forward Fold</div><div class="stretch-time">2 minutes</div></div>
+    <div class="stretch-desc">Legs extended, loop strap around both feet. Hinge from hips on each exhale, spine long. Walk hands further down the strap every 30 sec as your body softens.</div>
+    <div class="stretch-meta single">
+      <div class="meta-item"><div class="meta-label">Key</div><div class="meta-text">Length through the spine, not nose to knees. By now hamstrings have been working 8+ minutes — this fold will go deeper.</div></div>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <h3>Why 2-minute holds work</h3>
+    <p>This is where connective tissue actually adapts, not just feels good temporarily. Combined with progressive deepening you're training your nervous system to release. Do this 3-4x a week consistently and you will get more flexible. Patience is the whole game.</p>
+  </div>
+</div>
+
+<!-- TARGETED PRACTICES -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Targeted Practices</div><div class="section-line"></div></div>
+  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">All versions: SFB or Quick + LEG warm-up &nbsp;·&nbsp; 120 sec per pose &nbsp;·&nbsp; no cool-down needed &nbsp;·&nbsp; ~15-22 min total</p>
+
+  <div class="tp-card">
+    <div class="tp-header">
+      <div class="tp-version">TP V1</div>
+      <div class="tp-title">Hips, Splits and Grounding</div>
+      <div class="tp-meta">Post-Arm-Day</div>
+    </div>
+    <div class="tp-body">
+      <ul class="tp-poses">
+        <li>Low Lunge — hip flexors, front of back thigh</li>
+        <li>Half Split — hamstrings, back of front thigh</li>
+        <li>Warrior I — hip flexors, chest, shoulders</li>
+        <li>Butterfly Pose — inner groin, hips</li>
+        <li>Supine Twist — spinal rotation, outer hips</li>
+      </ul>
+      <div class="tp-best"><strong>Best after:</strong> push-up sessions or any upper body day. Keeps hips open and counteracts sitting.</div>
+    </div>
+  </div>
+
+  <div class="tp-card">
+    <div class="tp-header">
+      <div class="tp-version">TP V2</div>
+      <div class="tp-title">Spine, Hips and Twist</div>
+      <div class="tp-meta">Post-Leg-Day</div>
+    </div>
+    <div class="tp-body">
+      <ul class="tp-poses">
+        <li>Melting Heart — thoracic spine, shoulders, chest</li>
+        <li>Seated Spinal Twist — spinal rotation, outer hips</li>
+        <li>Reclined Pigeon — deep outer hip, glute</li>
+        <li>Butterfly Pose — inner groin, hips</li>
+        <li>Supine Twist — spinal rotation, outer hips</li>
+      </ul>
+      <div class="tp-best"><strong>Best after:</strong> pistol squat sessions or any lower body day. Decompress the legs and spine after heavy leg work.</div>
+    </div>
+  </div>
+
+  <div class="tp-card">
+    <div class="tp-header">
+      <div class="tp-version">TP V3</div>
+      <div class="tp-title">Deep Hip Open and Balance</div>
+      <div class="tp-meta">Solo Practice</div>
+    </div>
+    <div class="tp-body">
+      <ul class="tp-poses">
+        <li>Pigeon Pose — deep outer hip, glute, hip flexor</li>
+        <li>Half Split — hamstrings, back of front thigh</li>
+        <li>Warrior III — balance, hamstrings, glutes, core</li>
+        <li>Butterfly Pose — inner groin, hips</li>
+        <li>Supine Twist — spinal rotation, outer hips</li>
+      </ul>
+      <div class="tp-best"><strong>Best as:</strong> standalone practice or on rest days. The most challenging of the three — good for when you want something meaningful without a full workout.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
