@@ -2,7 +2,7 @@
 
 Personal fitness reference system for Leonna — built and maintained with Claude.
 
-## Pages
+## Reference Docs
 
 | File | Description |
 |------|-------------|
@@ -13,6 +13,13 @@ Personal fitness reference system for Leonna — built and maintained with Claud
 | `warm-up-routines-v1.2.html` | SFB, Quick + LEG, Quick - LEG, cool-down stretches |
 | `yoga-strap-flexibility-routine.html` | 12-14 min flexibility routine |
 | `yoga-app-ecosystem-master-plan-v5.1.html` | Shelved app plans |
+
+## Apps
+
+| File | Description |
+|------|-------------|
+| `workout-logger.html` | Log sessions — anchors, warm-up, duration, vibe, notes |
+| `check-in-app.html` | Bi-weekly check-in form — generates prompt for Claude chat |
 
 ## Live Site
 [leonnariley18-ui.github.io/fitness-hq](https://leonnariley18-ui.github.io/fitness-hq/workout-reference-guide.html)
