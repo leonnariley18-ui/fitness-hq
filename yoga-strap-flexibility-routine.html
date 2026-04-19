@@ -51,7 +51,17 @@
   .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
   .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
   .site-nav ul li a.active { background: #b8903a; color: #fff; }
+
+  .coll-header { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; user-select: none; margin-bottom: 2px; }
+  .coll-header:hover { background: #faf6f0; }
+  .coll-header.open { border-radius: 10px 10px 0 0; margin-bottom: 0; }
+  .coll-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1a2a5e; }
+  .coll-arrow { font-size: 12px; color: #b8903a; transition: transform 0.2s; }
+  .coll-arrow.open { transform: rotate(180deg); }
+  .coll-body { display: none; border: 0.5px solid #d8cfc4; border-top: none; border-radius: 0 0 10px 10px; background: #fff; padding: 16px 18px; margin-bottom: 12px; }
+  .coll-body.open { display: block; }
 </style>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
 </head>
 <body>
 <nav class="site-nav">
@@ -64,10 +74,8 @@
     <li><a href="yoga-strap-flexibility-routine.html" class="active">Strap Routine</a></li>
     <li><a href="targeted-practice.html">Targeted Practice</a></li>
     <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
-    <li><a href="checkin-summary.html">Check-In</a></li>
-    <li><a href="smoothie-lab.html">Smoothie Lab</a></li>
     <li><a href="workout-logger.html">Logger</a></li>
-    <li><a href="check-in-app.html">Check-In App</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
   </ul>
 </nav>
 
@@ -191,6 +199,11 @@
 <!-- WHEN TO USE -->
 <div class="section">
   <div class="section-header"><div class="section-title">When to Use</div><div class="section-line"></div></div>
+  <div class="coll-header" onclick="toggleColl('when')" id="coll-when">
+    <span class="coll-label">When to Use</span>
+    <span class="coll-arrow" id="arrow-when">▼</span>
+  </div>
+  <div class="coll-body" id="body-when" style="padding:0 18px;">
   <ul class="use-list">
     <li><div class="use-dot"></div>After push-up sessions (always last)</li>
     <li><div class="use-dot"></div>After pistol squat sessions (always last)</li>
@@ -204,6 +217,16 @@
 <script>
   var btn = document.getElementById('backToTop');
   window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
+</script>
+<script>
+  function toggleColl(id) {
+    var body = document.getElementById('body-' + id);
+    var arrow = document.getElementById('arrow-' + id);
+    var header = document.getElementById('coll-' + id);
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+    header.classList.toggle('open');
+  }
 </script>
 </body>
 </html>
