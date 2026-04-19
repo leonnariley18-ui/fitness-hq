@@ -83,7 +83,17 @@
   .version-list { list-style: none; padding-left: 12px; }
   .version-list li { font-size: 12px; color: #5a4a3a; line-height: 1.8; font-weight: 300; }
   .version-list li::before { content: "– "; color: #b8903a; }
+
+  .coll-header { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; user-select: none; margin-bottom: 2px; }
+  .coll-header:hover { background: #faf6f0; }
+  .coll-header.open { border-radius: 10px 10px 0 0; margin-bottom: 0; }
+  .coll-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1c3d2e; }
+  .coll-arrow { font-size: 12px; color: #b8903a; transition: transform 0.2s; }
+  .coll-arrow.open { transform: rotate(180deg); }
+  .coll-body { display: none; border: 0.5px solid #d8cfc4; border-top: none; border-radius: 0 0 10px 10px; background: #fff; padding: 16px 18px; margin-bottom: 12px; }
+  .coll-body.open { display: block; }
 </style>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
 </head>
 <body>
 
@@ -97,10 +107,8 @@
     <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
     <li><a href="targeted-practice.html">Targeted Practice</a></li>
     <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
-    <li><a href="checkin-summary.html">Check-In</a></li>
-    <li><a href="smoothie-lab.html">Smoothie Lab</a></li>
     <li><a href="workout-logger.html">Logger</a></li>
-    <li><a href="check-in-app.html">Check-In App</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
   </ul>
 </nav>
 
@@ -232,6 +240,11 @@
 <!-- VERSION HISTORY -->
 <div class="section">
   <div class="section-header"><div class="section-title">Version History</div><div class="section-line"></div></div>
+  <div class="coll-header" onclick="toggleColl('version')" id="coll-version">
+    <span class="coll-label">Version History</span>
+    <span class="coll-arrow" id="arrow-version">▼</span>
+  </div>
+  <div class="coll-body" id="body-version" style="padding-top:8px;">
   <div class="version-entry">
     <div class="version-tag">v1.2 — April 10, 2026</div>
     <ul class="version-list">
@@ -251,6 +264,15 @@
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
 
 <script>
+  function toggleColl(id) {
+    var body = document.getElementById('body-' + id);
+    var arrow = document.getElementById('arrow-' + id);
+    var header = document.getElementById('coll-' + id);
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+    header.classList.toggle('open');
+  }
+
   function toggleWarmup(id) {
     var body = document.getElementById('body-' + id);
     var arrow = document.getElementById('arrow-' + id);
