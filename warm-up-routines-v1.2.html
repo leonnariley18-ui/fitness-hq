@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Warm-Up Routines</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; max-width: 820px; margin: 0 auto; padding: 0 32px 64px; }
+
+  .site-nav { background: #1c3d2e; padding: 12px 0; margin: 0 -32px 48px; position: sticky; top: 0; z-index: 100; }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
+  .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
+  .site-nav ul li a.active { background: #b8903a; color: #fff; }
+
+  .header { border-bottom: 2px solid #b8903a; padding-bottom: 24px; margin-bottom: 36px; }
+  .header h1 { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #1c3d2e; margin-bottom: 4px; }
+  .header .sub { font-size: 12px; color: #7a6a5a; font-weight: 300; letter-spacing: 0.04em; }
+  .header .meta { font-size: 11px; color: #b8903a; margin-top: 6px; font-weight: 500; }
+
+  .section { margin-bottom: 36px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #1c3d2e; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: #d8cfc4; }
+
+  /* QUICK REFERENCE */
+  .rules-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .rule-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px; text-align: center; cursor: pointer; transition: all 0.15s; }
+  .rule-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+  .rule-abbr { font-size: 16px; font-weight: 600; color: #1c3d2e; margin-bottom: 4px; }
+  .rule-full { font-size: 11px; color: #7a6a5a; font-weight: 300; margin-bottom: 6px; }
+  .rule-desc { font-size: 11px; color: #3a2a1a; line-height: 1.5; }
+
+  /* TIP BOX */
+  .tip-box { background: #f0ebe3; border-left: 4px solid #b8903a; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 16px; }
+  .tip-box p { font-size: 12px; color: #4a3a2a; line-height: 1.7; margin: 0; }
+
+  /* WARMUP CARDS */
+  .warmup-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+  .warmup-card.sfb { border-left: 4px solid #1c3d2e; }
+  .warmup-card.qleg { border-left: 4px solid #b8903a; }
+  .warmup-card.qnoleg { border-left: 4px solid #6b1f38; }
+  .warmup-card-header { padding: 14px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background 0.15s; }
+  .warmup-card-header:hover { background: #faf6f0; }
+  .warmup-badge { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 99px; }
+  .badge-sfb { background: #e8f0ea; color: #1c3d2e; }
+  .badge-qleg { background: #f5ede0; color: #8a6030; }
+  .badge-qnoleg { background: #f5e8ec; color: #6b1f38; }
+  .warmup-title { font-size: 13px; font-weight: 600; color: #2a2a2a; }
+  .warmup-arrow { font-size: 12px; color: #b8903a; transition: transform 0.2s; }
+  .warmup-arrow.open { transform: rotate(180deg); }
+  .warmup-body { display: none; padding: 0 20px 16px; }
+  .warmup-body.open { display: block; }
+  .warmup-when { font-size: 12px; color: #5a4a3a; margin-bottom: 12px; font-weight: 300; }
+
+  .exercise-list { list-style: none; padding: 0; }
+  .exercise-list li { font-size: 12px; color: #3a2a1a; padding: 6px 0; border-bottom: 1px solid #f0e8de; display: flex; gap: 10px; line-height: 1.5; }
+  .exercise-list li:last-child { border-bottom: none; }
+  .ex-num { font-size: 10px; font-weight: 600; color: #b8903a; min-width: 20px; margin-top: 2px; }
+  .ex-name { font-weight: 500; color: #2a2a2a; }
+  .ex-note { font-size: 11px; color: #7a6a5a; font-weight: 300; }
+  .leg-tag { display: inline-block; font-size: 9px; font-weight: 600; color: #6b1f38; background: #f5e8ec; padding: 1px 6px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+
+  /* STRETCH CARDS */
+  .stretch-card { background: #1c3d2e; border-radius: 10px; padding: 20px; margin-bottom: 12px; }
+  .stretch-card h3 { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; color: #f5ede0; margin-bottom: 4px; }
+  .stretch-card .sub { font-size: 11px; color: #a0b8a8; margin-bottom: 14px; font-weight: 300; }
+  .stretch-list { list-style: none; padding: 0; }
+  .stretch-list li { font-size: 12px; color: #c8d8c8; padding: 6px 0; border-bottom: 1px solid #2d5a3e; display: flex; gap: 10px; line-height: 1.5; font-weight: 300; }
+  .stretch-list li:last-child { border-bottom: none; }
+  .stretch-num { font-size: 10px; font-weight: 600; color: #b8903a; min-width: 20px; margin-top: 2px; }
+
+  /* BACK TO TOP */
+  .back-to-top { position: fixed; bottom: 28px; right: 28px; background: #1c3d2e; color: #f5ede0; border: none; border-radius: 99px; padding: 10px 18px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; opacity: 0; transition: opacity 0.3s, transform 0.15s; letter-spacing: 0.06em; text-transform: uppercase; z-index: 99; }
+  .back-to-top.visible { opacity: 1; }
+  .back-to-top:hover { transform: translateY(-2px); }
+
+  .version-entry { padding: 10px 0; border-bottom: 1px solid #e8ddd0; }
+  .version-entry:last-child { border-bottom: none; }
+  .version-tag { font-size: 11px; font-weight: 600; color: #b8903a; margin-bottom: 6px; }
+  .version-list { list-style: none; padding-left: 12px; }
+  .version-list li { font-size: 12px; color: #5a4a3a; line-height: 1.8; font-weight: 300; }
+  .version-list li::before { content: "– "; color: #b8903a; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <ul>
+    <li><a href="workout-reference-guide.html">Home</a></li>
+    <li><a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a></li>
+    <li><a href="calisthenics-master-plan-v2.0.html">Calisthenics</a></li>
+    <li><a href="fitness-nutrition-systems-v3.1.html">Nutrition</a></li>
+    <li><a href="warm-up-routines-v1.2.html" class="active">Warm-Ups</a></li>
+    <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
+    <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
+  </ul>
+</nav>
+
+<div class="header">
+  <h1>Warm-Up Routines</h1>
+  <div class="sub">Memorize these and warm up anywhere</div>
+  <div class="meta">v1.2 · April 10, 2026</div>
+</div>
+
+<!-- QUICK REFERENCE -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Quick Reference</div><div class="section-line"></div></div>
+  <div class="rules-grid">
+    <div class="rule-card" onclick="openWarmup('sfb')">
+      <div class="rule-abbr">SFB</div>
+      <div class="rule-full">Standard Full-Body · 5 min</div>
+      <div class="rule-desc">Anything with legs, yoga, or targeted practice — tap to expand</div>
+    </div>
+    <div class="rule-card" onclick="openWarmup('qleg')">
+      <div class="rule-abbr">Quick + LEG</div>
+      <div class="rule-full">3 min</div>
+      <div class="rule-desc">Rushed sessions involving legs — tap to expand</div>
+    </div>
+    <div class="rule-card" onclick="openWarmup('qnoleg')">
+      <div class="rule-abbr">Quick - LEG</div>
+      <div class="rule-full">~90 sec</div>
+      <div class="rule-desc">Push-ups only. Never before pistol squats — tap to expand</div>
+    </div>
+  </div>
+</div>
+
+<!-- SFB -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Standard Full-Body (SFB)</div><div class="section-line"></div></div>
+  <div class="warmup-card sfb" id="warmup-sfb">
+    <div class="warmup-card-header" onclick="toggleWarmup('sfb')">
+      <div>
+        <div class="warmup-badge badge-sfb">5 min · all exercises · 8-10 reps each</div>
+        <div class="warmup-title" style="margin-top:6px;">Standard Full-Body Warm-Up</div>
+      </div>
+      <span class="warmup-arrow" id="arrow-sfb">▼</span>
+    </div>
+    <div class="warmup-body" id="body-sfb">
+      <div class="warmup-when">Use before yoga, strap routine, pistol squats, or any full session. Keep moving the entire 5 minutes. You should feel warm and energized by the end.</div>
+      <ul class="exercise-list">
+        <li><div class="ex-num">01</div><div><div class="ex-name">Neck Rolls</div><div class="ex-note">Gently roll head in half-circles, side to side. Slow and controlled.</div></div></li>
+        <li><div class="ex-num">02</div><div><div class="ex-name">Chest Opener</div><div class="ex-note">Arms out to sides, bring forward (like clapping), then back out wide.</div></div></li>
+        <li><div class="ex-num">03</div><div><div class="ex-name">Hip Circles</div><div class="ex-note">Feet planted, circle hips both directions.</div></div></li>
+        <li><div class="ex-num">04</div><div><div class="ex-name">Shoulder Rolls with Arm Swings</div><div class="ex-note">Swing arms forward then backward, bending knees each time arms come down.</div></div></li>
+        <li><div class="ex-num">05</div><div><div class="ex-name">Cat-Cow (on the ground)</div><div class="ex-note">Inhale: drop belly, lift chest (cow). Exhale: round spine (cat). Move with breath.</div></div></li>
+        <li><div class="ex-num">06</div><div><div class="ex-name">Wide Stance Toe Reach</div><div class="ex-note">Wide stance, reach toward toes. Hamstrings and inner thighs.</div></div></li>
+        <li><div class="ex-num">07</div><div><div class="ex-name">Side Lunges</div><div class="ex-note">Step wide to one side, bend that knee, other leg straight. Alternate sides.</div></div></li>
+        <li><div class="ex-num">08</div><div><div class="ex-name">High Knees with Arm Pulls</div><div class="ex-note">Bring knee to chest while pulling arms down. Alternating legs.</div></div></li>
+        <li><div class="ex-num">09</div><div><div class="ex-name">Standing Toe Reach Kicks</div><div class="ex-note">Back straight, kick leg up toward hands. Hamstrings and balance.</div></div></li>
+        <li><div class="ex-num">10</div><div><div class="ex-name">Cross-Body Step Kicks</div><div class="ex-note">Kick leg across and back while moving arms to stretch chest. Keep elbows up.</div></div></li>
+        <li><div class="ex-num">11</div><div><div class="ex-name">Hip Circles (Standing Fire Hydrant)</div><div class="ex-note">Lift one leg off ground, circle the hip. Both directions, both legs.</div></div></li>
+        <li><div class="ex-num">12</div><div><div class="ex-name">Ankle Circles (Pointed Toe)</div><div class="ex-note">Point toe away, hold 2-3 sec. Flex back toward you, hold 2-3 sec. Both ankles.</div></div></li>
+        <li><div class="ex-num">13</div><div><div class="ex-name">Side Stretch</div><div class="ex-note">Reach one arm up and over to the side. Both sides.</div></div></li>
+        <li><div class="ex-num">14</div><div><div class="ex-name">Wrist Circles</div><div class="ex-note">Arms extended, make fists, circle wrists both directions. Preps wrists for floor work.</div></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK VERSIONS -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Quick Versions</div><div class="section-line"></div></div>
+  <div class="tip-box">
+    <p><strong>Quick + LEG (3 min):</strong> Any rushed session involving legs. Keep all exercises including the ones marked <span style="display:inline-block; font-size:9px; font-weight:600; color:#6b1f38; background:#f5e8ec; padding:1px 6px; border-radius:99px;">LEG</span><br/><br/>
+    <strong>Quick - LEG (~90 sec):</strong> Push-up only days. Skip ALL <span style="display:inline-block; font-size:9px; font-weight:600; color:#6b1f38; background:#f5e8ec; padding:1px 6px; border-radius:99px;">LEG</span> exercises. Never use before <a href="calisthenics-master-plan-v2.0.html" style="color:#b8903a; font-weight:500;">pistol squats</a>.</p>
+  </div>
+
+  <div class="warmup-card qleg" id="warmup-qleg">
+    <div class="warmup-card-header" onclick="toggleWarmup('qleg')">
+      <div>
+        <div class="warmup-badge badge-qleg">5-6 reps each · LEG = skip on push-up only days</div>
+        <div class="warmup-title" style="margin-top:6px;">Quick Full-Body Warm-Up</div>
+      </div>
+      <span class="warmup-arrow" id="arrow-qleg">▼</span>
+    </div>
+    <div class="warmup-body" id="body-qleg">
+      <ul class="exercise-list">
+        <li><div class="ex-num">01</div><div><div class="ex-name">Neck Rolls</div><div class="ex-note">Quick half-circles, both directions.</div></div></li>
+        <li><div class="ex-num">02</div><div><div class="ex-name">Arm Circles</div><div class="ex-note">Big circles forward then back, 10 each direction.</div></div></li>
+        <li><div class="ex-num">03</div><div><div class="ex-name">Hip Circles <span class="leg-tag">LEG</span></div><div class="ex-note">Both directions, 10 circles each way.</div></div></li>
+        <li><div class="ex-num">04</div><div><div class="ex-name">Cat-Cow (on the ground)</div><div class="ex-note">8-10 reps, sync with breath.</div></div></li>
+        <li><div class="ex-num">05</div><div><div class="ex-name">Wide Stance Toe Reach <span class="leg-tag">LEG</span></div><div class="ex-note">6 reps, reach down and up.</div></div></li>
+        <li><div class="ex-num">06</div><div><div class="ex-name">High Knees <span class="leg-tag">LEG</span></div><div class="ex-note">Quick high knees, 20 total (10 each leg).</div></div></li>
+        <li><div class="ex-num">07</div><div><div class="ex-name">Cross-Body Step Kicks <span class="leg-tag">LEG</span></div><div class="ex-note">Dynamic movement, 10 total.</div></div></li>
+        <li><div class="ex-num">08</div><div><div class="ex-name">Ankle Circles and Wrist Circles</div><div class="ex-note">Quick point-and-flex each ankle, then wrist circles both directions.</div></div></li>
+        <li><div class="ex-num">09</div><div><div class="ex-name">Side Stretch</div><div class="ex-note">Reach up and over, both sides, hold 3 seconds each.</div></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- POST PUSH-UP STRETCHES -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Post-Push-Up Stretches</div><div class="section-line"></div></div>
+  <div class="stretch-card">
+    <h3>Post-Push-Up Stretches</h3>
+    <div class="sub">4 minutes · after every <a href="calisthenics-master-plan-v2.0.html" style="color:#b8d8b8;">push-up session</a> · non-negotiable</div>
+    <ul class="stretch-list">
+      <li><div class="stretch-num">01</div><div><strong style="color:#f5ede0;">Chest Opener (Doorway Stretch)</strong> — 60 sec · Stand in doorway, arms on frame at shoulder height, step forward. OR clasp hands behind back and lift.</div></li>
+      <li><div class="stretch-num">02</div><div><strong style="color:#f5ede0;">Cross-Body Shoulder Stretch</strong> — 30 sec each side · One arm across body at chest level, other arm gently pulls at elbow.</div></li>
+      <li><div class="stretch-num">03</div><div><strong style="color:#f5ede0;">Tricep Stretch</strong> — 30 sec each side · One arm overhead, bend elbow so hand reaches down your back, other hand gently pushes elbow back.</div></li>
+      <li><div class="stretch-num">04</div><div><strong style="color:#f5ede0;">Child's Pose</strong> — 60 sec · Kneel, sit hips back toward heels, extend arms forward, forehead to floor. Breathe and relax.</div></li>
+      <li><div class="stretch-num">05</div><div><strong style="color:#f5ede0;">Wrist Stretch</strong> — 30 sec each direction · Hands on floor, fingers pointing toward body, lean weight back. Repeat with fingers pointing away.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- POST PISTOL SQUAT STRETCHES -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Post-Pistol Squat Stretches</div><div class="section-line"></div></div>
+  <div class="stretch-card">
+    <h3>Post-Pistol Squat Stretches</h3>
+    <div class="sub">4 minutes · after every <a href="calisthenics-master-plan-v2.0.html" style="color:#b8d8b8;">pistol squat session</a> · non-negotiable</div>
+    <ul class="stretch-list">
+      <li><div class="stretch-num">01</div><div><strong style="color:#f5ede0;">Standing Quad Stretch</strong> — 30 sec each leg · Bend one knee, bring foot toward glute, hold ankle. Hold wall for balance if needed.</div></li>
+      <li><div class="stretch-num">02</div><div><strong style="color:#f5ede0;">Low Lunge Hip Flexor Stretch</strong> — 45 sec each side · Step one foot forward into low lunge, back knee on floor. Sink hips forward and down.</div></li>
+      <li><div class="stretch-num">03</div><div><strong style="color:#f5ede0;">Standing Figure Four</strong> — 30 sec each side · Cross one ankle over opposite knee, sit back like lowering into a chair.</div></li>
+      <li><div class="stretch-num">04</div><div><strong style="color:#f5ede0;">Seated Forward Fold</strong> — 60 sec · Legs extended, loop strap around feet if needed. Hinge from hips with long spine. Full posterior chain.</div></li>
+      <li><div class="stretch-num">05</div><div><strong style="color:#f5ede0;">Supine Figure Four</strong> — 45 sec each side · Lie on back. Cross right ankle over left thigh, flex foot. Draw both legs gently toward chest.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- VERSION HISTORY -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Version History</div><div class="section-line"></div></div>
+  <div class="version-entry">
+    <div class="version-tag">v1.2 — April 10, 2026</div>
+    <ul class="version-list">
+      <li>Post-Pistol Squat Stretches added (4 min, 5 stretches)</li>
+      <li>Quick - LEG rule clarified: push-ups only, never before pistol squats</li>
+    </ul>
+  </div>
+  <div class="version-entry">
+    <div class="version-tag">v1.1 — March 14, 2026</div>
+    <ul class="version-list">
+      <li>Rebuilt from scratch — Cat-cow updated to ground version</li>
+      <li>Three warm-up options clarified: SFB, Quick + LEG, Quick - LEG</li>
+    </ul>
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+
+<script>
+  function toggleWarmup(id) {
+    var body = document.getElementById('body-' + id);
+    var arrow = document.getElementById('arrow-' + id);
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+  }
+
+  function openWarmup(id) {
+    var body = document.getElementById('body-' + id);
+    var arrow = document.getElementById('arrow-' + id);
+    if (!body.classList.contains('open')) {
+      body.classList.add('open');
+      arrow.classList.add('open');
+    }
+    document.getElementById('warmup-' + id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  });
+</script>
+</body>
+</html>

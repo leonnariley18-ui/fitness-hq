@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fitness & Nutrition Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; padding: 48px 32px; max-width: 820px; margin: 0 auto; }
+
+  .header { border-bottom: 2px solid #b8903a; padding-bottom: 24px; margin-bottom: 36px; }
+  .header h1 { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #1a2a5e; margin-bottom: 4px; }
+  .header .sub { font-size: 12px; color: #7a6a5a; font-weight: 300; letter-spacing: 0.04em; }
+  .header .meta { font-size: 11px; color: #b8903a; margin-top: 6px; font-weight: 500; }
+
+  .section { margin-bottom: 36px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #1a2a5e; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: #d8cfc4; }
+
+  p { font-size: 13px; line-height: 1.8; color: #3a2a1a; margin-bottom: 10px; }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #1a2a5e; border-radius: 10px; padding: 16px; text-align: center; }
+  .stat-n { font-family: 'Lora', serif; font-size: 24px; font-weight: 600; color: #f5ede0; margin-bottom: 4px; }
+  .stat-label { font-size: 10px; color: #8898c8; font-weight: 300; }
+
+  .context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .context-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 14px 16px; }
+  .context-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #9a8070; margin-bottom: 6px; }
+  .context-list { list-style: none; padding: 0; }
+  .context-list li { font-size: 12px; color: #3a2a1a; line-height: 1.8; display: flex; gap: 8px; font-weight: 300; }
+  .context-list li::before { content: "·"; color: #b8903a; font-weight: 600; }
+
+  .method-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .method-card.primary { border-left: 4px solid #1a2a5e; }
+  .method-card.secondary { border-left: 4px solid #d8cfc4; opacity: 0.85; }
+  .method-title { font-size: 13px; font-weight: 600; color: #1a2a5e; margin-bottom: 6px; }
+  .method-desc { font-size: 12px; color: #5a4a3a; line-height: 1.6; font-weight: 300; }
+  .primary-badge { display: inline-block; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; background: #e8eaf5; color: #1a2a5e; padding: 2px 8px; border-radius: 99px; margin-bottom: 8px; }
+  .retired-badge { display: inline-block; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; background: #f0ebe3; color: #9a8070; padding: 2px 8px; border-radius: 99px; margin-bottom: 8px; }
+
+  .recipe-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .recipe-name { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: #2a2a2a; margin-bottom: 4px; }
+  .recipe-role { font-size: 11px; color: #9a8070; margin-bottom: 10px; font-weight: 300; }
+  .recipe-status { font-size: 11px; font-weight: 500; color: #b8903a; margin-bottom: 8px; }
+  .recipe-desc { font-size: 12px; color: #5a4a3a; line-height: 1.6; font-weight: 300; }
+
+  .loading-order { background: #1a2a5e; border-radius: 10px; padding: 16px 20px; }
+  .loading-order h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8898c8; margin-bottom: 10px; }
+  .loading-steps { list-style: none; counter-reset: steps; padding: 0; }
+  .loading-steps li { counter-increment: steps; font-size: 12px; color: #c8d8e8; padding: 5px 0; border-bottom: 1px solid #2a3a6e; display: flex; gap: 12px; line-height: 1.5; font-weight: 300; }
+  .loading-steps li:last-child { border-bottom: none; }
+  .loading-steps li::before { content: counter(steps); font-size: 10px; font-weight: 600; color: #b8903a; min-width: 16px; margin-top: 2px; }
+
+  .ingredients-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .ing-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 8px; padding: 12px; }
+  .ing-cat { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #9a8070; margin-bottom: 6px; }
+  .ing-list { font-size: 11px; color: #3a2a1a; line-height: 1.8; font-weight: 300; }
+
+  .version-entry { padding: 10px 0; border-bottom: 1px solid #e8ddd0; }
+  .version-entry:last-child { border-bottom: none; }
+  .version-tag { font-size: 11px; font-weight: 600; color: #b8903a; margin-bottom: 6px; }
+  .version-list { list-style: none; padding-left: 12px; }
+  .version-list li { font-size: 12px; color: #5a4a3a; line-height: 1.8; font-weight: 300; }
+  .version-list li::before { content: "–  "; color: #b8903a; }
+
+  /* NAV */
+  .site-nav { background: #1c3d2e; padding: 12px 0; margin: -48px -32px 48px; position: sticky; top: 0; z-index: 100; }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
+  .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
+  .site-nav ul li a.active { background: #b8903a; color: #fff; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <ul>
+    <li><a href="workout-reference-guide.html">Home</a></li>
+    <li><a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a></li>
+    <li><a href="calisthenics-master-plan-v2.0.html">Calisthenics</a></li>
+    <li><a href="fitness-nutrition-systems-v3.1.html" class="active">Nutrition</a></li>
+    <li><a href="warm-up-routines-v1.2.html">Warm-Ups</a></li>
+    <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
+    <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
+  </ul>
+</nav>
+
+<div class="header">
+  <h1>Fitness & Nutrition Systems</h1>
+  <div class="sub">Nutrition Strategy & Flexibility Training</div>
+  <div class="meta">v3.1 &nbsp;·&nbsp; April 10, 2026</div>
+</div>
+
+<!-- PROTEIN TARGETS -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Protein & Calorie Targets</div><div class="section-line"></div></div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-n">90-115g</div>
+      <div class="stat-label">Daily protein goal</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">2,100-2,500</div>
+      <div class="stat-label">Bulking calories/day</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">3-4 scoops</div>
+      <div class="stat-label">Protein powder daily</div>
+    </div>
+  </div>
+  <div class="context-grid">
+    <div class="context-card">
+      <div class="context-label">Your context</div>
+      <ul class="context-list">
+        <li>Age 30, ~115 lbs, very fast metabolism</li>
+        <li>Goal: bulk up, get stronger, build muscle mass</li>
+        <li>Target areas: hips, thighs, glutes, overall strength</li>
+      </ul>
+    </div>
+    <div class="context-card">
+      <div class="context-label">What doesn't work</div>
+      <ul class="context-list">
+        <li>Plain milk, peanut butter, cottage cheese</li>
+        <li>Apple juice (protein didn't break down)</li>
+        <li>Hot chocolate (unreliable, max 1-2 scoops)</li>
+        <li>Protein snow system (too inconsistent)</li>
+      </ul>
+    </div>
+  </div>
+  <p style="font-size:12px; color:#7a6a5a;">Protein is needed every day — not just workout days. Muscles repair and grow during rest days too.</p>
+</div>
+
+<!-- PROTEIN DELIVERY -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Protein Delivery System</div><div class="section-line"></div></div>
+
+  <div class="method-card primary">
+    <div class="primary-badge">Primary Method</div>
+    <div class="method-title">Blended Shakes (Nutribullet)</div>
+    <div class="method-desc">Most reliable and enjoyable method. Naked Mass unflavored blends well with frozen fruit, oat milk, yogurt. Pre-batch into 4oz glass jars on Sundays for the week. 4-day consumption window.</div>
+  </div>
+
+  <div class="method-card secondary">
+    <div class="method-title">Secondary: Greek Yogurt</div>
+    <div class="method-desc">Stir in 1-1.5 scoops. Handles mixing well. Use when blending isn't practical.</div>
+  </div>
+
+  <div class="method-card secondary">
+    <div class="method-title">Secondary: Strawberry Lemonade</div>
+    <div class="method-desc">Shake well. Works in a pinch but not a go-to option.</div>
+  </div>
+
+  <div class="loading-order">
+    <h4>Nutribullet Loading Order</h4>
+    <ol class="loading-steps">
+      <li>Banana (first, at the bottom)</li>
+      <li>Dry / flavor ingredients (cookie butter, spices)</li>
+      <li>Protein powder</li>
+      <li>Liquid last — so liquid hits the blade first</li>
+    </ol>
+  </div>
+</div>
+
+<!-- SMOOTHIE LAB -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Smoothie Lab</div><div class="section-line"></div></div>
+  <p style="font-size:12px; color:#7a6a5a; margin-bottom:16px;">One variable changed per batch. Sweet over tart. Silky/creamy textures. Pre-batch Sundays. Workout days = 2 bottles, rest days = 1.</p>
+
+  <div class="recipe-card">
+    <div class="recipe-name">Biscoff Baby</div>
+    <div class="recipe-role">Primary Weekly Supplement Shot — 6 × 4oz glass jars every Sunday</div>
+    <div class="recipe-status">⭐ 4 stars — recipe locked in</div>
+    <div class="recipe-desc">Base formula: oat milk, pomegranate juice, frozen banana, Speculoos cookie butter, vanilla, cinnamon, salt, Naked Mass protein powder. Batch 2 increased protein powder and cookie butter — confirmed winner.</div>
+  </div>
+
+  <div class="recipe-card">
+    <div class="recipe-name">Peach Fusion</div>
+    <div class="recipe-role">Standalone Smoothie — enjoyment-focused, no protein powder</div>
+    <div class="recipe-status">⭐ 4 stars — v2 pending</div>
+    <div class="recipe-desc">v2 plan: add 1 tsp honey for sweetness (one-variable iteration). Status: pending test.</div>
+  </div>
+
+  <div class="recipe-card">
+    <div class="recipe-name">Mango Strawberry</div>
+    <div class="recipe-role">Work in progress</div>
+    <div class="recipe-status">Batch 1 discarded — v2 needed</div>
+    <div class="recipe-desc">Issues: overflow, honey overpowering, liquid too thin. Back to the drawing board.</div>
+  </div>
+</div>
+
+<!-- INGREDIENTS ON HAND -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Ingredients On Hand</div><div class="section-line"></div></div>
+  <div class="ingredients-grid">
+    <div class="ing-card">
+      <div class="ing-cat">Frozen Fruit</div>
+      <div class="ing-list">Peaches, strawberries, mango, raspberries, blueberries, bananas</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-cat">Yogurt</div>
+      <div class="ing-list">Black raspberry, blueberry, strawberry vanilla, mango (Greek)</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-cat">Liquids</div>
+      <div class="ing-list">Oat milk, pomegranate juice (frozen), pineapple juice, apple juice</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-cat">Flavor</div>
+      <div class="ing-list">Speculoos cookie butter, vanilla extract, cinnamon</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-cat">Protein</div>
+      <div class="ing-list">Naked Mass (unflavored, 3 ingredients)</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-cat">Storage</div>
+      <div class="ing-list">4oz glass Ball jars for pre-batching</div>
+    </div>
+  </div>
+</div>
+
+<!-- VERSION HISTORY -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Version History</div><div class="section-line"></div></div>
+  <div class="version-entry">
+    <div class="version-tag">v3.1 — April 10, 2026</div>
+    <ul class="version-list">
+      <li>Calisthenics-first framing (push-ups + pistol squats), yoga is need-based</li>
+      <li>Weekly rhythm reflects push-up/pistol squat alternation</li>
+      <li>Note added: batch prep needs flexible fallback for hectic life periods</li>
+    </ul>
+  </div>
+  <div class="version-entry">
+    <div class="version-tag">v3.0 — March 14, 2026</div>
+    <ul class="version-list">
+      <li>Blended shakes confirmed as primary method, Protein Snow System retired</li>
+      <li>Smoothie Lab added: Biscoff Baby + Peach Fusion</li>
+      <li>Yoga Strap Flexibility Training unlocked and added</li>
+    </ul>
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+<script>
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
+</script>
+</body>
+</html>

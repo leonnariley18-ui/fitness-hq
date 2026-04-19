@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yoga App Ecosystem Master Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; padding: 48px 32px; max-width: 820px; margin: 0 auto; }
+
+  .header { border-bottom: 2px solid #9a8060; padding-bottom: 24px; margin-bottom: 36px; opacity: 0.8; }
+  .header h1 { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: #3d2a1c; margin-bottom: 4px; }
+  .header .sub { font-size: 12px; color: #7a6a5a; font-weight: 300; letter-spacing: 0.04em; }
+  .header .meta { font-size: 11px; color: #9a8060; margin-top: 6px; font-weight: 500; }
+
+  .shelved-banner { background: #3d2a1c; border-radius: 12px; padding: 24px 28px; margin-bottom: 36px; }
+  .shelved-banner .badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; background: #9a8060; color: #faf6f0; padding: 3px 10px; border-radius: 99px; margin-bottom: 12px; }
+  .shelved-banner h2 { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; color: #f5ede0; margin-bottom: 10px; }
+  .shelved-banner p { font-size: 12px; color: #c0a890; line-height: 1.7; font-weight: 300; margin-bottom: 6px; }
+  .shelved-banner p:last-child { margin-bottom: 0; }
+  .shelved-banner .ref { font-size: 11px; color: #9a8060; margin-top: 10px; font-style: italic; }
+
+  .section { margin-bottom: 32px; opacity: 0.75; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #3d2a1c; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: #d8cfc4; }
+
+  p { font-size: 13px; line-height: 1.8; color: #5a4a3a; margin-bottom: 10px; }
+
+  .app-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .app-card { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 18px; }
+  .app-card.active { border-left: 4px solid #9a8060; }
+  .app-card.shelved { border-left: 4px solid #d8cfc4; opacity: 0.7; }
+  .app-num { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #9a8060; margin-bottom: 4px; }
+  .app-name { font-size: 14px; font-weight: 600; color: #3d2a1c; margin-bottom: 6px; }
+  .app-status { display: inline-block; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 99px; margin-bottom: 8px; }
+  .status-active { background: #e8f0ea; color: #1c6b2e; }
+  .status-shelved { background: #f0ebe3; color: #9a8070; }
+  .app-desc { font-size: 12px; color: #5a4a3a; line-height: 1.6; font-weight: 300; }
+  .app-upgrade { font-size: 11px; color: #9a8060; margin-top: 8px; font-style: italic; }
+
+  .version-entry { padding: 10px 0; border-bottom: 1px solid #e8ddd0; }
+  .version-entry:last-child { border-bottom: none; }
+  .version-tag { font-size: 11px; font-weight: 600; color: #9a8060; margin-bottom: 6px; }
+  .version-list { list-style: none; padding-left: 12px; }
+  .version-list li { font-size: 12px; color: #5a4a3a; line-height: 1.8; font-weight: 300; }
+  .version-list li::before { content: "–  "; color: #9a8060; }
+
+  /* NAV */
+  .site-nav { background: #1c3d2e; padding: 12px 0; margin: -48px -32px 48px; position: sticky; top: 0; z-index: 100; }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
+  .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
+  .site-nav ul li a.active { background: #b8903a; color: #fff; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <ul>
+    <li><a href="workout-reference-guide.html">Home</a></li>
+    <li><a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a></li>
+    <li><a href="calisthenics-master-plan-v2.0.html">Calisthenics</a></li>
+    <li><a href="fitness-nutrition-systems-v3.1.html">Nutrition</a></li>
+    <li><a href="warm-up-routines-v1.2.html">Warm-Ups</a></li>
+    <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
+    <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-app-ecosystem-master-plan-v5.1.html" class="active">Yoga Ecosystem</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In</a></li>
+  </ul>
+</nav>
+
+<div class="header">
+  <h1>Yoga App Ecosystem Master Plan</h1>
+  <div class="sub">Master Plan & Specifications</div>
+  <div class="meta">v5.1 &nbsp;·&nbsp; SHELVED April 10, 2026 &nbsp;·&nbsp; Preserved for reference</div>
+</div>
+
+<!-- SHELVED BANNER -->
+<div class="shelved-banner">
+  <div class="badge">Shelved — April 2026</div>
+  <h2>This plan has been shelved.</h2>
+  <p>As of the April 2026 ecosystem redesign, yoga has shifted to a need-based practice rather than the center of the fitness ecosystem. Apps #2/3 and #4 will not be built at this time — there isn't enough consistent yoga data to make analytics-based apps useful.</p>
+  <p>App #1 remains fully active and in use. The yoga coaching need is now handled by CC (Yoga Coaching Claude), a dedicated Claude project. App #1's free-text field addition covers what App #4 would have done.</p>
+  <p>This document is preserved in full in case yoga becomes a larger focus again in the future.</p>
+  <div class="ref">→ See Fitness Ecosystem Master Plan v1.1 for the current north star document.</div>
+</div>
+
+<!-- APP STATUS -->
+<div class="section">
+  <div class="section-header"><div class="section-title">App Status</div><div class="section-line"></div></div>
+  <div class="app-grid">
+    <div class="app-card active">
+      <div class="app-num">App #1</div>
+      <div class="app-name">Yoga Flow Generator</div>
+      <div class="app-status status-active">✅ Active</div>
+      <div class="app-desc">AI-powered yoga flow generation. Two modes: Flow Practice (generate + free-text customization before generation and on regeneration) and Targeted Practice (load CC-generated JSON with pose education, voice guidance, alignment cues, hold timers).</div>
+      <div class="app-upgrade">Free-text fields added April 2026 · Targeted Practice mode added April 2026</div>
+    </div>
+    <div class="app-card shelved">
+      <div class="app-num">Apps #2 / #3</div>
+      <div class="app-name">Yoga Pattern Analyzer & Targeted Practice Builder</div>
+      <div class="app-status status-shelved">🚫 Shelved</div>
+      <div class="app-desc">Originally planned to analyze Google Calendar ICS data, identify struggle pose patterns, and generate targeted drill sessions. Replaced by CC (Yoga Coaching Claude project) which does this conversationally and more flexibly.</div>
+    </div>
+    <div class="app-card shelved">
+      <div class="app-num">App #4</div>
+      <div class="app-name">Flow Editor</div>
+      <div class="app-status status-shelved">🚫 Shelved</div>
+      <div class="app-desc">Originally planned to allow editing of App #1 flows (swap poses, adjust duration, remove things). Replaced by App #1's new free-text field on regeneration, which covers this conversationally.</div>
+    </div>
+  </div>
+</div>
+
+<!-- VERSION HISTORY -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Version History</div><div class="section-line"></div></div>
+  <div class="version-entry">
+    <div class="version-tag">v5.1 — April 10, 2026 (SHELVED)</div>
+    <ul class="version-list">
+      <li>Apps #2/3 and #4 shelved indefinitely</li>
+      <li>App #1 upgraded: free-text fields, Targeted Practice mode</li>
+      <li>Yoga coaching moving to CC (dedicated Claude project)</li>
+      <li>Document preserved for future reference</li>
+    </ul>
+  </div>
+  <div class="version-entry">
+    <div class="version-tag">v5 — March 14, 2026</div>
+    <ul class="version-list">
+      <li>Full ecosystem specification with App #2/3 targeted practice format</li>
+      <li>Calisthenics integration documented</li>
+    </ul>
+  </div>
+  <div class="version-entry">
+    <div class="version-tag">v1.0 — February 7, 2026</div>
+    <ul class="version-list">
+      <li>Initial comprehensive specification</li>
+      <li>Complete ecosystem design with all four apps</li>
+    </ul>
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+<script>
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
+</script>
+</body>
+</html>
