@@ -108,10 +108,6 @@
   .coll-arrow.open { transform: rotate(180deg); }
   .coll-body { display: none; border: 0.5px solid #d8cfc4; border-top: none; border-radius: 0 0 10px 10px; background: #fff; padding: 16px 18px; margin-bottom: 12px; }
   .coll-body.open { display: block; }
-
-  /* HAMBURGER NAV — MOBILE */
-  @media (max-width: 768px) {
-    .site-nav ul { display: none; }
     .hamburger { display: flex; }
   }
   .hamburger {
@@ -192,6 +188,138 @@
     body { padding-bottom: env(safe-area-inset-bottom, 24px); }
     * { -webkit-tap-highlight-color: transparent; }
   }
+
+  /* MOBILE NAV */
+  @media (max-width: 768px) {
+    .site-nav { display: none; }
+    .mobile-header { display: flex; }
+  }
+
+  .mobile-header {
+    display: none;
+    background: #1c3d2e;
+    padding: 14px 20px;
+    margin: 0 -32px 32px;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .mobile-header-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f5ede0;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-header-title .menu-hint {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    opacity: 0.6;
+  }
+  .mobile-header-title .menu-hint span {
+    display: block;
+    width: 14px;
+    height: 1.5px;
+    background: #b8903a;
+    border-radius: 2px;
+  }
+  .mobile-page-name {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b8903a;
+  }
+
+  .slide-menu {
+    position: fixed;
+    top: 0; right: -280px;
+    width: 260px;
+    height: 100vh;
+    background: #1c3d2e;
+    z-index: 150;
+    transition: right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 28px 24px 40px;
+    overflow-y: auto;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.35);
+  }
+  .slide-menu.open { right: 0; }
+
+  .slide-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .slide-menu-logo {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #f5ede0;
+  }
+  .slide-menu-logo span { color: #b8903a; }
+  .slide-menu-close {
+    background: none;
+    border: none;
+    color: #a0b8a8;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .slide-menu .menu-section-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4a7a5a;
+    margin: 20px 0 8px;
+  }
+  .slide-menu a {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #a0b8a8;
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: color 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .slide-menu a:last-child { border-bottom: none; }
+  .slide-menu a:hover, .slide-menu a:active { color: #f5ede0; }
+  .slide-menu a.active { color: #b8903a; font-weight: 500; }
+
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 140;
+    backdrop-filter: blur(2px);
+  }
+  .menu-overlay.open { display: block; }
+
+  /* MOBILE BODY FEEL */
+  @media (max-width: 768px) {
+    body { -webkit-overflow-scrolling: touch; padding: 0 20px 60px; }
+    * { -webkit-tap-highlight-color: transparent; }
+  }
+
 </style>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
   <link rel="manifest" href="manifest.json"/>
@@ -217,6 +345,38 @@
     <li><a href="check-in-app.html">Check-In</a></li>
   </ul>
 </nav>
+
+<div class="mobile-header" id="mobileHeader">
+  <div class="mobile-header-title" onclick="toggleMenu()">
+    <div class="menu-hint"><span></span><span></span><span></span></div>
+    <div class="mobile-page-name">Calisthenics</div>
+  </div>
+  <div style="font-family:'Lora',serif; font-size:13px; font-weight:600; color:#f5ede0; opacity:0.5;">FHQ</div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+<div class="slide-menu" id="slideMenu">
+  <div class="slide-menu-header">
+    <div class="slide-menu-logo">Fitness <span>HQ</span></div>
+    <button class="slide-menu-close" onclick="toggleMenu()">✕</button>
+  </div>
+  <div class="menu-section-label">Reference</div>
+  <a href="workout-reference-guide.html">Home</a>
+  <a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a>
+  <a href="calisthenics-master-plan-v2.0.html" class="active">Calisthenics</a>
+  <a href="fitness-nutrition-systems-v3.1.html">Nutrition</a>
+  <a href="warm-up-routines-v1.2.html">Warm-Ups</a>
+  <a href="yoga-strap-flexibility-routine.html">Strap Routine</a>
+  <a href="targeted-practice.html">Targeted Practice</a>
+  <a href="checkin-summary.html">Check-In</a>
+  <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
+  <div class="menu-section-label">Apps & Tools</div>
+  <a href="smoothie-lab.html">Smoothie Lab</a>
+  <a href="workout-logger.html">Logger</a>
+  <a href="check-in-app.html">Check-In App</a>
+</div>
+
 
 <div class="header">
   <h1>Calisthenics Master Plan</h1>
@@ -448,19 +608,18 @@
     btn.classList.toggle('visible', window.scrollY > 300);
   });
 </script>
+
 <script>
-  // Register service worker
+  function toggleMenu() {
+    document.getElementById('slideMenu').classList.toggle('open');
+    document.getElementById('menuOverlay').classList.toggle('open');
+  }
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/fitness-hq/service-worker.js');
     });
   }
 
-  function toggleMenu() {
-    document.getElementById('hamburger').classList.toggle('open');
-    document.getElementById('slideMenu').classList.toggle('open');
-    document.getElementById('menuOverlay').classList.toggle('open');
-  }
 </script>
 </body>
 </html>
