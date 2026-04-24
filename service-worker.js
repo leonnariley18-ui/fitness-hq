@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fitness-hq-v1';
+const CACHE_NAME = 'fitness-hq-v3';
 
 const PAGES = [
   '/fitness-hq/workout-reference-guide.html',
@@ -13,26 +13,25 @@ const PAGES = [
   '/fitness-hq/smoothie-lab.html',
   '/fitness-hq/workout-logger.html',
   '/fitness-hq/check-in-app.html',
-  '/fitness-hq/icons/icon-192.png',
-  '/fitness-hq/icons/icon-512.png',
+  '/fitness-hq/icon-192.png',
+  '/fitness-hq/icon-512.png',
 ];
 
 // Install — cache all pages
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(PAGES))
   );
-  self.skipWaiting();
 });
 
-// Activate — clear old caches
+// Activate — immediately clear ALL old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+      Promise.all(keys.map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 // Fetch — network first, fall back to cache
