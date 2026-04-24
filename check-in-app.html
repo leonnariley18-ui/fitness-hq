@@ -369,7 +369,98 @@
   .site-nav ul li a { font-size: 11px; font-weight: 500; color: #a0b8a8; text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; }
   .site-nav ul li a:hover { background: rgba(255,255,255,0.1); color: #f5ede0; }
   .site-nav ul li a.active { background: #b8903a; color: #fff; }
+
+  /* HAMBURGER NAV — MOBILE */
+  @media (max-width: 768px) {
+    .site-nav ul { display: none; }
+    .hamburger { display: flex; }
+  }
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 200;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: transparent;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #f5ede0;
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .slide-menu {
+    position: fixed;
+    top: 0; right: -280px;
+    width: 260px;
+    height: 100vh;
+    background: #1c3d2e;
+    z-index: 150;
+    transition: right 0.3s ease;
+    padding: 70px 24px 40px;
+    overflow-y: auto;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  }
+  .slide-menu.open { right: 0; }
+  .slide-menu a {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #a0b8a8;
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    letter-spacing: 0.03em;
+    transition: color 0.15s;
+  }
+  .slide-menu a:hover { color: #f5ede0; }
+  .slide-menu a.active { color: #b8903a; }
+  .slide-menu .menu-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4a7a5a;
+    margin: 20px 0 8px;
+  }
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 140;
+  }
+  .menu-overlay.open { display: block; }
+
+  /* MOBILE APP FEEL */
+  @media (max-width: 768px) {
+    body {
+      -webkit-overflow-scrolling: touch;
+      padding: 0 20px 80px;
+    }
+    body { padding-bottom: env(safe-area-inset-bottom, 24px); }
+    * { -webkit-tap-highlight-color: transparent; }
+  }
 </style>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#1c3d2e"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Fitness HQ"/>
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
 </head>
 <body>
 <nav class="site-nav">
@@ -382,10 +473,8 @@
     <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
     <li><a href="targeted-practice.html">Targeted Practice</a></li>
     <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
-    <li><a href="checkin-summary.html">Check-In</a></li>
-    <li><a href="smoothie-lab.html">Smoothie Lab</a></li>
     <li><a href="workout-logger.html">Logger</a></li>
-    <li><a href="check-in-app.html" class="active">Check-In App</a></li>
+    <li><a href="check-in-app.html" class="active">Check-In</a></li>
   </ul>
 </nav>
 
@@ -745,6 +834,20 @@ A: ${getValue('goals_q1')}`;
   document.getElementById('outputOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeOutput();
   });
+</script>
+<script>
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/fitness-hq/service-worker.js');
+    });
+  }
+
+  function toggleMenu() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('slideMenu').classList.toggle('open');
+    document.getElementById('menuOverlay').classList.toggle('open');
+  }
 </script>
 </body>
 </html>
