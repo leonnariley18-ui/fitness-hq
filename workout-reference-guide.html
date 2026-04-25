@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Fitness HQ — Home</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#1c3d2e"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Fitness HQ"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Poppins', sans-serif; background: #faf6f0; color: #2a2a2a; max-width: 820px; margin: 0 auto; padding: 0 32px 64px; }
@@ -62,7 +68,6 @@
   .dir-card.app { border-left: 4px solid #b8903a; }
   .dir-card.doc { border-left: 4px solid #1c3d2e; }
   .dir-card.shelved { border-left: 4px solid #d8cfc4; opacity: 0.7; }
-  .dir-icon { font-size: 18px; margin-bottom: 8px; }
   .dir-name { font-size: 13px; font-weight: 600; color: #1c3d2e; margin-bottom: 4px; }
   .dir-desc { font-size: 11px; color: #7a6a5a; line-height: 1.5; font-weight: 300; }
   .dir-subtitle { font-size: 11px; color: #9a8070; font-weight: 300; margin-bottom: 4px; font-style: italic; }
@@ -71,179 +76,60 @@
   .tag-living { background: #ede8f5; color: #5a3a8a; }
   .tag-doc { background: #e8f0ea; color: #1c6b2e; }
   .tag-shelved { background: #f0ebe3; color: #9a8070; }
-    .hamburger { display: flex; }
-  }
-  .hamburger {
+
+  /* BACK TO TOP */
+  .back-to-top { position: fixed; bottom: 28px; right: 28px; background: #1c3d2e; color: #f5ede0; border: none; border-radius: 99px; padding: 10px 18px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; opacity: 0; transition: opacity 0.3s, transform 0.15s; letter-spacing: 0.06em; text-transform: uppercase; z-index: 99; }
+  .back-to-top.visible { opacity: 1; }
+  .back-to-top:hover { transform: translateY(-2px); }
+
+  /* HAMBURGER NAV — MOBILE ONLY */
+  .hq-hamburger {
     display: none;
     position: fixed;
-    top: 14px;
-    right: 18px;
-    z-index: 200;
+    top: 16px;
+    right: 16px;
+    z-index: 999;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
-    cursor: pointer;
-    padding: 6px;
-    background: transparent;
+    width: 40px;
+    height: 40px;
+    background: #1c3d2e;
     border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  .hamburger span {
+  .hq-hamburger span {
     display: block;
-    width: 22px;
+    width: 20px;
     height: 2px;
     background: #f5ede0;
     border-radius: 2px;
-    transition: all 0.25s;
   }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .slide-menu {
-    position: fixed;
-    top: 0; right: -280px;
-    width: 260px;
-    height: 100vh;
-    background: #1c3d2e;
-    z-index: 150;
-    transition: right 0.3s ease;
-    padding: 70px 24px 40px;
-    overflow-y: auto;
-    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
-  }
-  .slide-menu.open { right: 0; }
-  .slide-menu a {
-    display: block;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #a0b8a8;
-    text-decoration: none;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    letter-spacing: 0.03em;
-    transition: color 0.15s;
-  }
-  .slide-menu a:hover { color: #f5ede0; }
-  .slide-menu a.active { color: #b8903a; }
-  .slide-menu .menu-label {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #4a7a5a;
-    margin: 20px 0 8px;
-  }
-  .menu-overlay {
+  .hq-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 140;
+    background: rgba(0,0,0,0.5);
+    z-index: 997;
   }
-  .menu-overlay.open { display: block; }
-
-  /* MOBILE APP FEEL */
-  @media (max-width: 768px) {
-    body {
-      -webkit-overflow-scrolling: touch;
-      padding: 0 20px 80px;
-    }
-    body { padding-bottom: env(safe-area-inset-bottom, 24px); }
-    * { -webkit-tap-highlight-color: transparent; }
-  }
-
-  /* MOBILE NAV */
-  @media (max-width: 768px) {
-    .site-nav { display: none; }
-    .mobile-header { display: flex; }
-  }
-
-  .mobile-header {
-    display: none;
-    background: #1c3d2e;
-    padding: 14px 20px;
-    margin: 0 -32px 32px;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .mobile-header-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #f5ede0;
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .mobile-header-title .menu-hint {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    opacity: 0.6;
-  }
-  .mobile-header-title .menu-hint span {
-    display: block;
-    width: 14px;
-    height: 1.5px;
-    background: #b8903a;
-    border-radius: 2px;
-  }
-  .mobile-page-name {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #b8903a;
-  }
-
-  .slide-menu {
+  .hq-overlay.open { display: block; }
+  .hq-drawer {
     position: fixed;
-    top: 0; right: -280px;
+    top: 0;
+    right: -280px;
     width: 260px;
-    height: 100vh;
+    height: 100%;
     background: #1c3d2e;
-    z-index: 150;
-    transition: right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 28px 24px 40px;
+    z-index: 998;
+    padding: 60px 24px 40px;
+    transition: right 0.25s ease;
     overflow-y: auto;
-    box-shadow: -4px 0 24px rgba(0,0,0,0.35);
   }
-  .slide-menu.open { right: 0; }
-
-  .slide-menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .slide-menu-logo {
-    font-family: 'Lora', serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #f5ede0;
-  }
-  .slide-menu-logo span { color: #b8903a; }
-  .slide-menu-close {
-    background: none;
-    border: none;
-    color: #a0b8a8;
-    font-size: 22px;
-    cursor: pointer;
-    padding: 4px;
-    line-height: 1;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .slide-menu .menu-section-label {
+  .hq-drawer.open { right: 0; }
+  .hq-drawer .d-label {
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.14em;
@@ -251,46 +137,27 @@
     color: #4a7a5a;
     margin: 20px 0 8px;
   }
-  .slide-menu a {
+  .hq-drawer a {
     display: block;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #a0b8a8;
     text-decoration: none;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: color 0.15s;
-    -webkit-tap-highlight-color: transparent;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .slide-menu a:last-child { border-bottom: none; }
-  .slide-menu a:hover, .slide-menu a:active { color: #f5ede0; }
-  .slide-menu a.active { color: #b8903a; font-weight: 500; }
+  .hq-drawer a.active { color: #b8903a; font-weight: 600; }
+  .hq-drawer a:last-child { border-bottom: none; }
 
-  .menu-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 140;
-    backdrop-filter: blur(2px);
-  }
-  .menu-overlay.open { display: block; }
-
-  /* MOBILE BODY FEEL */
   @media (max-width: 768px) {
-    body { -webkit-overflow-scrolling: touch; padding: 0 20px 60px; }
+    .site-nav { display: none !important; }
+    .hq-hamburger { display: flex !important; }
+    body { padding: 70px 20px 60px; }
     * { -webkit-tap-highlight-color: transparent; }
+    -webkit-overflow-scrolling: touch;
   }
-
 </style>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
-  <link rel="manifest" href="manifest.json"/>
-  <meta name="theme-color" content="#1c3d2e"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="Fitness HQ"/>
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
 </head>
 <body>
 
@@ -304,28 +171,19 @@
     <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
     <li><a href="targeted-practice.html">Targeted Practice</a></li>
     <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
-    <li><a href="workout-logger.html">Logger</a></li>
     <li><a href="checkin-summary.html">Check-In</a></li>
     <li><a href="smoothie-lab.html">Smoothie Lab</a></li>
+    <li><a href="workout-logger.html">Logger</a></li>
+    <li><a href="check-in-app.html">Check-In App</a></li>
   </ul>
 </nav>
 
-<div class="mobile-header" id="mobileHeader">
-  <div class="mobile-header-title" onclick="toggleMenu()">
-    <div class="menu-hint"><span></span><span></span><span></span></div>
-    <div class="mobile-page-name">Home</div>
-  </div>
-  <div style="font-family:'Lora',serif; font-size:13px; font-weight:600; color:#f5ede0; opacity:0.5;">FHQ</div>
-</div>
-
-<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
-
-<div class="slide-menu" id="slideMenu">
-  <div class="slide-menu-header">
-    <div class="slide-menu-logo">Fitness <span>HQ</span></div>
-    <button class="slide-menu-close" onclick="toggleMenu()">✕</button>
-  </div>
-  <div class="menu-section-label">Reference</div>
+<button class="hq-hamburger" id="hqBtn" onclick="hqToggle()">
+  <span></span><span></span><span></span>
+</button>
+<div class="hq-overlay" id="hqOverlay" onclick="hqToggle()"></div>
+<div class="hq-drawer" id="hqDrawer">
+  <div class="d-label">Reference</div>
   <a href="workout-reference-guide.html" class="active">Home</a>
   <a href="fitness-ecosystem-master-plan-v1.2.html">Ecosystem</a>
   <a href="calisthenics-master-plan-v2.0.html">Calisthenics</a>
@@ -335,12 +193,11 @@
   <a href="targeted-practice.html">Targeted Practice</a>
   <a href="checkin-summary.html">Check-In</a>
   <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
-  <div class="menu-section-label">Apps & Tools</div>
+  <div class="d-label">Apps</div>
   <a href="smoothie-lab.html">Smoothie Lab</a>
   <a href="workout-logger.html">Logger</a>
   <a href="check-in-app.html">Check-In App</a>
 </div>
-
 
 <div class="header">
   <h1>Fitness HQ 🦂</h1>
@@ -461,7 +318,8 @@
     </a>
     <a href="fitness-nutrition-systems-v3.1.html" class="dir-card doc">
       <div class="dir-tag tag-doc">Reference</div>
-      <div class="dir-name">Fitness & Nutrition Systems</div>
+      <div class="dir-name">Nutrition</div>
+      <div class="dir-subtitle">Fitness & Nutrition Systems v3.1</div>
       <div class="dir-desc">Protein strategy, Smoothie Lab, Biscoff Baby recipe and more.</div>
     </a>
     <a href="warm-up-routines-v1.2.html" class="dir-card doc">
@@ -479,18 +337,7 @@
     <a href="targeted-practice.html" class="dir-card doc">
       <div class="dir-tag tag-doc">Reference</div>
       <div class="dir-name">Targeted Practice</div>
-      <div class="dir-desc">V1, V2, and V3 targeted practices — poses, focus areas, and best use cases.</div>
-    </a>
-    <a href="workout-logger.html" class="dir-card app">
-      <div class="dir-tag tag-app">App</div>
-      <div class="dir-name">Logger</div>
-      <div class="dir-subtitle">Workout Logger</div>
-      <div class="dir-desc">Log your session — anchors, warm-up, duration, vibe, notes.</div>
-    </a>
-    <a href="check-in-app.html" class="dir-card app">
-      <div class="dir-tag tag-app">App</div>
-      <div class="dir-name">Check-In App</div>
-      <div class="dir-desc">Bi-weekly check-in form — generates your Claude chat prompt.</div>
+      <div class="dir-desc">V1, V2, and V3 targeted practices — poses, focus areas, and downloadable JSONs.</div>
     </a>
     <a href="checkin-summary.html" class="dir-card doc">
       <div class="dir-tag tag-living">Living Doc</div>
@@ -503,27 +350,38 @@
       <div class="dir-name">Smoothie Lab</div>
       <div class="dir-desc">Interactive recipe tracker — ingredients, steps, batch log, ratings.</div>
     </a>
+    <a href="workout-logger.html" class="dir-card app">
+      <div class="dir-tag tag-app">App</div>
+      <div class="dir-name">Logger</div>
+      <div class="dir-subtitle">Workout Logger</div>
+      <div class="dir-desc">Log your session — anchors, warm-up, duration, vibe, notes.</div>
+    </a>
+    <a href="check-in-app.html" class="dir-card app">
+      <div class="dir-tag tag-app">App</div>
+      <div class="dir-name">Check-In App</div>
+      <div class="dir-desc">Bi-weekly check-in form — generates your Claude chat prompt.</div>
+    </a>
     <a href="yoga-app-ecosystem-master-plan-v5.1.html" class="dir-card shelved">
       <div class="dir-tag tag-shelved">Shelved</div>
       <div class="dir-name">Yoga Ecosystem</div>
       <div class="dir-subtitle">Yoga App Ecosystem Master Plan v5.1</div>
-      <div class="dir-desc">Apps #2/3 and #4 — preserved for future reference.</div>
+      <div class="dir-desc">Shelved app plans — preserved for reference.</div>
     </a>
   </div>
 </div>
 
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
 
 <script>
-  function toggleMenu() {
-    document.getElementById('slideMenu').classList.toggle('open');
-    document.getElementById('menuOverlay').classList.toggle('open');
+  function hqToggle() {
+    document.getElementById('hqDrawer').classList.toggle('open');
+    document.getElementById('hqOverlay').classList.toggle('open');
   }
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() { btn.classList.toggle('visible', window.scrollY > 300); });
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/fitness-hq/service-worker.js');
-    });
+    navigator.serviceWorker.register('/fitness-hq/service-worker.js');
   }
-
 </script>
 </body>
 </html>
