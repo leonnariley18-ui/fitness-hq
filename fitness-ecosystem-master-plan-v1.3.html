@@ -125,49 +125,14 @@
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  .slide-menu {
-    position: fixed;
-    top: 0; right: -280px;
-    width: 260px;
-    height: 100vh;
-    background: #1c3d2e;
-    z-index: 150;
-    transition: right 0.3s ease;
-    padding: 70px 24px 40px;
-    overflow-y: auto;
-    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
-  }
-  .slide-menu.open { right: 0; }
-  .slide-menu a {
-    display: block;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #a0b8a8;
-    text-decoration: none;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    letter-spacing: 0.03em;
-    transition: color 0.15s;
-  }
-  .slide-menu a:hover { color: #f5ede0; }
-  .slide-menu a.active { color: #b8903a; }
-  .slide-menu .menu-label {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #4a7a5a;
-    margin: 20px 0 8px;
-  }
-  .menu-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 140;
-  }
-  .menu-overlay.open { display: block; }
+  
+  
+  
+  
+  
+  
+  
+  
 
   /* MOBILE APP FEEL */
   @media (max-width: 768px) {
@@ -179,98 +144,85 @@
     * { -webkit-tap-highlight-color: transparent; }
   }
 
-  /* MOBILE NAV */
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  
   @media (max-width: 768px) {
-    .site-nav { display: none; }
-    .mobile-header { display: flex; }
+    body { -webkit-overflow-scrolling: touch; padding: 0 20px 60px; }
+    * { -webkit-tap-highlight-color: transparent; }
   }
 
-  .mobile-header {
+  /* HAMBURGER NAV — MOBILE ONLY */
+  .hq-hamburger {
     display: none;
-    background: #1c3d2e;
-    padding: 14px 20px;
-    margin: 0 -32px 32px;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .mobile-header-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #f5ede0;
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .mobile-header-title .menu-hint {
-    display: flex;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 999;
     flex-direction: column;
-    gap: 3px;
-    opacity: 0.6;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: #1c3d2e;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  .mobile-header-title .menu-hint span {
+  .hq-hamburger span {
     display: block;
-    width: 14px;
-    height: 1.5px;
-    background: #b8903a;
+    width: 20px;
+    height: 2px;
+    background: #f5ede0;
     border-radius: 2px;
   }
-  .mobile-page-name {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #b8903a;
-  }
-
-  .slide-menu {
+  .hq-overlay {
+    display: none;
     position: fixed;
-    top: 0; right: -280px;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 997;
+  }
+  .hq-overlay.open { display: block; }
+  .hq-drawer {
+    position: fixed;
+    top: 0;
+    right: -280px;
     width: 260px;
-    height: 100vh;
+    height: 100%;
     background: #1c3d2e;
-    z-index: 150;
-    transition: right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 28px 24px 40px;
+    z-index: 998;
+    padding: 60px 24px 40px;
+    transition: right 0.25s ease;
     overflow-y: auto;
-    box-shadow: -4px 0 24px rgba(0,0,0,0.35);
   }
-  .slide-menu.open { right: 0; }
-
-  .slide-menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .slide-menu-logo {
-    font-family: 'Lora', serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #f5ede0;
-  }
-  .slide-menu-logo span { color: #b8903a; }
-  .slide-menu-close {
-    background: none;
-    border: none;
-    color: #a0b8a8;
-    font-size: 22px;
-    cursor: pointer;
-    padding: 4px;
-    line-height: 1;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .slide-menu .menu-section-label {
+  .hq-drawer.open { right: 0; }
+  .hq-drawer .d-label {
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.14em;
@@ -278,38 +230,25 @@
     color: #4a7a5a;
     margin: 20px 0 8px;
   }
-  .slide-menu a {
+  .hq-drawer a {
     display: block;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #a0b8a8;
     text-decoration: none;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: color 0.15s;
-    -webkit-tap-highlight-color: transparent;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .slide-menu a:last-child { border-bottom: none; }
-  .slide-menu a:hover, .slide-menu a:active { color: #f5ede0; }
-  .slide-menu a.active { color: #b8903a; font-weight: 500; }
+  .hq-drawer a.active { color: #b8903a; font-weight: 600; }
+  .hq-drawer a:last-child { border-bottom: none; }
 
-  .menu-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 140;
-    backdrop-filter: blur(2px);
-  }
-  .menu-overlay.open { display: block; }
-
-  /* MOBILE BODY FEEL */
   @media (max-width: 768px) {
-    body { -webkit-overflow-scrolling: touch; padding: 0 20px 60px; }
+    .site-nav { display: none !important; }
+    .hq-hamburger { display: flex !important; }
+    body { padding-top: 70px !important; }
     * { -webkit-tap-highlight-color: transparent; }
   }
-
 </style>
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#1c3d2e"/>
@@ -337,22 +276,12 @@
   </ul>
 </nav>
 
-<div class="mobile-header" id="mobileHeader">
-  <div class="mobile-header-title" onclick="toggleMenu()">
-    <div class="menu-hint"><span></span><span></span><span></span></div>
-    <div class="mobile-page-name">Ecosystem</div>
-  </div>
-  <div style="font-family:'Lora',serif; font-size:13px; font-weight:600; color:#f5ede0; opacity:0.5;">FHQ</div>
-</div>
-
-<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
-
-<div class="slide-menu" id="slideMenu">
-  <div class="slide-menu-header">
-    <div class="slide-menu-logo">Fitness <span>HQ</span></div>
-    <button class="slide-menu-close" onclick="toggleMenu()">✕</button>
-  </div>
-  <div class="menu-section-label">Reference</div>
+<button class="hq-hamburger" id="hqBtn" onclick="hqToggle()">
+  <span></span><span></span><span></span>
+</button>
+<div class="hq-overlay" id="hqOverlay" onclick="hqToggle()"></div>
+<div class="hq-drawer" id="hqDrawer">
+  <div class="d-label">Reference</div>
   <a href="workout-reference-guide.html">Home</a>
   <a href="fitness-ecosystem-master-plan-v1.3.html" class="active">Ecosystem</a>
   <a href="calisthenics-master-plan-v2.1.html">Calisthenics</a>
@@ -362,12 +291,11 @@
   <a href="targeted-practice.html">Targeted Practice</a>
   <a href="checkin-summary.html">Check-In</a>
   <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
-  <div class="menu-section-label">Apps & Tools</div>
+  <div class="d-label">Apps</div>
   <a href="smoothie-lab.html">Smoothie Lab</a>
   <a href="workout-logger.html">Logger</a>
   <a href="check-in-app.html">Check-In App</a>
 </div>
-
 
 <div class="header">
   <h1>Fitness Ecosystem Master Plan</h1>
@@ -619,16 +547,17 @@
 </script>
 
 <script>
-  function toggleMenu() {
-    document.getElementById('slideMenu').classList.toggle('open');
-    document.getElementById('menuOverlay').classList.toggle('open');
-  }
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/fitness-hq/service-worker.js');
     });
   }
 
+
+  function hqToggle() {
+    document.getElementById('hqDrawer').classList.toggle('open');
+    document.getElementById('hqOverlay').classList.toggle('open');
+  }
 </script>
 </body>
 </html>

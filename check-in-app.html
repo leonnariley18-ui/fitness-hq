@@ -383,21 +383,34 @@
     * { -webkit-tap-highlight-color: transparent; }
   }
 
-  /* MOBILE NAV */
-  @media (max-width: 768px) {
-    .site-nav { display: none; }
-    
-  }
+  
 
   
   
 
-  /* MOBILE BODY FEEL */
+  
   
   }
-
 
   /* HAMBURGER — MOBILE ONLY */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .hq-drawer a:last-child { border-bottom: none; }
+  @media (max-width: 768px) {
+    .site-nav { display: none !important; }
+    
+    body { padding-top: 70px !important; }
+    * { -webkit-tap-highlight-color: transparent; }
+  }
+
+  /* HAMBURGER NAV — MOBILE ONLY */
   .hq-hamburger {
     display: none;
     position: fixed;
@@ -464,6 +477,7 @@
   }
   .hq-drawer a.active { color: #b8903a; font-weight: 600; }
   .hq-drawer a:last-child { border-bottom: none; }
+
   @media (max-width: 768px) {
     .site-nav { display: none !important; }
     .hq-hamburger { display: flex !important; }
@@ -515,45 +529,6 @@
   <a href="workout-logger.html">Logger</a>
   <a href="check-in-app.html" class="active">Check-In App</a>
 </div>
-
-
-  <a href="workout-reference-guide.html">Home</a>
-  <a href="fitness-ecosystem-master-plan-v1.3.html">Ecosystem</a>
-  <a href="calisthenics-master-plan-v2.1.html">Calisthenics</a>
-  <a href="fitness-nutrition-systems-v3.1.html">Nutrition</a>
-  <a href="warm-up-routines-v1.2.html">Warm-Ups</a>
-  <a href="yoga-strap-flexibility-routine.html">Strap Routine</a>
-  <a href="targeted-practice.html">Targeted Practice</a>
-  <a href="checkin-summary.html">Check-In</a>
-  <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
-  <div class="d-label">Apps</div>
-  <a href="smoothie-lab.html">Smoothie Lab</a>
-  <a href="workout-logger.html">Logger</a>
-  <a href="check-in-app.html" class="active">Check-In App</a>
-</div>
-
-<div class="mobile-page-name">Check-In App</div>
-  </div>
-  <div style="font-family:'Lora',serif; font-size:13px; font-weight:600; color:#f5ede0; opacity:0.5;">FHQ</div>
-</div>
-
-</div>
-  <div class="menu-section-label">Reference</div>
-  <a href="workout-reference-guide.html">Home</a>
-  <a href="fitness-ecosystem-master-plan-v1.3.html">Ecosystem</a>
-  <a href="calisthenics-master-plan-v2.1.html">Calisthenics</a>
-  <a href="fitness-nutrition-systems-v3.1.html">Nutrition</a>
-  <a href="warm-up-routines-v1.2.html">Warm-Ups</a>
-  <a href="yoga-strap-flexibility-routine.html">Strap Routine</a>
-  <a href="targeted-practice.html">Targeted Practice</a>
-  <a href="checkin-summary.html">Check-In</a>
-  <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
-  <div class="menu-section-label">Apps & Tools</div>
-  <a href="smoothie-lab.html">Smoothie Lab</a>
-  <a href="workout-logger.html">Logger</a>
-  <a href="check-in-app.html" class="active">Check-In App</a>
-</div>
-
 
 <header class="app-header">
   <div>
@@ -912,8 +887,6 @@ A: ${getValue('goals_q1')}`;
     if (e.target === this) closeOutput();
   });
 </script>
-
-
 
 <script>
   function hqToggle() {

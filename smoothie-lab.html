@@ -700,74 +700,14 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-  .site-nav {
-    background: #17121a;
-    border-bottom: 1px solid #2e2535;
-    padding: 12px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .site-nav ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-    padding: 0 16px;
-    margin: 0;
-  }
-  .site-nav ul li a {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #8a7a92;
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 99px;
-    transition: all 0.2s;
-    display: block;
-  }
-  .site-nav ul li a:hover {
-    background: rgba(200,80,106,0.12);
-    color: #c8506a;
-  }
-  .site-nav ul li a.active {
-    background: rgba(232,149,109,0.15);
-    color: #e8956d;
-    border: 1px solid rgba(232,149,109,0.3);
-  }
-}
-  
-  
+  /* SITE NAV — SMOOTHIE LAB DARK THEME */
+  .site-nav { background: var(--surface); padding: 12px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 0 16px; margin: 0; }
+  .site-nav ul li a { font-size: 11px; font-weight: 500; color: var(--text-muted); text-decoration: none; padding: 6px 12px; border-radius: 99px; transition: all 0.15s; letter-spacing: 0.04em; display: block; font-family: 'DM Sans', sans-serif; }
+  .site-nav ul li a:hover { background: var(--surface2); color: var(--text); }
+  .site-nav ul li a.active { background: var(--accent); color: #fff; }
 
-  /* MOBILE APP FEEL */
-  @media (max-width: 768px) {
-    body {
-      -webkit-overflow-scrolling: touch;
-      padding: 0 20px 80px;
-    }
-    body { padding-bottom: env(safe-area-inset-bottom, 24px); }
-    * { -webkit-tap-highlight-color: transparent; }
-  }
-
-  /* MOBILE NAV */
-  @media (max-width: 768px) {
-    .site-nav { display: none; }
-    
-  }
-
-  
-  
-
-  /* MOBILE BODY FEEL */
-  
-  }
-
-
-  /* HAMBURGER — MOBILE ONLY */
+  /* HAMBURGER NAV — MOBILE ONLY */
   .hq-hamburger {
     display: none;
     position: fixed;
@@ -779,25 +719,25 @@
     gap: 5px;
     width: 40px;
     height: 40px;
-    background: #1c3d2e;
-    border: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   }
   .hq-hamburger span {
     display: block;
     width: 20px;
     height: 2px;
-    background: #f5ede0;
+    background: var(--text);
     border-radius: 2px;
   }
   .hq-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     z-index: 997;
   }
   .hq-overlay.open { display: block; }
@@ -807,7 +747,8 @@
     right: -280px;
     width: 260px;
     height: 100%;
-    background: #1c3d2e;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
     z-index: 998;
     padding: 60px 24px 40px;
     transition: right 0.25s ease;
@@ -819,37 +760,37 @@
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #4a7a5a;
+    color: var(--text-dim);
     margin: 20px 0 8px;
   }
   .hq-drawer a {
     display: block;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    color: #a0b8a8;
+    color: var(--text-muted);
     text-decoration: none;
     padding: 11px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid var(--border);
   }
-  .hq-drawer a.active { color: #b8903a; font-weight: 600; }
+  .hq-drawer a.active { color: var(--accent); font-weight: 600; }
   .hq-drawer a:last-child { border-bottom: none; }
+
   @media (max-width: 768px) {
     .site-nav { display: none !important; }
     .hq-hamburger { display: flex !important; }
-    body { padding-top: 70px !important; }
     * { -webkit-tap-highlight-color: transparent; }
   }
 </style>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦂</text></svg>"/>
   <link rel="manifest" href="manifest.json"/>
-  <meta name="theme-color" content="#1c3d2e"/>
+  <meta name="theme-color" content="#0e0b0f"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Fitness HQ"/>
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
 </head>
 <body>
+
 <nav class="site-nav">
   <ul>
     <li><a href="workout-reference-guide.html">Home</a></li>
@@ -887,45 +828,6 @@
   <a href="workout-logger.html">Logger</a>
   <a href="check-in-app.html">Check-In App</a>
 </div>
-
-
-  <a href="workout-reference-guide.html">Home</a>
-  <a href="fitness-ecosystem-master-plan-v1.3.html">Ecosystem</a>
-  <a href="calisthenics-master-plan-v2.1.html">Calisthenics</a>
-  <a href="fitness-nutrition-systems-v3.1.html">Nutrition</a>
-  <a href="warm-up-routines-v1.2.html">Warm-Ups</a>
-  <a href="yoga-strap-flexibility-routine.html">Strap Routine</a>
-  <a href="targeted-practice.html">Targeted Practice</a>
-  <a href="checkin-summary.html">Check-In</a>
-  <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
-  <div class="d-label">Apps</div>
-  <a href="smoothie-lab.html" class="active">Smoothie Lab</a>
-  <a href="workout-logger.html">Logger</a>
-  <a href="check-in-app.html">Check-In App</a>
-</div>
-
-<div class="mobile-page-name">Smoothie Lab</div>
-  </div>
-  <div style="font-family:'Lora',serif; font-size:13px; font-weight:600; color:#f5ede0; opacity:0.5;">FHQ</div>
-</div>
-
-</div>
-  <div class="menu-section-label">Reference</div>
-  <a href="workout-reference-guide.html">Home</a>
-  <a href="fitness-ecosystem-master-plan-v1.3.html">Ecosystem</a>
-  <a href="calisthenics-master-plan-v2.1.html">Calisthenics</a>
-  <a href="fitness-nutrition-systems-v3.1.html">Nutrition</a>
-  <a href="warm-up-routines-v1.2.html">Warm-Ups</a>
-  <a href="yoga-strap-flexibility-routine.html">Strap Routine</a>
-  <a href="targeted-practice.html">Targeted Practice</a>
-  <a href="checkin-summary.html">Check-In</a>
-  <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
-  <div class="menu-section-label">Apps & Tools</div>
-  <a href="smoothie-lab.html" class="active">Smoothie Lab</a>
-  <a href="workout-logger.html">Logger</a>
-  <a href="check-in-app.html">Check-In App</a>
-</div>
-
 
 
 <div class="container">
@@ -1364,15 +1266,10 @@
   render();
 </script>
 
-
-
 <script>
   function hqToggle() {
     document.getElementById('hqDrawer').classList.toggle('open');
     document.getElementById('hqOverlay').classList.toggle('open');
-  }
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/fitness-hq/service-worker.js');
   }
 </script>
 </body>
