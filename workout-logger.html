@@ -16,30 +16,16 @@
   .app-header { background: var(--emerald); padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; }
   .app-header h1 { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: var(--gold-light); }
   .date-badge { font-size: 11px; color: #a0b8a8; font-weight: 300; margin-top: 2px; }
-  .header-timer { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; color: var(--gold); letter-spacing: 0.05em; min-width: 90px; text-align: right; }
   .app-body { max-width: 600px; margin: 0 auto; padding: 28px 20px 120px; }
   .section-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 14px; margin-bottom: 16px; overflow: hidden; }
   .section-header-bar { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .section-icon { font-size: 15px; }
   .section-header-bar h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--emerald); }
   .section-body { padding: 16px 20px; }
-  .timer-row { display: flex; align-items: center; gap: 16px; }
-  .timer-info { flex: 1; }
-  .timer-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-  .timer-big { font-family: 'Lora', serif; font-size: 40px; font-weight: 600; color: var(--emerald); line-height: 1; transition: color 0.2s; }
-  .timer-big.running { color: var(--gold); }
-  .timer-controls { display: flex; flex-direction: column; gap: 8px; }
-  .btn-timer { padding: 10px 20px; border-radius: 99px; border: none; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-  .btn-start { background: var(--emerald); color: var(--gold-light); }
-  .btn-start:hover { background: var(--emerald-mid); }
-  .btn-stop { background: var(--gold); color: #fff; display: none; }
-  .btn-reset { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-  .btn-reset:hover { border-color: var(--charcoal); color: var(--charcoal); }
-  .manual-time { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
-  .manual-time label { font-size: 11px; color: var(--muted); font-weight: 300; white-space: nowrap; }
-  .manual-time input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Poppins', sans-serif; font-size: 13px; text-align: center; outline: none; width: 60px; }
-  .manual-time input:focus { border-color: var(--gold); }
-  .manual-time span { font-size: 11px; color: var(--muted); }
+  .duration-row { display: flex; align-items: center; gap: 12px; }
+  .duration-input { padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 500; text-align: center; outline: none; width: 72px; color: var(--charcoal); background: var(--ivory); }
+  .duration-input:focus { border-color: var(--gold); }
+  .duration-unit { font-size: 12px; color: var(--muted); font-weight: 400; }
   .chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { padding: 8px 16px; border-radius: 99px; border: 1px solid var(--border); background: var(--ivory); font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.15s; user-select: none; }
   .chip:hover { border-color: var(--emerald); color: var(--emerald); }
@@ -254,31 +240,18 @@
     <h1>Workout Logger 🦂</h1>
     <div class="date-badge" id="todayDate"></div>
   </div>
-  <div class="header-timer" id="headerTimer">0:00</div>
 </header>
 
 <main class="app-body">
 
   <div class="section-card">
-    <div class="section-header-bar"><span class="section-icon">⏱</span><h3>Session Timer</h3></div>
+    <div class="section-header-bar"><span class="section-icon">⏱</span><h3>Duration</h3></div>
     <div class="section-body">
-      <div class="timer-row">
-        <div class="timer-info">
-          <div class="timer-label">Elapsed Time</div>
-          <div class="timer-big" id="timerBig">0:00</div>
-        </div>
-        <div class="timer-controls">
-          <button class="btn-timer btn-start" id="startBtn" onclick="startTimer()">Start</button>
-          <button class="btn-timer btn-stop" id="stopBtn" onclick="stopTimer()">Stop</button>
-          <button class="btn-timer btn-reset" onclick="resetTimer()">Reset</button>
-        </div>
-      </div>
-      <div class="manual-time">
-        <label>Or enter manually:</label>
-        <input type="number" id="manualHr" placeholder="hr" min="0" max="23"/>
-        <span>hr</span>
-        <input type="number" id="manualMin" placeholder="min" min="0" max="59"/>
-        <span>min</span>
+      <div class="duration-row">
+        <input type="number" class="duration-input" id="manualHr" placeholder="0" min="0" max="23"/>
+        <span class="duration-unit">hr</span>
+        <input type="number" class="duration-input" id="manualMin" placeholder="0" min="0" max="59"/>
+        <span class="duration-unit">min</span>
       </div>
     </div>
   </div>
@@ -368,59 +341,11 @@
 
 <script>
 var lastOutput = '';
-var timerSecs = 0;
-var timerRunning = false;
-var timerInterval = null;
 var now = new Date();
 
 document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US', {
   weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
 });
-
-function pad(n) { return n < 10 ? '0' + n : '' + n; }
-
-function formatTime(s) {
-  var m = Math.floor(s / 60);
-  var sec = s % 60;
-  return m + ':' + pad(sec);
-}
-
-function updateDisplays() {
-  var t = formatTime(timerSecs);
-  document.getElementById('timerBig').textContent = t;
-  document.getElementById('headerTimer').textContent = t;
-}
-
-function startTimer() {
-  if (timerRunning) return;
-  timerRunning = true;
-  document.getElementById('timerBig').classList.add('running');
-  document.getElementById('startBtn').style.display = 'none';
-  document.getElementById('stopBtn').style.display = 'block';
-  timerInterval = setInterval(function() { timerSecs++; updateDisplays(); }, 1000);
-}
-
-function stopTimer() {
-  if (!timerRunning) return;
-  timerRunning = false;
-  clearInterval(timerInterval);
-  document.getElementById('timerBig').classList.remove('running');
-  document.getElementById('startBtn').style.display = 'block';
-  document.getElementById('stopBtn').style.display = 'none';
-  var totalMins = Math.round(timerSecs / 60);
-  var hrs = Math.floor(totalMins / 60);
-  var mins = totalMins % 60;
-  if (hrs > 0) document.getElementById('manualHr').value = hrs;
-  if (mins > 0) document.getElementById('manualMin').value = mins;
-}
-
-function resetTimer() {
-  stopTimer();
-  timerSecs = 0;
-  updateDisplays();
-  document.getElementById('manualHr').value = '';
-  document.getElementById('manualMin').value = '';
-}
 
 function toggleChip(el) {
   el.classList.toggle('selected');
@@ -474,13 +399,9 @@ function generateLog() {
   var min = parseInt(document.getElementById('manualMin').value) || 0;
 
   var duration = '';
-  if (hr > 0 || min > 0) {
-    if (hr > 0 && min > 0) duration = hr + 'h ' + min + 'min';
-    else if (hr > 0) duration = hr + 'h';
-    else duration = min + 'min';
-  } else if (timerSecs > 0) {
-    duration = formatTime(timerSecs);
-  }
+  if (hr > 0 && min > 0) duration = hr + 'h ' + min + 'min';
+  else if (hr > 0) duration = hr + 'h';
+  else if (min > 0) duration = min + 'min';
 
   var lines = [];
   if (anchors.length > 0) lines.push('Did: ' + anchors.join(', '));
@@ -535,8 +456,9 @@ function clearAll() {
   var allBtns = document.querySelectorAll('.warmup-btn');
   for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove('selected');
   document.getElementById('notes').value = '';
+  document.getElementById('manualHr').value = '';
+  document.getElementById('manualMin').value = '';
   document.getElementById('tpSection').style.display = 'none';
-  resetTimer();
   closeOutput();
 }
 
