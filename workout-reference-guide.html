@@ -34,11 +34,12 @@
   .section-line { flex: 1; height: 1px; background: #d8cfc4; }
 
   /* WARMUP */
-  .warmup-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .warmup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .warmup-pill { background: #fff; border: 0.5px solid #d8cfc4; border-radius: 10px; padding: 16px; text-align: center; }
   .warmup-pill.sfb { border-top: 3px solid #1c3d2e; }
   .warmup-pill.qleg { border-top: 3px solid #b8903a; }
   .warmup-pill.qnoleg { border-top: 3px solid #6b1f38; }
+  .warmup-pill.seated { border-top: 3px solid #5a7a9a; }
   .warmup-abbr { font-size: 14px; font-weight: 600; color: #2a2a2a; margin-bottom: 4px; }
   .warmup-time { font-size: 10px; font-weight: 600; color: #b8903a; letter-spacing: 0.08em; margin-bottom: 6px; }
   .warmup-desc { font-size: 11px; color: #5a4a3a; line-height: 1.5; font-weight: 300; }
@@ -170,6 +171,7 @@
     <li><a href="warm-up-routines-v1.2.html">Warm-Ups</a></li>
     <li><a href="yoga-strap-flexibility-routine.html">Strap Routine</a></li>
     <li><a href="targeted-practice.html">Targeted Practice</a></li>
+    <li><a href="yoga-coach-lite.html">Yoga Coach</a></li>
     <li><a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a></li>
     <li><a href="checkin-summary.html">Check-In</a></li>
     <li><a href="smoothie-lab.html">Smoothie Lab</a></li>
@@ -192,6 +194,7 @@
   <a href="yoga-strap-flexibility-routine.html">Strap Routine</a>
   <a href="targeted-practice.html">Targeted Practice</a>
   <a href="checkin-summary.html">Check-In</a>
+  <a href="yoga-coach-lite.html">Yoga Coach</a>
   <a href="yoga-app-ecosystem-master-plan-v5.1.html">Yoga Ecosystem</a>
   <div class="d-label">Apps</div>
   <a href="smoothie-lab.html">Smoothie Lab</a>
@@ -235,6 +238,11 @@
       <div class="warmup-time">5 minutes</div>
       <div class="warmup-desc">Push-ups only. Never before pistol squats.</div>
     </div>
+    <div class="warmup-pill seated">
+      <div class="warmup-abbr">Seated</div>
+      <div class="warmup-time">~11 minutes</div>
+      <div class="warmup-desc">Yoga, TP, strap routine, low-energy days. Floor seated. Not before pistol squats.</div>
+    </div>
   </div>
 </div>
 
@@ -246,8 +254,8 @@
       <div class="anchor-num">01</div>
       <div class="anchor-body">
         <div class="anchor-name"><a href="calisthenics-master-plan-v2.1.html" style="color:#1c3d2e; text-decoration:none;">Push-Ups ↗</a></div>
-        <div class="anchor-time">~25 min</div>
-        <div class="anchor-flow"><strong>Quick - LEG</strong> then push-ups then post-push-up stretches</div>
+        <div class="anchor-time">~29-35 min</div>
+        <div class="anchor-flow"><strong>Quick - LEG</strong> then push-ups then post-push-up stretches (8 min)</div>
       </div>
     </div>
     <div class="anchor-card">
@@ -263,7 +271,7 @@
       <div class="anchor-body">
         <div class="anchor-name"><a href="https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa" target="_blank" style="color:#1c3d2e; text-decoration:none;">Yoga — App #1 ↗</a></div>
         <div class="anchor-time">~20-70 min</div>
-        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then yoga flow via App #1. Opens in a new tab.</div>
+        <div class="anchor-flow"><strong>SFB, Quick + LEG, or Seated</strong> then yoga flow via App #1. Opens in a new tab.</div>
       </div>
     </div>
     <div class="anchor-card">
@@ -271,7 +279,7 @@
       <div class="anchor-body">
         <div class="anchor-name"><a href="targeted-practice.html" style="color:#1c3d2e; text-decoration:none;">Targeted Practice ↗</a></div>
         <div class="anchor-time">~15-22 min</div>
-        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then targeted practice via <a href="https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa" target="_blank" style="color:#5a4a3a; font-weight:500;">App #1 ↗</a>. No cool-down needed.</div>
+        <div class="anchor-flow"><strong>SFB, Quick + LEG, or Seated</strong> then targeted practice via <a href="https://claude.ai/public/artifacts/1e66e940-20b7-4680-ab36-11818b2a1efa" target="_blank" style="color:#5a4a3a; font-weight:500;">App #1 ↗</a>. No cool-down needed.</div>
       </div>
     </div>
     <div class="anchor-card">
@@ -279,7 +287,7 @@
       <div class="anchor-body">
         <div class="anchor-name"><a href="yoga-strap-flexibility-routine.html" style="color:#1c3d2e; text-decoration:none;">Strap Routine ↗</a></div>
         <div class="anchor-time">~20 min</div>
-        <div class="anchor-flow"><strong>SFB or Quick + LEG</strong> then strap routine. Always last in any session.</div>
+        <div class="anchor-flow"><strong>SFB, Quick + LEG, or Seated</strong> then strap routine. Always last in any session.</div>
       </div>
     </div>
   </div>
@@ -325,8 +333,8 @@
     <a href="warm-up-routines-v1.2.html" class="dir-card doc">
       <div class="dir-tag tag-doc">Reference</div>
       <div class="dir-name">Warm-Ups</div>
-      <div class="dir-subtitle">Warm-Up Routines v1.2</div>
-      <div class="dir-desc">SFB, Quick + LEG, Quick - LEG, post-push-up and post-pistol squat stretches.</div>
+      <div class="dir-subtitle">Warm-Up Routines v1.4</div>
+      <div class="dir-desc">SFB, Quick + LEG, Quick - LEG, Seated, post-push-up and post-pistol squat stretches.</div>
     </a>
     <a href="yoga-strap-flexibility-routine.html" class="dir-card doc">
       <div class="dir-tag tag-doc">Reference</div>
@@ -360,6 +368,12 @@
       <div class="dir-tag tag-app">App</div>
       <div class="dir-name">Check-In App</div>
       <div class="dir-desc">Bi-weekly check-in form — generates your Claude chat prompt.</div>
+    </a>
+    <a href="yoga-coach-lite.html" class="dir-card app">
+      <div class="dir-tag tag-app">App</div>
+      <div class="dir-name">Yoga Coach · Lite</div>
+      <div class="dir-subtitle">Tablet companion app</div>
+      <div class="dir-desc">Load a flow or targeted practice JSON and run a guided session with voice, timers, and cues.</div>
     </a>
     <a href="yoga-app-ecosystem-master-plan-v5.1.html" class="dir-card shelved">
       <div class="dir-tag tag-shelved">Shelved</div>
