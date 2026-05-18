@@ -259,13 +259,13 @@
 <div class="header">
   <h1>Warm-Up Routines</h1>
   <div class="sub">Memorize these and warm up anywhere</div>
-  <div class="meta">v1.3 · May 9, 2026</div>
+  <div class="meta">v1.4 · May 16, 2026</div>
 </div>
 
 <!-- QUICK REFERENCE -->
 <div class="section">
   <div class="section-header"><div class="section-title">Quick Reference</div><div class="section-line"></div></div>
-  <div class="rules-grid">
+  <div class="rules-grid" style="grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
     <div class="rule-card" onclick="openWarmup('sfb')">
       <div class="rule-abbr">SFB</div>
       <div class="rule-full">Standard Full-Body · 17 min</div>
@@ -280,6 +280,11 @@
       <div class="rule-abbr">Quick - LEG</div>
       <div class="rule-full">5 min</div>
       <div class="rule-desc">Push-ups only. Never before pistol squats — tap to expand</div>
+    </div>
+    <div class="rule-card" onclick="openWarmup('seated')">
+      <div class="rule-abbr">Seated</div>
+      <div class="rule-full">~11 min</div>
+      <div class="rule-desc">Yoga, TP, strap routine, low-energy days. Floor seated. Not before pistol squats — tap to expand</div>
     </div>
   </div>
 </div>
@@ -322,7 +327,8 @@
   <div class="section-header"><div class="section-title">Quick Versions</div><div class="section-line"></div></div>
   <div class="tip-box">
     <p><strong>Quick + LEG (9 min):</strong> Any rushed session involving legs. Keep all exercises including the ones marked <span style="display:inline-block; font-size:9px; font-weight:600; color:#6b1f38; background:#f5e8ec; padding:1px 6px; border-radius:99px;">LEG</span><br/><br/>
-    <strong>Quick - LEG (5 min):</strong> Push-up only days. Skip ALL <span style="display:inline-block; font-size:9px; font-weight:600; color:#6b1f38; background:#f5e8ec; padding:1px 6px; border-radius:99px;">LEG</span> exercises. Never use before <a href="calisthenics-master-plan-v2.1.html" style="color:#b8903a; font-weight:500;">pistol squats</a>.</p>
+    <strong>Quick - LEG (5 min):</strong> Push-up only days. Skip ALL <span style="display:inline-block; font-size:9px; font-weight:600; color:#6b1f38; background:#f5e8ec; padding:1px 6px; border-radius:99px;">LEG</span> exercises. Never use before <a href="calisthenics-master-plan-v2.1.html" style="color:#b8903a; font-weight:500;">pistol squats</a>.<br/><br/>
+    <strong>Seated (~11 min):</strong> Fully seated on the floor, back straight throughout. Great for yoga, targeted practice, strap routine, or low-energy days. Not a substitute before pistol squats — you need more dynamic movement to prep for single-leg loading.</p>
   </div>
 
   <div class="warmup-card qleg" id="warmup-qleg">
@@ -349,7 +355,38 @@
   </div>
 </div>
 
-<!-- POST PUSH-UP STRETCHES -->
+<!-- SEATED -->
+<div class="section">
+  <div class="section-header"><div class="section-title">Seated Warm-Up</div><div class="section-line"></div></div>
+  <div class="warmup-card" style="border-left: 4px solid #5a7a9a;" id="warmup-seated">
+    <div class="warmup-card-header" onclick="toggleWarmup('seated')">
+      <div>
+        <div class="warmup-badge" style="background:#e8eef5; color:#3a5a7a;">~11 min · fully seated · back straight throughout</div>
+        <div class="warmup-title" style="margin-top:6px;">Seated Warm-Up</div>
+      </div>
+      <span class="warmup-arrow" id="arrow-seated">▼</span>
+    </div>
+    <div class="warmup-body" id="body-seated">
+      <div class="warmup-when">Use before yoga, targeted practice, or strap routine. Perfect for low-energy days. All exercises done seated on the floor, back straight. Not a substitute before pistol squats.</div>
+      <ul class="exercise-list">
+        <li><div class="ex-num">01</div><div><div class="ex-name">Neck Movement</div><div class="ex-note">Slow controlled movements, 1 min. Rolls, tilts, side to side.</div></div></li>
+        <li><div class="ex-num">02</div><div><div class="ex-name">Arms Out — Wrist Rotation</div><div class="ex-note">Arms extended, rotate wrists both directions. 30 sec.</div></div></li>
+        <li><div class="ex-num">03</div><div><div class="ex-name">Arms In — Elbow Stretch</div><div class="ex-note">Arms bent, elbow stretches and extensions. 30 sec.</div></div></li>
+        <li><div class="ex-num">04</div><div><div class="ex-name">Hands On Shoulder — Shoulder Rotation</div><div class="ex-note">Hands on shoulders, circle both elbows forward then back. 40 sec.</div></div></li>
+        <li><div class="ex-num">05</div><div><div class="ex-name">Seated Side Stretch — Left</div><div class="ex-note">Reach one arm up and over to the right, hold. 40 sec.</div></div></li>
+        <li><div class="ex-num">06</div><div><div class="ex-name">Seated Side Stretch — Right</div><div class="ex-note">Reach one arm up and over to the left, hold. 40 sec.</div></div></li>
+        <li><div class="ex-num">07</div><div><div class="ex-name">Seated Side Twist — Left</div><div class="ex-note">Rotate torso left, hands on armrests or thighs. 30 sec.</div></div></li>
+        <li><div class="ex-num">08</div><div><div class="ex-name">Seated Side Twist — Right</div><div class="ex-note">Rotate torso right. 30 sec.</div></div></li>
+        <li><div class="ex-num">09</div><div><div class="ex-name">Arms Up — Stretch and Bend</div><div class="ex-note">Reach arms overhead, stretch long, then bow forward at the midsection. 40 sec.</div></div></li>
+        <li><div class="ex-num">10</div><div><div class="ex-name">Torso Rotation</div><div class="ex-note">Seated, butt stays grounded, rotate midsection in full circles both directions. 30 sec.</div></div></li>
+        <li><div class="ex-num">11</div><div><div class="ex-name">Legs Straight — Toe Curls and Ankle Stretch</div><div class="ex-note">Legs extended, flex and point, ankle circles. 40 sec.</div></div></li>
+        <li><div class="ex-num">12</div><div><div class="ex-name">Knee to Chest — Hinge at Knee to Stretch — Left</div><div class="ex-note">Draw left knee to chest, then extend and hinge at knee for hamstring stretch. 30 sec.</div></div></li>
+        <li><div class="ex-num">13</div><div><div class="ex-name">Knee to Chest — Hinge at Knee to Stretch — Right</div><div class="ex-note">Same on the right side. 30 sec.</div></div></li>
+        <li><div class="ex-num">14</div><div><div class="ex-name">Butterfly Pose</div><div class="ex-note">Feet together, knees fall open, gentle forward lean. 40 sec. Blanket under sit bones if needed.</div></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
 <div class="section">
   <div class="section-header"><div class="section-title">Post-Push-Up Stretches</div><div class="section-line"></div></div>
   <div class="stretch-card">
@@ -389,6 +426,14 @@
     <span class="coll-arrow" id="arrow-version">▼</span>
   </div>
   <div class="coll-body" id="body-version" style="padding-top:8px;">
+  <div class="version-entry">
+    <div class="version-tag">v1.4 — May 16, 2026</div>
+    <ul class="version-list">
+      <li>Seated Warm-Up added as official 4th tier (~11 min, fully seated)</li>
+      <li>Quick reference grid updated to 2x2 to include Seated</li>
+      <li>Use case: yoga, targeted practice, strap routine, low-energy days — not before pistol squats</li>
+    </ul>
+  </div>
   <div class="version-entry">
     <div class="version-tag">v1.3 — May 9, 2026</div>
     <ul class="version-list">
