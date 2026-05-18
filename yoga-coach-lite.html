@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Yoga Coach · Lite</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #d4a574 30%, #a8c5a0 70%, #e8c4a0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            color: #5a4a3a;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .header h1 { font-size: 2.4em; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: #6b5d4f; }
+        .header .lite-badge {
+            display: inline-block;
+            background: rgba(196,167,125,0.2);
+            color: #8b7355;
+            font-size: 0.65em;
+            letter-spacing: 3px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(196,167,125,0.4);
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Settings button */
+        .settings-btn {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.5);
+            border: 1.5px solid #d4c4b0;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .settings-btn:hover { background: rgba(255,255,255,0.8); transform: translateY(-50%) scale(1.05); }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.4);
+            padding: 10px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .tab {
+            flex: 1;
+            padding: 14px;
+            background: rgba(255,255,255,0.5);
+            border: none;
+            border-radius: 10px;
+            color: #6b5d4f;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .tab:hover { background: rgba(255,255,255,0.7); }
+        .tab.active {
+            background: linear-gradient(135deg, #fff 0%, #faf8f5 100%);
+            color: #8b7355;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(139,115,85,0.15);
+        }
+
+        /* Content */
+        .content {
+            background: linear-gradient(to bottom, #fdfbf7 0%, #f9f6f0 100%);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 40px rgba(107,93,79,0.15);
+            min-height: 500px;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, #c4a77d 0%, #a8896b 100%);
+            color: #fff;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(164,136,107,0.25);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(164,136,107,0.35); }
+        .btn:active { transform: translateY(0); }
+
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed #d4c4b0;
+            border-radius: 16px;
+            padding: 50px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.4);
+        }
+        .upload-zone:hover { border-color: #c4a77d; background: rgba(196,167,125,0.05); }
+        .upload-zone.dragover { border-color: #c4a77d; background: rgba(196,167,125,0.1); transform: scale(1.01); }
+        .upload-icon { font-size: 3em; margin-bottom: 16px; }
+        .upload-zone h3 { color: #6b5d4f; font-weight: 400; letter-spacing: 1px; margin-bottom: 8px; }
+        .upload-zone p { color: #8b7355; font-size: 0.9em; }
+
+        /* Practice guide */
+        .practice-guide { text-align: center; padding: 20px 0; }
+        .guide-display { margin: 30px 0; }
+        .pose-counter { font-size: 1.25em; color: #8b7355; margin-bottom: 20px; font-weight: 300; letter-spacing: 0.5px; }
+        .current-pose { font-size: 3em; color: #6b5d4f; margin-bottom: 20px; font-weight: 300; letter-spacing: 2px; line-height: 1.2; }
+        .pose-instruction { font-size: 1.2em; color: #8b7355; margin-bottom: 25px; line-height: 1.9; max-width: 580px; margin-left: auto; margin-right: auto; font-weight: 300; }
+        .timer-display {
+            font-size: 6em;
+            background: linear-gradient(135deg, #c4a77d 0%, #d4b896 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 300;
+            margin: 20px 0;
+        }
+        .progress-bar { width: 100%; height: 6px; background: rgba(212,196,176,0.2); border-radius: 3px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #c4a77d 0%, #d4b896 50%, #c4a77d 100%); transition: width 0.3s ease; }
+
+        .control-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .control-btn {
+            padding: 16px 32px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .control-btn:active { transform: scale(0.97); }
+        .pause-btn { background: linear-gradient(135deg, #e8dfd0 0%, #d4c4b0 100%); color: #6b5d4f; }
+        .start-btn { background: linear-gradient(135deg, #a8c5a0 0%, #8fb087 100%); color: white; }
+        .next-btn { background: linear-gradient(135deg, #c4a77d 0%, #a8896b 100%); color: white; }
+        .prev-btn { background: rgba(212,196,176,0.5); color: #6b5d4f; border: 1.5px solid #d4c4b0; }
+
+        /* Form tip / breathing */
+        .info-card {
+            padding: 16px 18px;
+            border-radius: 10px;
+            margin: 14px 0;
+            text-align: left;
+            font-size: 1.08em;
+            line-height: 1.7;
+        }
+        .info-card.form { background: linear-gradient(to right, #f0f5ec, #e8f5e0); border-left: 3px solid #a8c5a0; }
+        .info-card.breath { background: linear-gradient(to right, #e8f5f9, #e0f2f7); border-left: 3px solid #81c8d4; }
+        .info-card strong { display: block; margin-bottom: 4px; }
+
+        /* Modal overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(90,74,58,0.4);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: linear-gradient(to bottom, #fdfbf7, #f9f6f0);
+            padding: 36px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(107,93,79,0.25);
+            border: 1px solid #e8dfd0;
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-content h2 { color: #6b5d4f; font-weight: 400; letter-spacing: 1px; margin-bottom: 20px; }
+
+        /* Voice picker */
+        .voice-list { margin: 16px 0; max-height: 280px; overflow-y: auto; }
+        .voice-option {
+            padding: 12px 16px;
+            border: 1.5px solid #d4c4b0;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fdfbf7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .voice-option:hover { border-color: #c4a77d; background: rgba(196,167,125,0.06); }
+        .voice-option.selected { border-color: #c4a77d; background: linear-gradient(135deg, rgba(196,167,125,0.12), rgba(196,167,125,0.06)); }
+        .voice-name { font-size: 0.95em; color: #5a4a3a; }
+        .voice-lang { font-size: 0.8em; color: #a09080; }
+        .voice-preview { font-size: 0.8em; color: #c4a77d; cursor: pointer; padding: 4px 10px; border: 1px solid #c4a77d; border-radius: 20px; white-space: nowrap; }
+        .voice-preview:hover { background: rgba(196,167,125,0.1); }
+
+        /* Voice customization sliders */
+        .slider-group { margin-bottom: 16px; }
+        .slider-group label { font-size: 0.9em; color: #6b5d4f; display: block; margin-bottom: 5px; }
+        .slider-group input[type=range] { width: 100%; accent-color: #c4a77d; }
+        .slider-value { font-size: 0.82em; color: #888; text-align: center; margin-top: 3px; }
+
+        /* Vibe modal */
+        .vibe-options { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+        .vibe-tag {
+            padding: 14px 16px;
+            border: 1.5px solid #d4c4b0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fdfbf7;
+            font-size: 0.95em;
+        }
+        .vibe-tag:hover { border-color: #c4a77d; }
+        .vibe-tag.selected { border-color: #a8c5a0; background: linear-gradient(135deg, #a8c5a0, #8fb087); color: white; }
+
+        /* Modal buttons */
+        .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-btns .btn { padding: 13px; font-size: 0.95em; }
+        .btn-cancel {
+            flex: 1;
+            padding: 13px;
+            background: #e8dfd0;
+            color: #6b5d4f;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .btn-cancel:hover { background: #d4c4b0; }
+        .btn-confirm {
+            flex: 1;
+            padding: 13px;
+            background: linear-gradient(135deg, #c4a77d, #a8896b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .btn-confirm:hover { box-shadow: 0 4px 12px rgba(164,136,107,0.3); }
+
+        /* Completion / post-practice */
+        .complete-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .complete-card h2 { font-size: 1.8em; color: #6b5d4f; font-weight: 300; margin-bottom: 12px; }
+        .complete-card p { color: #8b7355; margin-bottom: 30px; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #6b5d4f;
+            color: white;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            z-index: 9999;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        /* Reflection list */
+        .reflection-pose {
+            padding: 12px 14px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #f0ebe0;
+        }
+        .reflection-pose .pose-label { font-weight: 500; color: #5a4a3a; margin-bottom: 8px; font-size: 0.95em; }
+        .reflection-btns { display: flex; gap: 8px; }
+        .reflect-btn {
+            flex: 1;
+            padding: 8px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .reflect-btn.loved { border-color: #4caf50; background: #e8f5e9; }
+        .reflect-btn.needs { border-color: #ff9800; background: #fff3e0; }
+
+        /* Mode toggle */
+        .mode-toggle {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #e0d8cf;
+            margin-bottom: 24px;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            background: #e8dfd0;
+            color: #6b5d4f;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+        .mode-btn.active { background: #6b5d4f; color: white; }
+
+        /* No voices warning */
+        .voice-warning {
+            padding: 14px;
+            background: #fff3cd;
+            border: 1.5px solid #ffc107;
+            border-radius: 10px;
+            color: #856404;
+            font-size: 0.9em;
+            margin-bottom: 16px;
+        }
+
+        /* Audio unlock banner */
+        .audio-unlock-banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #fff8f0, #fdf3e8);
+            border: 1.5px solid #e8c99a;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            animation: gentlePulse 2s ease-in-out infinite;
+        }
+        .audio-unlock-banner:hover { background: linear-gradient(135deg, #fff3e6, #fdeedd); border-color: #c4a77d; }
+        .audio-unlock-banner:active { transform: scale(0.99); }
+        .audio-unlock-icon { font-size: 1.6em; flex-shrink: 0; }
+        .audio-unlock-text { flex: 1; }
+        .audio-unlock-text strong { display: block; color: #6b5d4f; font-size: 0.95em; margin-bottom: 2px; }
+        .audio-unlock-text span { color: #a08060; font-size: 0.82em; }
+        .audio-unlock-dismiss { color: #c4a77d; font-size: 1.1em; flex-shrink: 0; }
+        @keyframes gentlePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(196,167,125,0); }
+            50% { box-shadow: 0 0 0 5px rgba(196,167,125,0.15); }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .content { padding: 20px; }
+            .current-pose { font-size: 2.2em; }
+            .timer-display { font-size: 4.5em; }
+            .pose-instruction { font-size: 1.05em; }
+            .control-btn { padding: 13px 20px; font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🧘🏿‍♀️ 💪🏿</h1>
+        <div class="lite-badge">lite</div>
+        <button class="settings-btn" onclick="openVoiceSettings()" title="voice settings">⚙️</button>
+    </div>
+
+    <div id="audioUnlockBanner" class="audio-unlock-banner" onclick="unlockAudio()" style="display:none">
+        <div class="audio-unlock-icon">🔊</div>
+        <div class="audio-unlock-text">
+            <strong>tap here to enable voice guidance</strong>
+            <span>Android requires a tap before audio can play</span>
+        </div>
+        <div class="audio-unlock-dismiss">→</div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('practice')">🌊 flow practice</button>
+        <button class="tab" onclick="switchTab('targeted')">🎯 targeted practice</button>
+    </div>
+
+    <div class="content">
+        <!-- FLOW PRACTICE TAB -->
+        <div id="practice" class="tab-content active">
+            <div id="practiceContent">
+                <div class="upload-zone" id="flowDropZone" onclick="document.getElementById('flowFileInput').click()"
+                     ondragover="handleDragOver(event,'flowDropZone')" ondragleave="handleDragLeave(event,'flowDropZone')" ondrop="handleDrop(event,'flow')">
+                    <div class="upload-icon">📂</div>
+                    <h3>load a flow</h3>
+                    <p>tap to choose a flow JSON, or drag and drop it here</p>
+                </div>
+                <input type="file" id="flowFileInput" accept=".json" style="display:none" onchange="loadFlowFromFile(event)">
+            </div>
+        </div>
+
+        <!-- TARGETED PRACTICE TAB -->
+        <div id="targeted" class="tab-content">
+            <div id="targetedContent">
+                <div class="upload-zone" id="targetedDropZone" onclick="document.getElementById('targetedFileInput').click()"
+                     ondragover="handleDragOver(event,'targetedDropZone')" ondragleave="handleDragLeave(event,'targetedDropZone')" ondrop="handleDrop(event,'targeted')">
+                    <div class="upload-icon">📂</div>
+                    <h3>load a targeted practice</h3>
+                    <p>tap to choose a targeted practice JSON</p>
+                </div>
+                <input type="file" id="targetedFileInput" accept=".json" style="display:none" onchange="loadTargetedFromFile(event)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── VOICE SETUP MODAL ─── -->
+<div class="modal" id="voiceModal">
+    <div class="modal-content">
+        <h2>🎙️ voice setup</h2>
+        <p style="color:#8b7355; font-size:0.9em; margin-bottom:16px;">pick a voice for your practice guidance. tap preview to hear it.</p>
+
+        <div id="voiceWarning" class="voice-warning" style="display:none">
+            voices are still loading — give it a second and try again.
+        </div>
+
+        <div class="voice-list" id="voiceList">
+            <p style="color:#aaa; text-align:center; padding:20px;">loading voices…</p>
+        </div>
+
+        <div class="slider-group">
+            <label>speed</label>
+            <input type="range" id="voiceSpeed" min="0.5" max="1.5" step="0.1" value="0.9" oninput="updateSpeedLabel(this.value)">
+            <div class="slider-value" id="speedLabel">0.9× (calm)</div>
+        </div>
+        <div class="slider-group">
+            <label>pitch</label>
+            <input type="range" id="voicePitch" min="0.8" max="1.2" step="0.05" value="0.9" oninput="updatePitchLabel(this.value)">
+            <div class="slider-value" id="pitchLabel">0.9× (warm)</div>
+        </div>
+
+        <div class="modal-btns">
+            <button class="btn-confirm" onclick="saveVoiceSettings()">save & close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ─── VIBE TAGS MODAL ─── -->
+<div class="modal" id="vibeModal">
+    <div class="modal-content">
+        <h2>how did that feel?</h2>
+        <div class="vibe-options">
+            <div class="vibe-tag" data-vibe="stilled" onclick="toggleVibe('stilled')">🌙 stilled <span style="font-size:0.85em;opacity:0.8">(restorative)</span></div>
+            <div class="vibe-tag" data-vibe="anchored" onclick="toggleVibe('anchored')">⚓ anchored <span style="font-size:0.85em;opacity:0.8">(good challenge)</span></div>
+            <div class="vibe-tag" data-vibe="pushed" onclick="toggleVibe('pushed')">🔥 pushed <span style="font-size:0.85em;opacity:0.8">(VERY challenging, whooped my ass lol)</span></div>
+        </div>
+        <button class="btn-confirm" style="width:100%; margin-top:20px;" onclick="confirmVibe()">continue</button>
+    </div>
+</div>
+
+<!-- ─── REFLECTION MODAL ─── -->
+<div class="modal" id="reflectionModal">
+    <div class="modal-content">
+        <h2>pose reflections</h2>
+        <p style="color:#8b7355; font-size:0.9em; margin-bottom:16px;">optional — mark any that stood out</p>
+        <div id="reflectionList" style="max-height:350px; overflow-y:auto;"></div>
+        <div class="modal-btns" style="margin-top:16px;">
+            <button class="btn-cancel" onclick="skipReflections()">skip</button>
+            <button class="btn-confirm" onclick="saveReflections()">done</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let currentFlow = null;
+let targetedSession = null;
+let selectedVoiceIndex = null;
+let voiceRate = 0.9;
+let voicePitch = 0.9;
+let selectedVibes = [];
+let currentReflections = {};
+let voiceSettingsFromFirstRun = false;
+let audioUnlocked = false;
+let wakeLock = null;
+
+let practiceState = {
+    isRunning: false,
+    isPaused: false,
+    currentPoseIndex: 0,
+    timeRemaining: 0,
+    timerInterval: null,
+    hasSpokenCurrentPose: false,
+    practiceStartTime: null
+};
+
+let targetedState = {
+    isRunning: false,
+    isPaused: false,
+    currentPoseIndex: 0,
+    currentSide: 1,
+    timeRemaining: 0,
+    timerInterval: null,
+    alignmentCycleInterval: null,
+    currentAlignmentIndex: 0,
+    hasSpokenModification: false
+};
+
+// ─── INIT ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    // Detect Android Chrome and show unlock banner
+    const isAndroid = /android/i.test(navigator.userAgent);
+    if (isAndroid) {
+        document.getElementById('audioUnlockBanner').style.display = 'flex';
+    }
+
+    if (window.speechSynthesis) {
+        window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+            // If first run modal is open, refresh the list
+            if (document.getElementById('voiceModal').classList.contains('active')) {
+                populateVoiceList();
+            }
+        };
+    }
+
+    // Load saved preferences
+    const saved = localStorage.getItem('yogalite-voice');
+    if (saved) {
+        const prefs = JSON.parse(saved);
+        selectedVoiceIndex = prefs.index ?? null;
+        voiceRate = prefs.rate ?? 0.9;
+        voicePitch = prefs.pitch ?? 0.9;
+        document.getElementById('voiceSpeed').value = voiceRate;
+        document.getElementById('voicePitch').value = voicePitch;
+        updateSpeedLabel(voiceRate);
+        updatePitchLabel(voicePitch);
+    } else {
+        // First time: open voice setup after a short delay
+        setTimeout(() => {
+            voiceSettingsFromFirstRun = true;
+            openVoiceSettings();
+        }, 600);
+    }
+});
+
+// ─── WAKE LOCK ───────────────────────────────────────────────────────────────
+async function acquireWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => { wakeLock = null; });
+    } catch(e) {}
+}
+
+function releaseWakeLock() {
+    if (wakeLock) { wakeLock.release(); wakeLock = null; }
+}
+
+// Re-acquire if page becomes visible again (Android sometimes releases it on tab switch)
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && practiceState.isRunning && !practiceState.isPaused) {
+        acquireWakeLock();
+    }
+});
+
+// ─── AUDIO UNLOCK ───────────────────────────────────────────────────────────
+function unlockAudio() {
+    if (audioUnlocked) return;
+
+    // Unlock AudioContext (for chimes/bells)
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        // Play a silent buffer to satisfy the gesture requirement
+        const buf = ctx.createBuffer(1, 1, 22050);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.connect(ctx.destination);
+        src.start(0);
+        ctx.resume();
+    } catch(e) {}
+
+    // Unlock speech synthesis with a silent utterance
+    try {
+        const u = new SpeechSynthesisUtterance('');
+        u.volume = 0;
+        window.speechSynthesis.speak(u);
+    } catch(e) {}
+
+    audioUnlocked = true;
+
+    // Hide banner with a little fade
+    const banner = document.getElementById('audioUnlockBanner');
+    banner.style.transition = 'opacity 0.4s, transform 0.4s';
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(-8px)';
+    setTimeout(() => banner.style.display = 'none', 400);
+
+    showToast('🔊 audio ready!');
+}
+
+// ─── TAB SWITCHING ──────────────────────────────────────────────────────────
+function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.tab[onclick="switchTab('${name}')"]`).classList.add('active');
+    document.getElementById(name).classList.add('active');
+}
+
+// ─── DRAG & DROP ────────────────────────────────────────────────────────────
+function handleDragOver(e, zoneId) {
+    e.preventDefault();
+    document.getElementById(zoneId).classList.add('dragover');
+}
+function handleDragLeave(e, zoneId) {
+    document.getElementById(zoneId).classList.remove('dragover');
+}
+function handleDrop(e, type) {
+    e.preventDefault();
+    const zoneId = type === 'flow' ? 'flowDropZone' : 'targetedDropZone';
+    document.getElementById(zoneId).classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    if (type === 'flow') processFlowFile(file);
+    else processTargetedFile(file);
+}
+
+// ─── FLOW LOADING ───────────────────────────────────────────────────────────
+function loadFlowFromFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    processFlowFile(file);
+    event.target.value = '';
+}
+
+function processFlowFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (!data.poses || !Array.isArray(data.poses)) {
+                alert("this doesn't look like a valid flow JSON — couldn't find a poses array.");
+                return;
+            }
+            currentFlow = data;
+            switchTab('practice');
+            startPractice();
+            showToast('✅ flow loaded!');
+        } catch {
+            alert('couldn\'t read that file — make sure it\'s valid JSON.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function startPractice() {
+    // Prepend welcome pose if not already there
+    const welcomePose = {
+        name: "welcome to your mat",
+        duration: 30,
+        instruction: "take a moment to settle in. find a comfortable position and take a few deep breaths.",
+        audioCues: "Welcome to your practice. Take this time to arrive fully on your mat. Close your eyes if that feels good. Begin to notice your breath. Let everything else fade away. This is your time.",
+        formTip: "",
+        needsTransition: false,
+        suggestedTransition: null,
+        isWelcome: true
+    };
+    if (!currentFlow.poses[0].isWelcome) {
+        currentFlow.poses.unshift(welcomePose);
+    }
+
+    practiceState.isRunning = true;
+    practiceState.isPaused = false;
+    practiceState.currentPoseIndex = 0;
+    practiceState.timeRemaining = currentFlow.poses[0].duration;
+    practiceState.hasSpokenCurrentPose = false;
+    practiceState.practiceStartTime = new Date();
+
+    acquireWakeLock();
+    displayPracticeGuide();
+    runTimer();
+}
+
+function displayPracticeGuide() {
+    const container = document.getElementById('practiceContent');
+    const pose = currentFlow.poses[practiceState.currentPoseIndex];
+    const progress = (practiceState.currentPoseIndex / currentFlow.poses.length) * 100;
+    const actualPoses = currentFlow.poses.filter(p => !p.isWelcome && !p.isTransition);
+    const currentPoseNumber = currentFlow.poses.slice(0, practiceState.currentPoseIndex + 1).filter(p => !p.isWelcome && !p.isTransition).length;
+
+    let counterText;
+    if (pose.isWelcome) {
+        const firstReal = currentFlow.poses.find(p => !p.isWelcome && !p.isTransition);
+        const n = firstReal ? firstReal.name.toLowerCase() : '';
+        const seated = ['seat','sukhasana','staff','dandasana','easy seat','cross-legged','lotus','hero','virasana','bound angle','sit','kneeling','table','tabletop','cat','cow','child'].some(k => n.includes(k));
+        counterText = seated ? 'find a comfortable seated position' : 'begin standing';
+    } else if (pose.isTransition) {
+        counterText = 'transitioning';
+    } else {
+        counterText = `pose ${currentPoseNumber} of ${actualPoses.length}`;
+    }
+
+    const isSavasana = pose.name.toLowerCase().includes('savasana') || pose.name.toLowerCase().includes('final relaxation');
+    const isTransition = pose.isTransition;
+
+    const formCard = !isSavasana && !isTransition && pose.formTip
+        ? `<div class="info-card form"><strong style="color:#6b8563;">🌿 form tip:</strong><span style="color:#6b5d4f;">${pose.formTip}</span></div>` : '';
+    const breathCard = !isSavasana && !isTransition && pose.breathingGuidance
+        ? `<div class="info-card breath"><strong style="color:#5a8a94;">💨 breathing:</strong><span style="color:#6b5d4f;">${pose.breathingGuidance}</span></div>` : '';
+
+    const isLast = practiceState.currentPoseIndex === currentFlow.poses.length - 1;
+    const pauseLabel = practiceState.isPaused ? '▶️ resume' : '⏸ pause';
+
+    container.innerHTML = `
+        <div class="practice-guide">
+            <div class="guide-display">
+                <div class="pose-counter">${counterText}</div>
+                <div class="current-pose">${pose.name}</div>
+                ${!isSavasana && !isTransition ? `<div class="pose-instruction">${pose.instruction}</div>` : ''}
+                <div class="timer-display">${formatTime(practiceState.timeRemaining)}</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+                ${formCard}
+                ${breathCard}
+            </div>
+            <div class="control-buttons">
+                ${practiceState.currentPoseIndex > 0 ? '<button class="control-btn prev-btn" onclick="prevPose()">← prev</button>' : ''}
+                <button class="control-btn ${practiceState.isPaused ? 'start-btn' : 'pause-btn'}" onclick="togglePause()">${pauseLabel}</button>
+                ${!isLast ? '<button class="control-btn next-btn" onclick="nextPose()">next →</button>' : ''}
+            </div>
+            ${isLast ? '<button class="btn" style="margin-top:20px; max-width:300px; margin-left:auto; margin-right:auto; display:block;" onclick="completePractice()">✨ complete practice</button>' : ''}
+            <div style="margin-top:20px;">
+                <button onclick="clearPractice()" style="background:none; border:none; color:#c4a77d; font-size:0.85em; cursor:pointer; letter-spacing:0.5px;">✕ clear practice</button>
+            </div>
+        </div>
+    `;
+
+    if (!practiceState.hasSpokenCurrentPose) {
+        speakPoseGuidance(pose);
+        practiceState.hasSpokenCurrentPose = true;
+    }
+}
+
+function runTimer() {
+    if (practiceState.timerInterval) clearInterval(practiceState.timerInterval);
+    practiceState.timerInterval = setInterval(() => {
+        if (!practiceState.isPaused && practiceState.isRunning) {
+            practiceState.timeRemaining--;
+
+            const el = document.querySelector('.timer-display');
+            if (el) el.textContent = formatTime(practiceState.timeRemaining);
+
+            const pose = currentFlow.poses[practiceState.currentPoseIndex];
+            const isSavasana = pose.name.toLowerCase().includes('savasana') || pose.name.toLowerCase().includes('final relaxation');
+            const isTransition = pose.isTransition;
+            const isWelcome = pose.isWelcome;
+
+            if (isSavasana && practiceState.timeRemaining === 30) {
+                playGentleBells();
+                setTimeout(() => {
+                    const farewell = new SpeechSynthesisUtterance("Thank you for showing up today. For making time for yourself. For choosing presence over perfection. You honored your body, your breath, and your practice. Namaste.");
+                    farewell.voice = getBestVoice();
+                    farewell.rate = voiceRate;
+                    farewell.pitch = voicePitch;
+                    farewell.volume = 1.0;
+                    window.speechSynthesis.speak(farewell);
+                }, 2000);
+            }
+
+            if (!isSavasana && !isTransition && !isWelcome) {
+                const dur = pose.duration;
+                const half = Math.floor(dur / 2);
+                if (dur > 30 && practiceState.timeRemaining === half && pose.formTip) speakFormTip(pose.formTip);
+                if (dur > 60 && practiceState.timeRemaining === 30) speakTimeCue(30);
+                else if (dur > 30 && practiceState.timeRemaining === 15) speakTimeCue(15);
+                else if (dur > 15 && practiceState.timeRemaining === 8) speakTransition();
+            }
+
+            if (practiceState.timeRemaining <= 0) {
+                if (practiceState.currentPoseIndex < currentFlow.poses.length - 1) {
+                    nextPose();
+                } else {
+                    clearInterval(practiceState.timerInterval);
+                    practiceState.isRunning = false;
+                }
+            }
+        }
+    }, 1000);
+}
+
+function togglePause() {
+    practiceState.isPaused = !practiceState.isPaused;
+    if (practiceState.isPaused) window.speechSynthesis.pause();
+    else window.speechSynthesis.resume();
+    displayPracticeGuide();
+}
+
+function nextPose() {
+    window.speechSynthesis.cancel();
+    if (practiceState.currentPoseIndex < currentFlow.poses.length - 1) {
+        practiceState.currentPoseIndex++;
+        practiceState.timeRemaining = currentFlow.poses[practiceState.currentPoseIndex].duration;
+        practiceState.hasSpokenCurrentPose = false;
+        displayPracticeGuide();
+    }
+}
+
+function prevPose() {
+    window.speechSynthesis.cancel();
+    if (practiceState.currentPoseIndex > 0) {
+        practiceState.currentPoseIndex--;
+        practiceState.timeRemaining = currentFlow.poses[practiceState.currentPoseIndex].duration;
+        practiceState.hasSpokenCurrentPose = false;
+        displayPracticeGuide();
+    }
+}
+
+function completePractice() {
+    clearInterval(practiceState.timerInterval);
+    practiceState.isRunning = false;
+    window.speechSynthesis.cancel();
+    releaseWakeLock();
+    selectedVibes = [];
+    document.querySelectorAll('.vibe-tag').forEach(t => t.classList.remove('selected'));
+    document.getElementById('vibeModal').classList.add('active');
+}
+
+function clearPractice() {
+    clearInterval(practiceState.timerInterval);
+    window.speechSynthesis.cancel();
+    releaseWakeLock();
+    practiceState.isRunning = false;
+    practiceState.isPaused = false;
+    practiceState.currentPoseIndex = 0;
+    practiceState.timeRemaining = 0;
+    practiceState.hasSpokenCurrentPose = false;
+    currentFlow = null;
+
+    document.getElementById('practiceContent').innerHTML = `
+        <div class="upload-zone" id="flowDropZone" onclick="document.getElementById('flowFileInput').click()"
+             ondragover="handleDragOver(event,'flowDropZone')" ondragleave="handleDragLeave(event,'flowDropZone')" ondrop="handleDrop(event,'flow')">
+            <div class="upload-icon">📂</div>
+            <h3>load a flow</h3>
+            <p>tap to choose a flow JSON, or drag and drop it here</p>
+        </div>
+        <input type="file" id="flowFileInput" accept=".json" style="display:none" onchange="loadFlowFromFile(event)">
+    `;
+}
+
+// ─── SPEECH ─────────────────────────────────────────────────────────────────
+function getBestVoice() {
+    const voices = window.speechSynthesis.getVoices();
+    if (selectedVoiceIndex !== null) {
+        const v = voices[selectedVoiceIndex];
+        if (v) return v;
+    }
+    // Fallback priority
+    const preferred = ['Google UK English Female','Google US English Female','Samantha','Karen','Microsoft Zira','Victoria'];
+    for (const name of preferred) {
+        const v = voices.find(v => v.name.includes(name));
+        if (v) return v;
+    }
+    return voices.find(v => v.name.toLowerCase().includes('female')) || voices[0] || null;
+}
+
+function speakPoseGuidance(pose) {
+    window.speechSynthesis.cancel();
+    setTimeout(() => {
+        const prevPose = practiceState.currentPoseIndex > 0 ? currentFlow.poses[practiceState.currentPoseIndex - 1] : null;
+        const isFirst = prevPose && prevPose.isWelcome;
+
+        let text;
+        if (pose.isWelcome) {
+            text = pose.audioCues;
+        } else if (pose.isTransition) {
+            text = pose.name.replace(/\([^)]*\)/g, '').trim();
+        } else if (pose.name.toLowerCase().includes('savasana') || pose.name.toLowerCase().includes('final relaxation')) {
+            text = pose.name.replace(/\([^)]*\)/g, '').trim();
+        } else {
+            const cleanName = pose.name.replace(/\([^)]*\)/g, '').trim();
+            text = isFirst
+                ? `Let's begin with ${cleanName}. ${pose.instruction}. ${pose.audioCues || ''}`
+                : `${cleanName}. ${pose.instruction}. ${pose.audioCues || ''}`;
+        }
+
+        const u = new SpeechSynthesisUtterance(text);
+        u.voice = getBestVoice();
+        u.rate = voiceRate;
+        u.pitch = voicePitch;
+        u.volume = pose.isTransition ? 0.7 : 1.0;
+        window.speechSynthesis.speak(u);
+    }, 100);
+}
+
+function speakTimeCue(seconds) {
+    const u = new SpeechSynthesisUtterance(`${seconds} seconds remaining`);
+    u.voice = getBestVoice(); u.rate = voiceRate; u.pitch = voicePitch; u.volume = 0.7;
+    window.speechSynthesis.speak(u);
+}
+
+function speakFormTip(tip) {
+    const u = new SpeechSynthesisUtterance(tip);
+    u.voice = getBestVoice(); u.rate = voiceRate; u.pitch = voicePitch; u.volume = 0.8;
+    window.speechSynthesis.speak(u);
+}
+
+function speakTransition() {
+    const nextIndex = practiceState.currentPoseIndex + 1;
+    if (nextIndex >= currentFlow.poses.length) return;
+    const next = currentFlow.poses[nextIndex];
+    if (next.isTransition) { playTransitionChime(); return; }
+    const cleanName = next.name.replace(/\([^)]*\)/g, '').trim();
+    const isSavasana = next.name.toLowerCase().includes('savasana') || next.name.toLowerCase().includes('final relaxation');
+    const intros = [`coming up next, ${cleanName}`,`get ready for ${cleanName}`,`we'll move into ${cleanName}`,`preparing for ${cleanName}`,`next up, ${cleanName}`];
+    const text = isSavasana ? `let's wrap up and gently move into ${cleanName}` : intros[Math.floor(Math.random() * intros.length)];
+    const u = new SpeechSynthesisUtterance(text);
+    u.voice = getBestVoice(); u.rate = voiceRate; u.pitch = voicePitch; u.volume = 0.9;
+    window.speechSynthesis.speak(u);
+}
+
+// ─── CHIMES ─────────────────────────────────────────────────────────────────
+function playTransitionChime() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine'; osc.frequency.value = 659.25;
+        const now = ctx.currentTime;
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
+        osc.start(now); osc.stop(now + 1.5);
+    } catch(e) {}
+}
+
+function playGentleBells() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.type = 'sine'; osc.frequency.value = freq;
+            const t = ctx.currentTime + i * 0.5;
+            gain.gain.setValueAtTime(0, t);
+            gain.gain.linearRampToValueAtTime(0.15, t + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.01, t + 3);
+            osc.start(t); osc.stop(t + 3);
+        });
+    } catch(e) {}
+}
+
+// ─── FORMAT TIME ─────────────────────────────────────────────────────────────
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+// ─── VIBE MODAL ──────────────────────────────────────────────────────────────
+function toggleVibe(v) {
+    const idx = selectedVibes.indexOf(v);
+    const el = document.querySelector(`.vibe-tag[data-vibe="${v}"]`);
+    if (idx > -1) { selectedVibes.splice(idx, 1); el.classList.remove('selected'); }
+    else { selectedVibes.push(v); el.classList.add('selected'); }
+}
+
+function confirmVibe() {
+    if (currentFlow) currentFlow.vibeTags = selectedVibes;
+    document.getElementById('vibeModal').classList.remove('active');
+    openReflectionModal();
+}
+
+// ─── REFLECTION MODAL ────────────────────────────────────────────────────────
+function openReflectionModal() {
+    if (!currentFlow || !currentFlow.poses) return;
+    currentReflections = {};
+    let html = '';
+    currentFlow.poses.forEach((pose, i) => {
+        if (pose.isWelcome || pose.isTransition) return;
+        html += `
+            <div class="reflection-pose">
+                <div class="pose-label">${pose.name} <span style="color:#aaa;font-size:0.85em">(${pose.duration}s)</span></div>
+                <div class="reflection-btns">
+                    <button class="reflect-btn" id="ref-${i}-loved" onclick="toggleReflection(${i},'loved')">💚 loved it</button>
+                    <button class="reflect-btn" id="ref-${i}-needs" onclick="toggleReflection(${i},'needs')">📚 needs practice</button>
+                </div>
+            </div>`;
+    });
+    document.getElementById('reflectionList').innerHTML = html;
+    document.getElementById('reflectionModal').classList.add('active');
+}
+
+function toggleReflection(i, type) {
+    const lovedBtn = document.getElementById(`ref-${i}-loved`);
+    const needsBtn = document.getElementById(`ref-${i}-needs`);
+    if (currentReflections[i] === type) {
+        delete currentReflections[i];
+        lovedBtn.className = 'reflect-btn';
+        needsBtn.className = 'reflect-btn';
+    } else {
+        currentReflections[i] = type;
+        lovedBtn.className = type === 'loved' ? 'reflect-btn loved' : 'reflect-btn';
+        needsBtn.className = type === 'needs' ? 'reflect-btn needs' : 'reflect-btn';
+    }
+}
+
+function saveReflections() {
+    const r = { loved: 0, needsPractice: 0, detailed: {} };
+    Object.entries(currentReflections).forEach(([idx, type]) => {
+        const pose = currentFlow.poses[idx];
+        if (!pose) return;
+        if (type === 'loved') { r.loved++; r.detailed[pose.name] = 'loved'; }
+        else { r.needsPractice++; r.detailed[pose.name] = 'needsPractice'; }
+    });
+    if (currentFlow) currentFlow.reflections = r;
+    document.getElementById('reflectionModal').classList.remove('active');
+    showPostPractice();
+}
+
+function skipReflections() {
+    document.getElementById('reflectionModal').classList.remove('active');
+    showPostPractice();
+}
+
+function showPostPractice() {
+    const totalMin = currentFlow ? Math.round(currentFlow.poses.filter(p => !p.isWelcome).reduce((s, p) => s + p.duration, 0) / 60) : 0;
+    const vibeText = selectedVibes.length > 0 ? selectedVibes.map(v => ({stilled:'🌙 stilled',anchored:'⚓ anchored',pushed:'🔥 pushed'}[v]||v)).join(' · ') : '';
+    document.getElementById('practiceContent').innerHTML = `
+        <div class="complete-card">
+            <div style="font-size:2.5em; margin-bottom:16px;">✨</div>
+            <h2>practice complete</h2>
+            ${vibeText ? `<p style="color:#c4a77d; font-size:1em; margin-bottom:8px;">${vibeText}</p>` : ''}
+            <p style="margin-bottom:28px;">${totalMin} minutes on the mat</p>
+            <div style="display:flex; flex-direction:column; gap:12px; max-width:320px; margin:0 auto;">
+                <button class="btn" onclick="downloadEnrichedJSON()">💾 save flow (with notes)</button>
+                <button class="btn" style="background:linear-gradient(135deg,#a8c5a0,#8fb087);" onclick="downloadICS()">📅 add to calendar</button>
+                <button class="btn" style="background:linear-gradient(135deg,#d4c4b0,#bfb0a0); color:#5a4a3a;" onclick="clearPractice()">load another flow</button>
+            </div>
+        </div>
+    `;
+    showToast('🎉 great practice!');
+}
+
+function downloadEnrichedJSON() {
+    if (!currentFlow) return;
+    const enriched = JSON.parse(JSON.stringify(currentFlow));
+    enriched.completedAt = new Date().toISOString();
+    enriched.vibeTags = selectedVibes;
+    // Remove welcome pose before saving
+    enriched.poses = enriched.poses.filter(p => !p.isWelcome);
+    const blob = new Blob([JSON.stringify(enriched, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    const slug = (currentFlow.name || 'flow').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    a.href = url;
+    a.download = `${slug}-${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('💾 flow saved!');
+}
+
+function downloadICS() {
+    if (!currentFlow) return;
+    const now = practiceState.practiceStartTime || new Date();
+    const realPoses = currentFlow.poses.filter(p => !p.isWelcome);
+    const totalSeconds = realPoses.reduce((s, p) => s + p.duration, 0);
+    const totalMin = Math.round(totalSeconds / 60);
+    const endTime = new Date(now.getTime() + totalSeconds * 1000);
+
+    const pad = n => String(n).padStart(2, '0');
+    const formatDate = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+
+    const flowName = currentFlow.name || 'Yoga Flow';
+    const difficulty = currentFlow.difficulty || '';
+    const style = currentFlow.style || '';
+
+    const poseList = realPoses
+        .filter(p => !p.isTransition)
+        .map((p, i) => `${i+1}. ${p.name}`)
+        .join('\\n');
+
+    const vibeLabel = selectedVibes.length > 0
+        ? selectedVibes.map(v => ({stilled:'🌙 stilled',anchored:'⚓ anchored',pushed:'🔥 pushed'}[v]||v)).join(', ')
+        : '';
+
+    const loved = Object.entries(currentFlow.reflections?.detailed || {}).filter(([,v]) => v === 'loved').map(([k]) => k);
+    const needs = Object.entries(currentFlow.reflections?.detailed || {}).filter(([,v]) => v === 'needsPractice').map(([k]) => k);
+
+    let desc = `${style ? style + ' - ' : ''}${difficulty ? difficulty : ''}`;
+    desc += `\\nDuration: ${totalMin} minutes`;
+    desc += `\\n\\nPoses:\\n${poseList}`;
+    if (vibeLabel) desc += `\\n\\nVibe: ${vibeLabel}`;
+    if (loved.length > 0) desc += `\\n\\nPose Reflections:\\n💚 Loved: ${loved.join(', ')}`;
+    if (needs.length > 0) desc += (loved.length > 0 ? '' : `\\n\\nPose Reflections:`) + `\\n📚 Needs Practice: ${needs.join(', ')}`;
+
+    const summary = `${totalMin}-min ${flowName}${style ? ' (' + style + ')' : ''}`;
+    const uid = `yoga-${Date.now()}@yoga-lite.app`;
+    const stamp = formatDate(new Date());
+
+    const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Yoga Coach Lite//EN',
+        'BEGIN:VEVENT',
+        `UID:${uid}`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART:${formatDate(now)}`,
+        `DTEND:${formatDate(endTime)}`,
+        `SUMMARY:${summary}`,
+        `DESCRIPTION:${desc}`,
+        'STATUS:CONFIRMED',
+        'END:VEVENT',
+        'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([ics], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = now.toISOString().slice(0, 10);
+    const slug = (currentFlow.name || 'flow').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    a.href = url;
+    a.download = `${slug}-${date}.ics`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📅 calendar event saved!');
+}
+
+// ─── TARGETED PRACTICE ───────────────────────────────────────────────────────
+function loadTargetedFromFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    processTargetedFile(file);
+    event.target.value = '';
+}
+
+function processTargetedFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (data.type !== 'targeted') {
+                alert('this doesn\'t look like a targeted practice file — needs "type": "targeted".');
+                return;
+            }
+            targetedSession = data;
+            showTargetedReady();
+            showToast('✅ targeted practice loaded!');
+        } catch {
+            alert('couldn\'t read that file — make sure it\'s valid JSON.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function showTargetedReady() {
+    const session = targetedSession;
+    const totalMin = session.poses.reduce((s, p) => s + (p.has_two_sides ? p.hold_seconds * 2 : p.hold_seconds), 0) / 60;
+
+    const propKeywords = ['block','blanket','pillow','strap','bolster','wall','chair'];
+    const propsNeeded = new Set();
+    session.poses.forEach(pose => {
+        if (pose.modifications) {
+            pose.modifications.forEach(mod => {
+                propKeywords.forEach(prop => {
+                    if (mod.toLowerCase().includes(prop)) {
+                        propsNeeded.add({block:'yoga blocks',blanket:'folded blanket',pillow:'pillow',strap:'yoga strap',bolster:'bolster',wall:'wall space',chair:'chair'}[prop] || prop);
+                    }
+                });
+            });
+        }
+    });
+
+    const propsHTML = propsNeeded.size > 0 ? `
+        <div style="background:#fdf6e3; border-left:3px solid #c4a77d; padding:14px; border-radius:8px; margin-bottom:20px; font-size:0.9em; color:#6b5d4f;">
+            <strong style="display:block; margin-bottom:6px;">🧘 grab before you start:</strong>
+            ${[...propsNeeded].join(', ')}
+        </div>` : '';
+
+    document.getElementById('targetedContent').innerHTML = `
+        <h2 style="margin-bottom:8px; color:#6b5d4f; font-weight:400;">${session.session_name}</h2>
+        <p style="color:#aaa; font-size:0.85em; margin-bottom:4px;">${session.analyzed_period || ''}</p>
+        <p style="color:#aaa; font-size:0.85em; margin-bottom:20px;">${session.poses.length} poses · ~${Math.round(totalMin)} min</p>
+        <div style="background:#f0f5ec; border-left:3px solid #a8c5a0; padding:14px; border-radius:8px; margin-bottom:20px; font-size:0.9em; color:#6b5d4f; line-height:1.6;">
+            ${session.intro}
+        </div>
+        ${propsHTML}
+        <button class="btn" style="max-width:300px; margin:0 auto; display:block;" onclick="startTargetedPractice()">▶️ begin session</button>
+        <button style="display:block; margin:12px auto 0; background:none; border:none; color:#aaa; font-size:0.85em; cursor:pointer;" onclick="resetTargeted()">load a different file</button>
+    `;
+}
+
+function startTargetedPractice() {
+    targetedState.isRunning = true;
+    targetedState.isPaused = false;
+    targetedState.currentPoseIndex = 0;
+    targetedState.currentSide = 1;
+    targetedState.currentAlignmentIndex = 0;
+    targetedState.hasSpokenModification = false;
+    targetedState.timeRemaining = targetedSession.poses[0].hold_seconds;
+
+    displayTargetedPractice(true);
+
+    const pose = targetedSession.poses[0];
+    const alignmentCue = pose.alignment_points.join('. ');
+    speakTargeted(`${targetedSession.intro}. Starting with ${pose.name}. ${pose.how_to_enter}. Key alignment: ${alignmentCue}`, () => {
+        playTransitionChime();
+        setTimeout(() => runTargetedTimer(), 1500);
+    });
+}
+
+function displayTargetedPractice(startAlignmentCycle) {
+    const session = targetedSession;
+    const pose = session.poses[targetedState.currentPoseIndex];
+    const sideLabel = pose.has_two_sides ? ` · side ${targetedState.currentSide}` : '';
+    const total = session.poses.length;
+    const progress = (targetedState.currentPoseIndex / total) * 100;
+
+    document.getElementById('targetedContent').innerHTML = `
+        <div class="practice-guide">
+            <div class="guide-display">
+                <div class="pose-counter">pose ${targetedState.currentPoseIndex + 1} of ${total}${sideLabel}</div>
+                <div class="current-pose">${pose.name}</div>
+                <div class="pose-instruction" id="alignmentCue">${pose.alignment_points[0] || ''}</div>
+                <div class="timer-display">${formatTime(targetedState.timeRemaining)}</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+            </div>
+            <div class="control-buttons">
+                ${targetedState.currentPoseIndex > 0 ? '<button class="control-btn prev-btn" onclick="targetedPrev()">← prev</button>' : ''}
+                <button class="control-btn ${targetedState.isPaused ? 'start-btn' : 'pause-btn'}" onclick="toggleTargetedPause()">${targetedState.isPaused ? '▶️ resume' : '⏸ pause'}</button>
+                <button class="control-btn next-btn" onclick="targetedNext()">next →</button>
+            </div>
+            <div style="margin-top:20px;">
+                <button onclick="clearTargetedPractice()" style="background:none; border:none; color:#c4a77d; font-size:0.85em; cursor:pointer;">✕ end session</button>
+            </div>
+        </div>
+    `;
+
+    if (startAlignmentCycle) {
+        if (targetedState.alignmentCycleInterval) clearInterval(targetedState.alignmentCycleInterval);
+        targetedState.currentAlignmentIndex = 0;
+        targetedState.alignmentCycleInterval = setInterval(() => {
+            if (!targetedState.isPaused && targetedState.isRunning) {
+                targetedState.currentAlignmentIndex = (targetedState.currentAlignmentIndex + 1) % pose.alignment_points.length;
+                const el = document.getElementById('alignmentCue');
+                if (el) el.textContent = pose.alignment_points[targetedState.currentAlignmentIndex];
+            }
+        }, 15000);
+    }
+}
+
+function runTargetedTimer() {
+    if (targetedState.timerInterval) clearInterval(targetedState.timerInterval);
+    targetedState.timerInterval = setInterval(() => {
+        if (!targetedState.isPaused && targetedState.isRunning) {
+            targetedState.timeRemaining--;
+            const el = document.querySelector('.timer-display');
+            if (el) el.textContent = formatTime(targetedState.timeRemaining);
+
+            const pose = targetedSession.poses[targetedState.currentPoseIndex];
+            const half = Math.floor(pose.hold_seconds / 2);
+            if (!targetedState.hasSpokenModification && targetedState.timeRemaining === half) {
+                targetedState.hasSpokenModification = true;
+                if (pose.modifications && pose.modifications.length > 0) {
+                    speakTargeted('modification: ' + pose.modifications[0]);
+                }
+            }
+
+            if (targetedState.timeRemaining <= 0) advanceTargeted();
+        }
+    }, 1000);
+}
+
+function advanceTargeted() {
+    clearInterval(targetedState.timerInterval);
+    clearInterval(targetedState.alignmentCycleInterval);
+
+    const session = targetedSession;
+    const pose = session.poses[targetedState.currentPoseIndex];
+
+    if (pose.has_two_sides && targetedState.currentSide === 1) {
+        targetedState.currentSide = 2;
+        targetedState.timeRemaining = pose.hold_seconds;
+        targetedState.currentAlignmentIndex = 0;
+        targetedState.hasSpokenModification = false;
+        displayTargetedPractice(true);
+        speakTargeted(`now gently switch to the other side. ${pose.alignment_points.join('. ')}`, () => {
+            playTransitionChime();
+            setTimeout(() => runTargetedTimer(), 1500);
+        });
+        return;
+    }
+
+    const nextIndex = targetedState.currentPoseIndex + 1;
+    if (nextIndex >= session.poses.length) {
+        targetedState.isRunning = false;
+        speakTargeted(session.outro, () => clearTargetedPractice());
+        return;
+    }
+
+    const nextPose = session.poses[nextIndex];
+    targetedState.currentPoseIndex = nextIndex;
+    targetedState.currentSide = 1;
+    targetedState.currentAlignmentIndex = 0;
+    targetedState.hasSpokenModification = false;
+    targetedState.timeRemaining = nextPose.hold_seconds;
+
+    const total = session.poses.length;
+    document.getElementById('targetedContent').innerHTML = `
+        <div class="practice-guide">
+            <div class="guide-display">
+                <div class="pose-counter">transitioning</div>
+                <div class="current-pose" style="color:#aaa;">${nextPose.name}</div>
+                <div class="timer-display">0:10</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${(nextIndex/total)*100}%"></div></div>
+            </div>
+            <div class="control-buttons">
+                <button class="control-btn pause-btn" onclick="toggleTargetedPause()">⏸ pause</button>
+            </div>
+        </div>
+    `;
+
+    let countdown = 10;
+    speakTargeted(`take a breath and make your way into ${nextPose.name}`);
+
+    const transTimer = setInterval(() => {
+        if (!targetedState.isPaused) {
+            countdown--;
+            const el = document.querySelector('.timer-display');
+            if (el) el.textContent = `0:${String(countdown).padStart(2,'0')}`;
+            if (countdown <= 0) {
+                clearInterval(transTimer);
+                displayTargetedPractice(true);
+                speakTargeted(`${nextPose.name}. ${nextPose.how_to_enter}. Key alignment: ${nextPose.alignment_points.join('. ')}`, () => {
+                    playTransitionChime();
+                    setTimeout(() => runTargetedTimer(), 1500);
+                });
+            }
+        }
+    }, 1000);
+}
+
+function targetedNext() {
+    clearInterval(targetedState.timerInterval);
+    clearInterval(targetedState.alignmentCycleInterval);
+    window.speechSynthesis.cancel();
+    advanceTargeted();
+}
+
+function targetedPrev() {
+    clearInterval(targetedState.timerInterval);
+    clearInterval(targetedState.alignmentCycleInterval);
+    window.speechSynthesis.cancel();
+    const pose = targetedSession.poses[targetedState.currentPoseIndex];
+    if (pose.has_two_sides && targetedState.currentSide === 2) {
+        targetedState.currentSide = 1;
+        targetedState.timeRemaining = pose.hold_seconds;
+        targetedState.currentAlignmentIndex = 0;
+        targetedState.hasSpokenModification = false;
+        displayTargetedPractice(true);
+        runTargetedTimer();
+        return;
+    }
+    if (targetedState.currentPoseIndex > 0) {
+        targetedState.currentPoseIndex--;
+        const prev = targetedSession.poses[targetedState.currentPoseIndex];
+        targetedState.currentSide = 1;
+        targetedState.timeRemaining = prev.hold_seconds;
+        targetedState.currentAlignmentIndex = 0;
+        targetedState.hasSpokenModification = false;
+        displayTargetedPractice(true);
+        runTargetedTimer();
+    }
+}
+
+function toggleTargetedPause() {
+    targetedState.isPaused = !targetedState.isPaused;
+    if (targetedState.isPaused) window.speechSynthesis.pause();
+    else window.speechSynthesis.resume();
+    displayTargetedPractice(false);
+}
+
+function speakTargeted(text, callback) {
+    window.speechSynthesis.cancel();
+    setTimeout(() => {
+        const u = new SpeechSynthesisUtterance(text);
+        u.voice = getBestVoice();
+        u.rate = voiceRate;
+        u.pitch = voicePitch;
+        u.volume = 1.0;
+        if (callback) u.onend = callback;
+        window.speechSynthesis.speak(u);
+    }, 100);
+}
+
+function clearTargetedPractice() {
+    clearInterval(targetedState.timerInterval);
+    clearInterval(targetedState.alignmentCycleInterval);
+    window.speechSynthesis.cancel();
+    targetedSession = null;
+    Object.assign(targetedState, { isRunning:false, isPaused:false, currentPoseIndex:0, currentSide:1, timeRemaining:0, timerInterval:null, alignmentCycleInterval:null, currentAlignmentIndex:0, hasSpokenModification:false });
+    resetTargeted();
+}
+
+function resetTargeted() {
+    targetedSession = null;
+    document.getElementById('targetedContent').innerHTML = `
+        <div class="upload-zone" id="targetedDropZone" onclick="document.getElementById('targetedFileInput').click()"
+             ondragover="handleDragOver(event,'targetedDropZone')" ondragleave="handleDragLeave(event,'targetedDropZone')" ondrop="handleDrop(event,'targeted')">
+            <div class="upload-icon">📂</div>
+            <h3>load a targeted practice</h3>
+            <p>tap to choose a targeted practice JSON</p>
+        </div>
+        <input type="file" id="targetedFileInput" accept=".json" style="display:none" onchange="loadTargetedFromFile(event)">
+    `;
+}
+
+// ─── VOICE SETTINGS ──────────────────────────────────────────────────────────
+function openVoiceSettings() {
+    populateVoiceList();
+    document.getElementById('voiceModal').classList.add('active');
+}
+
+function populateVoiceList() {
+    const voices = window.speechSynthesis.getVoices();
+    const container = document.getElementById('voiceList');
+    const warning = document.getElementById('voiceWarning');
+
+    if (!voices || voices.length === 0) {
+        warning.style.display = 'block';
+        container.innerHTML = '<p style="color:#aaa; text-align:center; padding:20px;">no voices found — try again in a moment</p>';
+        return;
+    }
+
+    warning.style.display = 'none';
+
+    // Filter to English voices, sort them nicely
+    const engVoices = voices.filter(v => v.lang.startsWith('en'));
+    const display = engVoices.length > 0 ? engVoices : voices;
+
+    let html = '';
+    display.forEach((voice, i) => {
+        const globalIndex = voices.indexOf(voice);
+        const isSelected = globalIndex === selectedVoiceIndex;
+        html += `
+            <div class="voice-option ${isSelected ? 'selected' : ''}" onclick="selectVoice(${globalIndex}, this)">
+                <div>
+                    <div class="voice-name">${voice.name}</div>
+                    <div class="voice-lang">${voice.lang}</div>
+                </div>
+                <span class="voice-preview" onclick="event.stopPropagation(); previewVoice(${globalIndex})">▶ preview</span>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+function selectVoice(index, el) {
+    selectedVoiceIndex = index;
+    document.querySelectorAll('.voice-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+function previewVoice(index) {
+    window.speechSynthesis.cancel();
+    const voices = window.speechSynthesis.getVoices();
+    const u = new SpeechSynthesisUtterance("Inhale deeply, and let it go.");
+    u.voice = voices[index];
+    u.rate = voiceRate;
+    u.pitch = voicePitch;
+    window.speechSynthesis.speak(u);
+}
+
+function updateSpeedLabel(val) {
+    voiceRate = parseFloat(val);
+    const label = val < 0.8 ? 'very slow' : val < 0.9 ? 'slow' : val < 1.0 ? 'calm' : val == 1.0 ? 'normal' : val < 1.2 ? 'energetic' : 'fast';
+    document.getElementById('speedLabel').textContent = `${parseFloat(val).toFixed(1)}× (${label})`;
+}
+
+function updatePitchLabel(val) {
+    voicePitch = parseFloat(val);
+    const label = val < 0.9 ? 'deeper' : val < 1.0 ? 'warm' : val == 1.0 ? 'natural' : val < 1.1 ? 'bright' : 'higher';
+    document.getElementById('pitchLabel').textContent = `${parseFloat(val).toFixed(1)}× (${label})`;
+}
+
+function saveVoiceSettings() {
+    localStorage.setItem('yogalite-voice', JSON.stringify({
+        index: selectedVoiceIndex,
+        rate: voiceRate,
+        pitch: voicePitch
+    }));
+    document.getElementById('voiceModal').classList.remove('active');
+    window.speechSynthesis.cancel();
+    if (voiceSettingsFromFirstRun) {
+        showToast('🎙️ voice saved! load a flow to start.');
+        voiceSettingsFromFirstRun = false;
+    } else {
+        showToast('🎙️ voice settings saved!');
+    }
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2200);
+}
+</script>
+</body>
+</html>
