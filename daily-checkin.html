@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daily Check-In</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #faf6f0;
+    color: #2a2a2a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    color: #1a2a5e;
+    margin-bottom: 4px;
+  }
+
+  .header .date {
+    font-size: 12px;
+    color: #b8903a;
+    font-weight: 500;
+  }
+
+  /* MODE PICKER */
+  .mode-picker {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .mode-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 99px;
+    border: 1.5px solid #d8cfc4;
+    background: #fff;
+    color: #9a8070;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .mode-btn:hover { border-color: #b8903a; color: #b8903a; }
+  .mode-btn.active { background: #1a2a5e; border-color: #1a2a5e; color: #fff; }
+  .mode-btn.period.active { background: #8b3a3a; border-color: #8b3a3a; }
+
+  /* FORM */
+  .form-card {
+    background: #fff;
+    border: 0.5px solid #d8cfc4;
+    border-radius: 16px;
+    padding: 28px;
+    width: 100%;
+    max-width: 540px;
+    display: none;
+  }
+
+  .form-section { margin-bottom: 20px; }
+
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a8070;
+    margin-bottom: 8px;
+  }
+
+  textarea, input[type="text"], input[type="number"] {
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #2a2a2a;
+    background: #faf6f0;
+    border: 0.5px solid #d8cfc4;
+    border-radius: 8px;
+    padding: 10px 12px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  textarea:focus, input:focus { border-color: #b8903a; }
+  textarea { min-height: 80px; }
+
+  /* RADIO / PILL SELECTORS */
+  .pill-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill-group input[type="radio"] { display: none; }
+  .pill-group label {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 99px;
+    border: 1px solid #d8cfc4;
+    background: #fff;
+    color: #7a6a5a;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    transition: all 0.15s;
+    margin: 0;
+  }
+  .pill-group input[type="radio"]:checked + label {
+    background: #1a2a5e;
+    border-color: #1a2a5e;
+    color: #fff;
+  }
+
+  /* PERIOD MODE PILLS */
+  .period-pills input[type="radio"]:checked + label {
+    background: #8b3a3a;
+    border-color: #8b3a3a;
+    color: #fff;
+  }
+
+  /* OUTPUT */
+  .output-section {
+    width: 100%;
+    max-width: 540px;
+    margin-top: 20px;
+    display: none;
+  }
+
+  .output-section.visible { display: block; }
+
+  .output-box {
+    background: #1a2a5e;
+    border-radius: 12px;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: #c8d8f0;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 10px; margin-top: 24px; }
+
+  .btn-primary {
+    flex: 1;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 99px;
+    border: none;
+    background: #1a2a5e;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover { background: #2a3a6e; }
+
+  .btn-copy {
+    flex: 1;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 99px;
+    border: 1.5px solid #1a2a5e;
+    background: transparent;
+    color: #1a2a5e;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .btn-copy:hover { background: #f0f2f8; }
+  .btn-copy.copied { border-color: #3a7a3a; color: #3a7a3a; }
+
+  .btn-reset {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 99px;
+    border: 1px solid #d8cfc4;
+    background: transparent;
+    color: #9a8070;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-reset:hover { border-color: #b8903a; color: #b8903a; }
+
+  /* REMINDER BANNERS */
+  .reminder-banner {
+    background: #fff9e6;
+    border-left: 4px solid #b8903a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #5a4a3a;
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .period-reminder {
+    background: #fdf0f0;
+    border-left-color: #8b3a3a;
+    color: #5a2a2a;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #9a8070;
+    font-size: 13px;
+    font-weight: 300;
+    max-width: 540px;
+  }
+
+  .empty-state .icon { font-size: 32px; margin-bottom: 12px; }
+
+  @media (max-width: 480px) {
+    body { padding: 24px 16px 80px; }
+    .form-card { padding: 20px; }
+    .btn-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Daily Check-In</h1>
+  <div class="date" id="todayDate"></div>
+</div>
+
+<div class="mode-picker">
+  <button class="mode-btn" onclick="setMode('weekday')">Weekday</button>
+  <button class="mode-btn" onclick="setMode('weekend')">Weekend</button>
+  <button class="mode-btn period" onclick="setMode('period')">Period Day</button>
+</div>
+
+<!-- EMPTY STATE -->
+<div class="empty-state" id="emptyState">
+  <div class="icon">📋</div>
+  Pick a mode above to get started.
+</div>
+
+<!-- WEEKDAY FORM -->
+<div class="form-card" id="weekdayForm" style="display:none;">
+  <div class="form-section">
+    <label>Snacks eaten today</label>
+    <textarea id="wd-snacks" placeholder="yes / no / list them..."></textarea>
+  </div>
+  <div class="form-section">
+    <label>Daily vibe</label>
+    <div class="pill-group">
+      <input type="radio" name="wd-vibe" id="wd-good" value="good"/>
+      <label for="wd-good">Good</label>
+      <input type="radio" name="wd-vibe" id="wd-okay" value="okay"/>
+      <label for="wd-okay">Okay</label>
+      <input type="radio" name="wd-vibe" id="wd-bad" value="bad"/>
+      <label for="wd-bad">Bad</label>
+    </div>
+  </div>
+  <div class="form-section">
+    <label>Notes (optional)</label>
+    <textarea id="wd-notes" placeholder="hormones, extra busy, sleep, anything worth flagging..."></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="generate('weekday')">Generate</button>
+    <button class="btn-reset" onclick="resetForm('weekday')">Reset</button>
+  </div>
+</div>
+
+<!-- WEEKEND FORM -->
+<div class="form-card" id="weekendForm">
+  <div class="reminder-banner" id="weekendBanner">
+    📓 Heads up — weekends call for a detailed running log in your journal app. Log each meal and snack as it happens throughout the day. Come back here at the end of the day to summarize.
+  </div>
+  <div class="form-section">
+    <label>Hunger levels throughout the day</label>
+    <textarea id="we-hunger" placeholder="were signals showing up? ignoring them? timing off?"></textarea>
+  </div>
+  <div class="form-section">
+    <label>Wins</label>
+    <textarea id="we-wins" placeholder="what went well?"></textarea>
+  </div>
+  <div class="form-section">
+    <label>Struggles</label>
+    <textarea id="we-struggles" placeholder="what was hard?"></textarea>
+  </div>
+  <div class="form-section">
+    <label>Notes (optional)</label>
+    <textarea id="we-notes" placeholder="were you out, home all day, did the bedside setup happen?"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="generate('weekend')">Generate</button>
+    <button class="btn-reset" onclick="resetForm('weekend')">Reset</button>
+  </div>
+</div>
+
+<!-- PERIOD FORM -->
+<div class="form-card" id="periodForm">
+  <div class="reminder-banner period-reminder" id="periodBanner">
+    📓 Period days — keep a running log of what you eat in your journal app as you go. Use this form to capture the overall picture at the end of the day.
+  </div>
+  <div class="form-section">
+    <label>Period day #</label>
+    <input type="number" id="pd-day" placeholder="e.g. 2" min="1" max="10"/>
+  </div>
+  <div class="form-section">
+    <label>Mode today</label>
+    <div class="pill-group period-pills">
+      <input type="radio" name="pd-mode" id="pd-meals" value="Meals"/>
+      <label for="pd-meals">Meals</label>
+      <input type="radio" name="pd-mode" id="pd-snacking" value="Snacking"/>
+      <label for="pd-snacking">Snacking</label>
+      <input type="radio" name="pd-mode" id="pd-both" value="Both"/>
+      <label for="pd-both">Both</label>
+      <input type="radio" name="pd-mode" id="pd-neither" value="Neither"/>
+      <label for="pd-neither">Neither</label>
+    </div>
+  </div>
+  <div class="form-section">
+    <label>Appetite overall</label>
+    <div class="pill-group period-pills">
+      <input type="radio" name="pd-appetite" id="pd-app-normal" value="Normal"/>
+      <label for="pd-app-normal">Normal</label>
+      <input type="radio" name="pd-appetite" id="pd-app-decreased" value="Decreased"/>
+      <label for="pd-app-decreased">Decreased</label>
+      <input type="radio" name="pd-appetite" id="pd-app-allover" value="All over the place"/>
+      <label for="pd-app-allover">All over the place</label>
+      <input type="radio" name="pd-appetite" id="pd-app-zero" value="Zero interest"/>
+      <label for="pd-app-zero">Zero interest</label>
+    </div>
+  </div>
+  <div class="form-section">
+    <label>Cravings (if any)</label>
+    <textarea id="pd-cravings" placeholder="what was your body asking for?"></textarea>
+  </div>
+  <div class="form-section">
+    <label>Notes (optional)</label>
+    <textarea id="pd-notes" placeholder="energy levels, anything else worth noting..."></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="generate('period')">Generate</button>
+    <button class="btn-reset" onclick="resetForm('period')">Reset</button>
+  </div>
+</div>
+
+<!-- OUTPUT -->
+<div class="output-section" id="outputSection">
+  <div class="output-box" id="outputBox"></div>
+  <div class="btn-row" style="margin-top:12px;">
+    <button class="btn-copy" id="copyBtn" onclick="copyOutput()">Copy to clipboard</button>
+    <button class="btn-reset" onclick="clearOutput()">Start over</button>
+  </div>
+</div>
+
+<script>
+  // Set today's date
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('todayDate').textContent = dateStr;
+
+  let currentMode = null;
+
+  function setMode(mode) {
+    currentMode = mode;
+
+    // Update buttons
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Hide all forms
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('weekdayForm').style.display = 'none';
+    document.getElementById('weekendForm').style.display = 'none';
+    document.getElementById('periodForm').style.display = 'none';
+    document.getElementById('outputSection').classList.remove('visible');
+
+    // Show selected form
+    document.getElementById(mode + 'Form').style.display = 'block';
+  }
+
+  function getRadioValue(name) {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    return checked ? checked.value : '';
+  }
+
+  function val(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function generate(mode) {
+    let output = '';
+    const shortDate = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+    if (mode === 'weekday') {
+      const snacks = val('wd-snacks');
+      const vibe = getRadioValue('wd-vibe');
+      const notes = val('wd-notes');
+
+      output += `Date: ${shortDate}\n`;
+      output += `\nSnacks eaten today: ${snacks || '—'}`;
+      output += `\n\nDaily vibe: ${vibe || '—'}`;
+      if (notes) output += `\n\nNotes: ${notes}`;
+
+    } else if (mode === 'weekend') {
+      const hunger = val('we-hunger');
+      const wins = val('we-wins');
+      const struggles = val('we-struggles');
+      const notes = val('we-notes');
+
+      output += `Date: ${shortDate}\n`;
+      output += `\nHunger levels: ${hunger || '—'}`;
+      output += `\n\nWins: ${wins || '—'}`;
+      output += `\n\nStruggles: ${struggles || '—'}`;
+      if (notes) output += `\n\nNotes: ${notes}`;
+
+    } else if (mode === 'period') {
+      const dayNum = val('pd-day');
+      const modeToday = getRadioValue('pd-mode');
+      const appetite = getRadioValue('pd-appetite');
+      const cravings = val('pd-cravings');
+      const notes = val('pd-notes');
+
+      output += `Date: ${shortDate}`;
+      if (dayNum) output += ` — Period Day ${dayNum}`;
+      output += `\n\nMode today: ${modeToday || '—'}`;
+      output += `\n\nAppetite overall: ${appetite || '—'}`;
+      if (cravings) output += `\n\nCravings: ${cravings}`;
+      if (notes) output += `\n\nNotes: ${notes}`;
+    }
+
+    document.getElementById('outputBox').textContent = output;
+    document.getElementById('outputSection').classList.add('visible');
+    document.getElementById(mode + 'Form').classList.remove('visible');
+
+    // Scroll to output
+    setTimeout(() => {
+      document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function copyOutput() {
+    const text = document.getElementById('outputBox').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy to clipboard';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function clearOutput() {
+    document.getElementById('outputSection').classList.remove('visible');
+    if (currentMode) {
+      document.getElementById(currentMode + 'Form').style.display = 'block';
+    }
+  }
+
+  function resetForm(mode) {
+    if (mode === 'weekday') {
+      document.getElementById('wd-snacks').value = '';
+      document.getElementById('wd-notes').value = '';
+      document.querySelectorAll('input[name="wd-vibe"]').forEach(r => r.checked = false);
+    } else if (mode === 'weekend') {
+      ['we-hunger','we-wins','we-struggles','we-notes'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+    } else if (mode === 'period') {
+      document.getElementById('pd-day').value = '';
+      document.getElementById('pd-cravings').value = '';
+      document.getElementById('pd-notes').value = '';
+      document.querySelectorAll('input[name="pd-mode"]').forEach(r => r.checked = false);
+      document.querySelectorAll('input[name="pd-appetite"]').forEach(r => r.checked = false);
+    }
+  }
+</script>
+</body>
+</html>
